@@ -16,7 +16,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -32,24 +31,5 @@
     <a href="/about.jsp">About</a>
   </nav>
 
-  <div id="container">
-    <h1>Register</h1>
-
-    <% if (request.getAttribute("error") != null) { %>
-      <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-    <% } %>
-
-    <form action="/register" method="POST">
-      <label for="username">Username: </label>
-      <br/>
-      <input type="text" name="username" id="username">
-      <br/>
-      <label for="password">Password: </label>
-      <br/>
-      <input type="password" name="password" id="password">
-      <br/><br/>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
 </body>
 </html>
