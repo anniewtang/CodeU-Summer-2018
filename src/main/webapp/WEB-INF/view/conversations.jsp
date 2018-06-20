@@ -34,7 +34,7 @@ List<Conversation> conversations = (List<Conversation>) request.getAttribute("co
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/conversations">Conversations</a>
+    <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
   </nav>
 

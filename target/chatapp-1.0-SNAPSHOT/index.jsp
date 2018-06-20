@@ -28,7 +28,7 @@
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/conversations">Conversations</a>
+    <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
   </nav>
 
@@ -36,13 +36,22 @@
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
       <h1>Dishcussion</h1>
+
       <!-- ADD SEARCH BAR -->
       <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
-      <input id="go" type="button" class="button" value="Go">
+
+
+      <form action="/results" method="get">
+        <input id="go" type="submit" class="button" value="Go">
+      </form>
+
 
       <br>
+      
       <!-- ADD REVIEW BUTTON -->
-      <input id="add-review" type="button" class="button" value="Add Review">
+      <form action="/review" method="get">
+        <input id="add-review" type="submit" class="button" value="Add Review">
+      </form>      
 
       <!-- IF user is signed in... use recommendations based on history & current location -->
       <!-- IF user is not signed in... use recommendations based on current location --> 

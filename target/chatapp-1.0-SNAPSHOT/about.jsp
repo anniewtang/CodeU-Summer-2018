@@ -27,7 +27,7 @@
     <% } else { %>
       <a href="/login">Login</a>
     <% } %>
-    <a href="/conversations">Conversations</a>
+    <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
   </nav>
 
