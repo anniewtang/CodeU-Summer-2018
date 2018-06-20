@@ -38,7 +38,9 @@
       <h1>Dishcussion</h1>
       <!-- ADD SEARCH BAR -->
       <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
+      <input id="go" type="button" class="button" value="Go">
 
+      <br>
       <!-- ADD REVIEW BUTTON -->
       <input id="add-review" type="button" class="button" value="Add Review">
 
