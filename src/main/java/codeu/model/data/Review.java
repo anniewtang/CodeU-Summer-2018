@@ -58,9 +58,9 @@ public class Review {
    }
 
    /** Returns the name of the dish */
-   public String getDishName() {
+   public String getDishID() {
      // NOT SURE IF NECESSARY?
-     return this.dishName;
+     return this.dishID;
    }
 
    /** Returns the star rating of this particualr Review*/
