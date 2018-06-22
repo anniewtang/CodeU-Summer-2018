@@ -26,6 +26,7 @@ public class Review {
   private final int numStars;
   private final String desc;
   private final Instant creation;
+  private final HashMap<String, Set<String>> tags;
   private final Photo photo; // LATER FEATURE
 
   /**
@@ -37,12 +38,13 @@ public class Review {
    * @param desc the text body of the actual review
    * @param creation the time of creation
    */
-   public Review(UUID author, UUID dishID, int numStars, String desc, Instant creation) {
+   public Review(UUID author, UUID dishID, int numStars, String desc, Instant creation, HashMap<String, Set<String>> tags) {
      this.author = author;
      this.dishID = dishID;
      this.numStars = numStars;
      this.desc = desc;
      this.creation = creation;
+     this.tags = tags;
    }
 
    /** Returns the author of the Review */
@@ -70,5 +72,10 @@ public class Review {
    public String getDescription() {
      return this.desc;
    }
+
+    /** Returns the text description of the Review */
+    public HashMap<String, Set<String>> getTags() {
+      return this.tags;
+    }
 
    // public Photo getPhoto()
