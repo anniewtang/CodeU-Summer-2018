@@ -57,9 +57,8 @@ public class Review {
      return this.restuarant;
    }
 
-   /** Returns the name of the dish */
+   /** Returns the id of the dish */
    public String getDishID() {
-     // NOT SURE IF NECESSARY?
      return this.dishID;
    }
 
