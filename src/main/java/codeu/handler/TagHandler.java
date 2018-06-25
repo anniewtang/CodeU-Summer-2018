@@ -27,8 +27,6 @@ public class TagHandler {
 
   // maps tag categories to their associated Tag object
   private HashMap<String, Tag> tagsByType;
-  // maps dishes to all their tags, organized by the tag category/type
-  private HashMap<UUID, HashMap<String, Set<String>>> tagsByDish;
 
   public TagHandler(HashMap<String, Tag> tagsByType,
                   HashMap<UUID, HashMap<String, Set<String>>> tagsByDish) {
@@ -41,8 +39,9 @@ public class TagHandler {
   }
 
   /**
-   * Retrieves the Tag object associated with a particular category,
+   * Retrieves the Tag object associated with a particular category.
    * i.e. "cuisine", "restriction", etc.
+   * Good for Search querying.
    * @method getTagsOfType
    * @param  type          name of the tag category
    * @return               appropriate Tag object
@@ -53,12 +52,43 @@ public class TagHandler {
 
   /**
    * Retrieves all the tags for a particular Dish.
+   * Good for UI display (showing _all_ tags for one particular dish)
    * @method getTagsForDish
    * @param  id             id of the dish we want all tags of
    * @return                returns {tag type : {tag values}}
    */
   public HashMap<String, Set<String>> getTagsForDish(UUID id) {
     return this.tagsByDish.get(id);
+  }
+
+  /**
+   * Puts the Dish into all the correct Tag objects.
+   * Puts all the user tags into the Dish object itself.
+   * @method setTags
+   * @param  id          dish ID user entered tags for
+   * @param  userTags    {tagType : {tagValues}} || i.e. {restrictions: {vegan, vegetarian}}
+   */
+  public void setTagsForDish(UUID id,  HashMap<String, Set<String> userTags) {
+    assignDishToTags(id, userTags);
+    assignTagsToDish(id, userTags);
+  }
+
+  /**
+   * Goes through all userTags, and puts the Dish into the appropriate Tag objects.
+   * @method assignDishToTags
+   * @param  id               dish id we're placing into the Tag objects
+   * @param  userTags         all the user-given tags
+   */
+  private void assignDishToTags(UUID id,  HashMap<String, Set<String> userTags) {
+    for (String tagType : userTags) {
+      Tag tag = getTagsOfType(tagType);
+      Set<String> tagValues = userTags.get(tagType);
+      tag.addDishToTagValue(id, userTags.get(tagType));
+    }
+  }
+
+  private void assignTagsToDish(UUID id,  HashMap<String, Set<String> userTags) {
+
   }
 
 }
