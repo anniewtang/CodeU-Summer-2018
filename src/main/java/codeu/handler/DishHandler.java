@@ -52,13 +52,8 @@ public class DishHandler {
   }
 
   /** Returns DishMap */
-  public HashMap<UUID, Dish> getDishMap {
-    return this.dishMap;
-  }
-
-  /** Returns ratingMap */
-  public HashMap<UUID, int> getRatingMap {
-    return this.ratingMap;
+  public HashMap<UUID, Dish> getDish(UUID id) {
+    return this.dishMap.get(id);
   }
 
   /** Get rating of a particular dish.
@@ -67,4 +62,17 @@ public class DishHandler {
     int rating = this.ratingMap.get(id);
     return rating;
   }
+
+
+    /**
+     * Retrieves all the tags for a particular Dish.
+     * Good for UI display (showing _all_ tags for one particular dish)
+     * @method getTagsForDish
+     * @param  id             id of the dish we want all tags of
+     * @return                returns {tag type : {tag values}}
+     */
+    public HashMap<String, Set<String>> getTagsForDish(UUID id) {
+      Dish dish = getDish(id);
+      return dish.getAllTags();
+    }
 }
