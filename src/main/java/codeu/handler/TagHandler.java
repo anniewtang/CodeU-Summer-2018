@@ -23,14 +23,14 @@ import java.util.HashMap;
  * handles the setting & getting of information for Tags,
  * and abstracts the process of querying.
  */
-public class TagQuery {
+public class TagHandler {
 
   // maps tag categories to their associated Tag object
   private HashMap<String, Tag> tagsByType;
   // maps dishes to all their tags, organized by the tag category/type
   private HashMap<UUID, HashMap<String, Set<String>>> tagsByDish;
 
-  public TagQuery(HashMap<String, Tag> tagsByType,
+  public TagHandler(HashMap<String, Tag> tagsByType,
                   HashMap<UUID, HashMap<String, Set<String>>> tagsByDish) {
     this.tagsByType = tagsByType;
     this.tagsByDish = tagsByDish;
