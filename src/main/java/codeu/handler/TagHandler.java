@@ -59,9 +59,8 @@ public class TagHandler {
    * @param  id          dish ID user entered tags for
    * @param  userTags    {tagType : {tagValues}} || i.e. {restrictions: {vegan, vegetarian}}
    */
-  public void setTagsForDish(UUID id,  HashMap<String, Set<String> userTags) {
+  public void updateTags(UUID id,  HashMap<String, Set<String> userTags) {
     assignDishToTags(id, userTags);
-    assignTagsToDish(id, userTags);
   }
 
   /**
@@ -77,9 +76,4 @@ public class TagHandler {
       tag.addDishToTagValue(id, userTags.get(tagType));
     }
   }
-
-  private void assignTagsToDish(UUID id,  HashMap<String, Set<String> userTags) {
-      // DishStore should be calling this?? question mark??
-  }
-
 }
