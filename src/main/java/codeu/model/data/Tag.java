@@ -40,14 +40,16 @@ public class Tag {
    }
 
    /**
-    * Associates a Dish with a particular tag value, for querying.
+    * Associates a Dish with all its given user tags, for querying.
     * @method addDishToTag
-    * @param  tagValue     the user tag given to the Dish
+    * @param  tagValues    the set of user tags, for this tag category
     * @param  dishID       id of the dish we're associating
     */
-   public void addDishToTag(String tagValue, UUID dishID) {
-     Set<UUID> dishes = getDishesByValue(tagValue);
-     dishes.put(UUID);
+   public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
+     for (String value : tagValues) {
+       Set<UUID> dishes = getDishesByValue(tagValue);
+       dishes.put(UUID);
+     }
    }
 
    /**
