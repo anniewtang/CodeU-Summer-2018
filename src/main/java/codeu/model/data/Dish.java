@@ -26,6 +26,9 @@ public class Dish {
   private final Location location;
   private final HashMap<String, Set<String>> tags;
 
+  // maps dishes to all their tags, organized by the tag category/type
+  private HashMap<UUID, HashMap<String, Set<String>>> tagsByDish;
+
   /**
    * Constructs a new Dish object.
    *
