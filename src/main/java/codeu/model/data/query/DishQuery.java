@@ -16,6 +16,7 @@ package codeu.model.data.query;
 
 import codeu.model.data.Dish;
 import java.util.UUID;
+import java.util.HashMap;
 
 public class DishQuery {
   private HashMap<UUID, Dish> dishMap; // maps dishIDs to Dish objects
