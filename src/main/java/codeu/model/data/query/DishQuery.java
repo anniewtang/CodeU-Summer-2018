@@ -18,6 +18,8 @@ import codeu.model.data.Dish;
 import java.util.UUID;
 import java.util.HashMap;
 
+/** Wrapper class that loads information from Data Store,
+  * and abstracts the process of querying  & storing Dish information. */
 public class DishQuery {
   private HashMap<UUID, Dish> dishMap; // maps dishIDs to Dish objects
   private HashMap<UUID, int> ratingMap; // maps dishIDs to average star ratings
@@ -62,5 +64,4 @@ public class DishQuery {
     int rating = this.ratingMap.get(id);
     return rating;
   }
-
 }
