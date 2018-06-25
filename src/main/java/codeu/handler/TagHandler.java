@@ -21,7 +21,9 @@ import java.util.HashMap;
 /**
  * Wrapper class that loads information from Data Store,
  * handles the setting & getting of information for Tags,
- * and abstracts the process of querying.
+ * and abstracts away the process of querying for SEARCH.
+ *
+ * Can return the DISHES associated with TAG VALUES.
  */
 public class TagHandler {
 
@@ -31,7 +33,7 @@ public class TagHandler {
   public TagHandler(HashMap<String, Tag> tagsByType,
                   HashMap<UUID, HashMap<String, Set<String>>> tagsByDish) {
     this.tagsByType = tagsByType;
-    this.tagsByDish = tagsByDish;
+    // TODO: REMOVE? this.tagsByDish = tagsByDish;
   }
 
   public void setTag(UUID id, String type, Set<String> values) {
@@ -48,17 +50,6 @@ public class TagHandler {
    */
   public Tag getTagsOfType(String type) {
     return this.tagsByType.get(type);
-  }
-
-  /**
-   * Retrieves all the tags for a particular Dish.
-   * Good for UI display (showing _all_ tags for one particular dish)
-   * @method getTagsForDish
-   * @param  id             id of the dish we want all tags of
-   * @return                returns {tag type : {tag values}}
-   */
-  public HashMap<String, Set<String>> getTagsForDish(UUID id) {
-    return this.tagsByDish.get(id);
   }
 
   /**
@@ -88,7 +79,7 @@ public class TagHandler {
   }
 
   private void assignTagsToDish(UUID id,  HashMap<String, Set<String> userTags) {
-
+      // DishStore should be calling this?? question mark??
   }
 
 }
