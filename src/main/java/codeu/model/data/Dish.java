@@ -17,14 +17,14 @@ package codeu.model.data;
 import java.time.Instant;
 import java.util.UUID;
 
-/** Class representing a Dish. Dish objects are static and finalized during initialization */
+/** Class representing a Dish. Dish objects can be updated, as more user tags are added. */
 public class Dish {
 
   private final UUID dishID;
   private final String dishName;
   private final String restuarant;
   private final Location location;
-  private final Tag tags;
+  private final HashMap<String, Set<String>> tags;
 
   /**
    * Constructs a new Dish object.
@@ -33,15 +33,13 @@ public class Dish {
    * @param name the name of the dish
    * @param restaurant the name of the restaurant where this dish came from
    * @param loc the location of the dish (/restaurant)
-   * @param userTags the first set of tags the user provides during the first review
+   * // TODO: MAKE IT SUCH THAT USER TAGS ARE ADDED IN **SEPARATELY** AFTER INITILIAZATION
    */
-   public Dish(UUID id, String name, String restaurant, Location loc, HashMap<String, List<String>> userTags) {
+   public Dish(UUID id, String name, String restaurant, Location loc) {
      this.dishID = id;
      this.dishName = name;
      this.restaurant = restaurant;
      this.location = loc;
-     this.tags = new Tag(id);
-     tags.setTags(userTags);
    }
 
    /** Returns id of the dish */
@@ -78,6 +76,7 @@ public class Dish {
    }
 
    /** Returns all the Tags Dish has */
+   // TODO: may have to delete, to ensure that we're using handler properly
    public List<String> getTags() {
      return tags.getAllTags();
    }
