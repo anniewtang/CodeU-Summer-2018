@@ -87,9 +87,4 @@ public class DishHandler {
     Dish dish = getDish(id);
     dish.setUserTags(userTags);
   }
-
-  private void assignTagsToDish(UUID id,  HashMap<String, Set<String> userTags) {
-      // DishStore should be calling this?? question mark??
-  }
-
 }
