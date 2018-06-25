@@ -53,23 +53,13 @@ public class TagHandler {
   }
 
   /**
-   * Puts the Dish into all the correct Tag objects.
-   * Puts all the user tags into the Dish object itself.
+   * After User provides user-tags for a particular Dish,
+   * we add Dish into all the appropriate Tag categories it belongs to.
    * @method setTags
    * @param  id          dish ID user entered tags for
    * @param  userTags    {tagType : {tagValues}} || i.e. {restrictions: {vegan, vegetarian}}
    */
   public void updateTags(UUID id,  HashMap<String, Set<String> userTags) {
-    assignDishToTags(id, userTags);
-  }
-
-  /**
-   * Goes through all userTags, and puts the Dish into the appropriate Tag objects.
-   * @method assignDishToTags
-   * @param  id               dish id we're placing into the Tag objects
-   * @param  userTags         all the user-given tags
-   */
-  private void assignDishToTags(UUID id,  HashMap<String, Set<String> userTags) {
     for (String tagType : userTags) {
       Tag tag = getTagsOfType(tagType);
       Set<String> tagValues = userTags.get(tagType);
