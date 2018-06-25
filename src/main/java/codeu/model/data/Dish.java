@@ -17,17 +17,17 @@ package codeu.model.data;
 import java.time.Instant;
 import java.util.UUID;
 
-/** Class representing a Dish. Dish objects can be updated, as more user tags are added. */
+/**
+ * Data class representing a Dish.
+ * Dish objects will be dynamically updated, as user adds more tags.
+ */
 public class Dish {
 
   private final UUID dishID;
   private final String dishName;
   private final String restuarant;
   private final Location location;
-  private final HashMap<String, Set<String>> tags;
-
-  // maps dishes to all their tags, organized by the tag category/type
-  private HashMap<UUID, HashMap<String, Set<String>>> tagsByDish;
+  private final HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
 
   /**
    * Constructs a new Dish object.
@@ -36,13 +36,14 @@ public class Dish {
    * @param name the name of the dish
    * @param restaurant the name of the restaurant where this dish came from
    * @param loc the location of the dish (/restaurant)
-   * // TODO: MAKE IT SUCH THAT USER TAGS ARE ADDED IN **SEPARATELY** AFTER INITILIAZATION
    */
    public Dish(UUID id, String name, String restaurant, Location loc) {
      this.dishID = id;
      this.dishName = name;
      this.restaurant = restaurant;
      this.location = loc;
+
+     // TODO: MAKE IT SUCH THAT USER TAGS ARE ADDED IN **SEPARATELY** AFTER INITILIAZATION
    }
 
    /** Returns id of the dish */
@@ -74,12 +75,13 @@ public class Dish {
    }
 
    /** Returns all the Reviews Dish has */
-   public List<Review> getReviews() {
+   public Set<Review> getReviews() {
      // pull from Dish store
    }
 
    /** Returns all the Tags Dish has */
    // TODO: may have to delete, to ensure that we're using handler properly
-   public List<String> getTags() {
-     return tags.getAllTags();
+   public Set<String> getAllTags() {
+     // return tags.getAllTags();
+     // 
    }
