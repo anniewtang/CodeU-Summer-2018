@@ -51,8 +51,9 @@ public class DishHandler {
     returns this.dishMap.containsKey(id);
   }
 
-  /** Returns DishMap */
-  public HashMap<UUID, Dish> getDish(UUID id) {
+  /** Returns Dish
+      Should only be called if Dish exists in our map */
+  public Dish getDish(UUID id) {
     return this.dishMap.get(id);
   }
 
@@ -63,16 +64,32 @@ public class DishHandler {
     return rating;
   }
 
+  /**
+   * Retrieves all the tags for a particular Dish.
+   * Good for UI display (i.e. showing _all_ tags for one dish for the user)
+   * @method getTagsForDish
+   * @param  id             id of the dish we want all tags of
+   * @return                returns {tag type : {tag values}}
+   */
+  public HashMap<String, Set<String>> getTagsForDish(UUID id) {
+    Dish dish = getDish(id);
+    return dish.getAllTags();
+  }
 
-    /**
-     * Retrieves all the tags for a particular Dish.
-     * Good for UI display (showing _all_ tags for one particular dish)
-     * @method getTagsForDish
-     * @param  id             id of the dish we want all tags of
-     * @return                returns {tag type : {tag values}}
-     */
-    public HashMap<String, Set<String>> getTagsForDish(UUID id) {
-      Dish dish = getDish(id);
-      return dish.getAllTags();
-    }
+  /**
+   * After user tags a particular Dish, DishHandler will update that Dish's
+   * tag values within the Dish object via this Handler class.
+   * @method updateDishTags
+   * @param  id             id of the Dish that was just rated/tagged
+   * @param  userTags       all the userTags of the form {tagType : {tagValues}}
+   */
+  public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
+    Dish dish = getDish(id);
+    dish.setUserTags(userTags);
+  }
+
+  private void assignTagsToDish(UUID id,  HashMap<String, Set<String> userTags) {
+      // DishStore should be calling this?? question mark??
+  }
+
 }
