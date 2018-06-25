@@ -61,22 +61,22 @@ public class DishStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory store of DishQuery. */
-  private DishQuery query;
+  private DishHandler handler;
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private DishStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    query = new DishQuery();
+    handler = new DishHandler();
   }
 
   /** Add a new Dish to the current set of dishes known to the application. */
   public void addDish(Dish dish) {
-    query.addDish(dish);
-    persistentStorageAgent.writeThrough(query);
+    handler.addDish(dish);
+    persistentStorageAgent.writeThrough(handler);
   }
 
   /** Sets the List of Conversations stored by this ConversationStore. */
-  public void setDishes(List<Conversation> conversations) {
-    this.query = query;
+  public void setHandler(DishHandler handler) {
+    this.handler = handler;
   }
 }
