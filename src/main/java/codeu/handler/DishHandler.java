@@ -23,11 +23,11 @@ import java.util.HashMap;
  * handles the setting & getting of information for Dishes,
  * and abstracts the process of querying.
  */
-public class DishQuery {
+public class DishHandler {
   private HashMap<UUID, Dish> dishMap; // maps dishIDs to Dish objects
   private HashMap<UUID, int> ratingMap; // maps dishIDs to average star ratings
 
-  public DishQuery(HashMap<UUID, Dish> dishMap, HashMap<UUID, int> ratingMap) {
+  public DishHandler(HashMap<UUID, Dish> dishMap, HashMap<UUID, int> ratingMap) {
     this.dishMap = dishMap;
     this.ratingMap = ratingMap;
   }
