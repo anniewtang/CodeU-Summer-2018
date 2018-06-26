@@ -75,6 +75,11 @@ public class DishStore {
     persistentStorageAgent.writeThrough(handler);
   }
 
+  /** Returns {tagType : {tagValues}} for the given Dish */
+  public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
+    return handler.getTagsForDish(dishID);
+  }
+
   /** Sets the List of Conversations stored by this ConversationStore. */
   public void setHandler(DishHandler handler) {
     this.handler = handler;
