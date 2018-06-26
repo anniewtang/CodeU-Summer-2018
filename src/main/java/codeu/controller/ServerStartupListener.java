@@ -25,11 +25,14 @@ public class ServerStartupListener implements ServletContextListener {
       List<User> users = PersistentStorageAgent.getInstance().loadUsers();
       UserStore.getInstance().setUsers(users);
 
-      List<Conversation> conversations = PersistentStorageAgent.getInstance().loadConversations();
-      ConversationStore.getInstance().setConversations(conversations);
+      DishHandler dishHandler = PersistentStorageAgent.getInstance().loadDishes();
+      DishStore.getInstance().setDishes(dishHandler);
 
-      List<Message> messages = PersistentStorageAgent.getInstance().loadMessages();
-      MessageStore.getInstance().setMessages(messages);
+      TagHandler tagHandler = PersistentStorageAgent.getInstance().loadTags();
+      TagStore.getInstance().setTags(tagHandler);
+
+      HashMap<UUID, Set<<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
+      ReviewStore.getInstance().setReviews(reviewsByDish);
 
     } catch (PersistentDataStoreException e) {
       System.err.println("Server didn't start correctly. An error occurred during Datastore load!");
