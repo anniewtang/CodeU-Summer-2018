@@ -60,10 +60,13 @@ public class DishStore {
    */
   private PersistentStorageAgent persistentStorageAgent;
 
-  /** The in-memory store of DishQuery. */
+  /** The in-memory store of DishHandler. */
   private DishHandler handler;
 
-  /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
+  /**
+   * This class is a singleton, so its constructor is private. Call getInstance() instead.
+   * Initializes a new handler (also a singleton), if this is the first time we're loading DishStore.
+   */
   private DishStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
     handler = new DishHandler();
