@@ -83,7 +83,7 @@ public class DishStore {
     return handler.getTagsForDish(dishID);
   }
 
-  /** Sets the in-memory dish handler stored by this DishStore. */
+  /** Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore. */
   public void setDishes(DishHandler dishHandler) {
     this.handler = dishHandler;
   }
