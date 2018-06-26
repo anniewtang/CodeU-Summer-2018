@@ -30,10 +30,8 @@ public class TagHandler {
   // maps tag categories to their associated Tag object
   private HashMap<String, Tag> tagsByType;
 
-  public TagHandler(HashMap<String, Tag> tagsByType,
-                  HashMap<UUID, HashMap<String, Set<String>>> tagsByDish) {
+  public TagHandler(HashMap<String, Tag> tagsByType) {
     this.tagsByType = tagsByType;
-    // TODO: REMOVE? this.tagsByDish = tagsByDish;
   }
 
   public void setTag(UUID id, String type, Set<String> values) {
@@ -44,11 +42,11 @@ public class TagHandler {
    * Retrieves the Tag object associated with a particular category.
    * i.e. "cuisine", "restriction", etc.
    * Good for Search querying.
-   * @method getTagsOfType
+   * @method getTagForType
    * @param  type          name of the tag category
    * @return               appropriate Tag object
    */
-  public Tag getTagsOfType(String type) {
+  public Tag getTagForType(String type) {
     return this.tagsByType.get(type);
   }
 
@@ -61,7 +59,7 @@ public class TagHandler {
    */
   public void updateTags(UUID id,  HashMap<String, Set<String> userTags) {
     for (String tagType : userTags) {
-      Tag tag = getTagsOfType(tagType);
+      Tag tag = getTagForType(tagType);
       Set<String> tagValues = userTags.get(tagType);
       tag.addDishToTagValue(id, userTags.get(tagType));
     }
