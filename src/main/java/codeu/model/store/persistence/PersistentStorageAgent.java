@@ -69,24 +69,43 @@ public class PersistentStorageAgent {
     return persistentDataStore.loadUsers();
   }
 
+  DishHandler dishHandler = PersistentStorageAgent.getInstance().loadDishes();
+  DishStore.getInstance().setDishes(dishHandler);
+
+  TagHandler tagHandler = PersistentStorageAgent.getInstance().loadTags();
+  TagStore.getInstance().setTags(tagHandler);
+
+  HashMap<UUID, Set<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
+  ReviewStore.getInstance().setReviews(reviewsByDish);
+
   /**
-   * Retrieve all Conversation objects from the Datastore service. The returned list may be empty.
+   * Retrieve all Dishes from the Datastore service in the form of a DishHandler.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public List<Conversation> loadConversations() throws PersistentDataStoreException {
-    return persistentDataStore.loadConversations();
+  public DishHandler loadDishes() throws PersistentDataStoreException {
+    return persistentDataStore.loadDishes();
   }
 
   /**
-   * Retrieve all Message objects from the Datastore service. The returned list may be empty.
+   * Retrieve all Reviews from the Datastore service in the form of a map to its DishID.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public List<Message> loadMessages() throws PersistentDataStoreException {
-    return persistentDataStore.loadMessages();
+  public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+    return persistentDataStore.loadReviews();
+  }
+
+  /**
+   * Retrieve all Tag objects from the Datastore service in the form of a TagHandler.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public TagHandler loadTags() throws PersistentDataStoreException {
+    return persistentDataStore.loadTags();
   }
 
   /** Write a User object to the Datastore service. */
@@ -94,13 +113,18 @@ public class PersistentStorageAgent {
     persistentDataStore.writeThrough(user);
   }
 
-  /** Write a Message object to the Datastore service. */
-  public void writeThrough(Conversation conversation) {
-    persistentDataStore.writeThrough(conversation);
+  /** Write a DishHandler object to the Datastore service. */
+  public void writeThrough(DishHandler handler) {
+    persistentDataStore.writeThrough(handler);
   }
 
-  /** Write a Conversation object to the Datastore service. */
-  public void writeThrough(Message message) {
-    persistentDataStore.writeThrough(message);
+  /** Write a TagHandler object to the Datastore service. */
+  public void writeThrough(TagHandler handler) {
+    persistentDataStore.writeThrough(handler);
   }
+
+  /** Write a Review object to the Datastore service. */
+  public void writeThrough(Review review) {
+    persistentDataStore.writeThrough(review);
+
 }
