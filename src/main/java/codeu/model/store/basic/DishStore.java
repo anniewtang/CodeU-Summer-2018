@@ -83,8 +83,8 @@ public class DishStore {
     return handler.getTagsForDish(dishID);
   }
 
-  /** Sets the List of Conversations stored by this ConversationStore. */
-  public void setHandler(DishHandler handler) {
-    this.handler = handler;
+  /** Sets the in-memory dish handler stored by this DishStore. */
+  public void setDishes(DishHandler dishHandler) {
+    this.handler = dishHandler;
   }
 }
