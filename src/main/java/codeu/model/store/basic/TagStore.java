@@ -81,7 +81,7 @@ public class TagStore {
   }
 
   /** Sets the Handler object (contains Tags + querying methods) in the TagStore. */
-  public void setHandler(TagHandler handler) {
+  public void setTags(TagHandler handler) {
     this.handler = handler;
   }
 }
