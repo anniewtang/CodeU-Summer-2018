@@ -29,7 +29,6 @@ public class Dish {
   private final UUID dishID;
   private final String dishName;
   private final String restuarant;
-  private final Location location;
   private final HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
   private final Set<String> allTags;
 
