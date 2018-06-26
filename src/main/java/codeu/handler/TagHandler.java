@@ -34,10 +34,6 @@ public class TagHandler {
     this.tagsByType = tagsByType;
   }
 
-  public void setTag(UUID id, String type, Set<String> values) {
-
-  }
-
   /**
    * Retrieves the Tag object associated with a particular category.
    * i.e. "cuisine", "restriction", etc.
