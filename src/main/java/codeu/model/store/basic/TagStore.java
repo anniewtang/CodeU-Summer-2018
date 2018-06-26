@@ -75,8 +75,8 @@ public class TagStore {
   }
 
   /** Returns the Tag object associated with the tagType category */
-  public Tag getTagsOfType(String tagType) {
-    return handler.getTagsOfType(tagType);
+  public Tag getTagForType(String tagType) {
+    return handler.getTagForType(tagType);
   }
 
   /** Returns the mapping between all tagTypes and tagValues for a Dish */
