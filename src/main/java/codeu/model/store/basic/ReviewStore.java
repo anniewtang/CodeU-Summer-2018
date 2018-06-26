@@ -15,7 +15,11 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Review;
+import codeu.model.data.Tag;
+import codeu.model.data.Dish;
 import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.model.store.basic.TagStore;
+import codeu.model.store.basic.DishStore;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +34,13 @@ import java.util.UUID;
  */
 public class ReviewStore {
 
-  /** Singleton instance of MessageStore. */
-  private static ReviewStore instance;
+  /** Singleton instance of ReviewStore. */
+  private static ReviewStore instance; // singleton instance of ReviewStore
+
+  /** REMOVE?? KEEP??
+  private static TagStore tagStore; // singleton instance of TagStore
+  private static DishStore dishStore; // singleton instance of DishStore
+  */
 
   /**
    * Returns the singleton instance of ReviewStore that should be shared between all servlet
@@ -78,13 +87,12 @@ public class ReviewStore {
 
   /** Update the TagStore's tags for querying, given the new review */
   private void updateTags(Review review) {
-    // take review.tags
-    // update all the appropriate items in TagStore
+    TagStore.getInstance().updateTags(review.getDishID(), review.getTags());
   }
 
   /** Update the DishStore's avg rating for this dish, given the new review */
   private void updateRating(Review review) {
-    // use review.numStars to update DishStore
+    DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
   }
 
   /** Sets the mapping of {dishID : Review} stored by this ReviewStore. */
