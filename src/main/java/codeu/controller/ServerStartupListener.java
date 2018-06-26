@@ -9,6 +9,9 @@ import codeu.model.store.basic.UserStore;
 import codeu.model.store.persistence.PersistentDataStoreException;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.UUID;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -31,7 +34,7 @@ public class ServerStartupListener implements ServletContextListener {
       TagHandler tagHandler = PersistentStorageAgent.getInstance().loadTags();
       TagStore.getInstance().setTags(tagHandler);
 
-      HashMap<UUID, Set<<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
+      HashMap<UUID, Set<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
       ReviewStore.getInstance().setReviews(reviewsByDish);
 
     } catch (PersistentDataStoreException e) {
