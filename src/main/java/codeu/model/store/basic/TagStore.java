@@ -69,24 +69,19 @@ public class TagStore {
     handler = new TagHandler();
   }
 
-  /** Sets the Handler object (contains Tags + querying methods) in the TagStore. */
-  public void setHandler(TagHandler handler) {
-    this.handler = handler;
-  }
-
   /** Returns the Tag object associated with the tagType category */
   public Tag getTagForType(String tagType) {
     return handler.getTagForType(tagType);
-  }
-
-  /** Returns the mapping between all tagTypes and tagValues for a Dish */
-  public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
-    return handler.getTagsForDish(dishID);
   }
 
   /** Updates existing Tag objects with new user tags */
   public void updateTags(UUID dishID, HashMap<String, Set<String>> userTags) {
     handler.updateTags(dishID, userTags);
     persistentStorageAgent.writeThrough(handler);
+  }
+
+  /** Sets the Handler object (contains Tags + querying methods) in the TagStore. */
+  public void setHandler(TagHandler handler) {
+    this.handler = handler;
   }
 }
