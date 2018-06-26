@@ -84,9 +84,9 @@ public class TagStore {
     return handler.getTagsForDish(dishID);
   }
 
-  /** Add user tags to a particular Dish */
-  public void addTags(UUID dishID, HashMap<String, Set<String>> userTags) {
-    handler.addTags(dishID, userTags);
+  /** Updates existing Tag objects with new user tags */
+  public void updateTags(UUID dishID, HashMap<String, Set<String>> userTags) {
+    handler.updateTags(dishID, userTags);
     persistentStorageAgent.writeThrough(handler);
   }
 }
