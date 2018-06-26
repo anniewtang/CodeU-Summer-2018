@@ -38,7 +38,7 @@ public class DishHandler {
   }
 
   /** Adds/updates the average rating for this dish */
-  public void addRating(UUID id, int rate) {
+  public void updateRating(UUID id, int rate) {
     int oldRating = 0;
     if (dishExists(id)) {
       oldRating = getRating(id);
