@@ -16,10 +16,15 @@ public class Constants {
 
   /* Cuisine Types Constants*/
   enum CuisineType {
-    ASIAN("Asian"), AMERICAN("American"), MEXICAN("Mexican"), EUROPEAN("European");
+    // Regional
+    ASIAN("Asian"), AMERICAN("American"), MEXICAN("Mexican"), EUROPEAN("European"),
+    // Top Ethnic Food preferences in the USA (via Google)
+    CHINESE("Chinese"), MEXICAN("Mexican"), ITALIAN("Italian"), JAPANESE("Japanese"),
+    GREEK("Greek"), FRENCH("French"), THAI("Thai"), SPANISH("Spanish"), INDIAN("Indian"),
+    MEDITERRAENEAN("Mediterraenean"), CAJUN("Cajun"), SOUL("Soul"), GERMAN("German"),
+    KOREAN("Korean"), VIETNAMESE("Vietnamese"), TURKISH("Turkish"), CARIBBEAN("Caribbean");
 
     private String type;
-
     CuisineType(String type) {
       this.type = type;
     }
@@ -31,11 +36,16 @@ public class Constants {
 
   /* Dish Type Constants */
   enum DishType {
+    Appetizer, Entree, Dessert, Breakfast, Lunch, Dinner, Sweet, Savory, Salty, Sour, Bitter
 
+    SOUP("Soup"), BREAD("Bread"), PORRIDGE("Porridge"), EGGS("Eggs"), WAFFLES("Waffles"),
+    PANCAKES("Pancakes"), COFFEE("Coffee"), OATMEAL("Oatmeal"), YOGURT("Yogurt"), BAGEL("Bagel")
+    NOODLE("Noodle"), PASTA("Pasta"), RICE("Rice"), BURGER("Burger"), FASTFOOD("Fast Food"),
+    SALAD("Salad"), SANDWICH("Sandwich"), FRUIT("Fruit"), ICECREAM("Ice Cream"), CAKE("Cake");
 
     private String type;
 
-    CuisineType(String type) {
+    DishType(String type) {
       this.type = type;
     }
 
