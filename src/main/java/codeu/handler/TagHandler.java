@@ -52,12 +52,16 @@ public class TagHandler {
    * @method setTags
    * @param  id          dish ID user entered tags for
    * @param  userTags    {tagType : {tagValues}} || i.e. {restrictions: {vegan, vegetarian}}
+   * @return a Set of all the Tag objects that we updated so we can write them into Data Store
    */
-  public void updateTags(UUID id,  HashMap<String, Set<String> userTags) {
+  public Set<Tag> updateTags(UUID id,  HashMap<String, Set<String> userTags) {
+    Set<Tag> updatedTags = new HashSet<>();
     for (String tagType : userTags) {
       Tag tag = getTagForType(tagType);
+      updatedTags.add(tag);
       Set<String> tagValues = userTags.get(tagType);
       tag.addDishToTagValue(id, userTags.get(tagType));
     }
+    return updatedTags;
   }
 }

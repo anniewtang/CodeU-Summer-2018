@@ -76,8 +76,10 @@ public class TagStore {
 
   /** Updates existing Tag objects with new user tags */
   public void updateTags(UUID dishID, HashMap<String, Set<String>> userTags) {
-    handler.updateTags(dishID, userTags);
-    persistentStorageAgent.writeThrough(handler);
+    Set<Tag> updatedTags = handler.updateTags(dishID, userTags);
+    for (Tag tag : updatedTags) {
+        persistentStorageAgent.writeThrough(tag);
+    }
   }
 
   /** Sets the Handler object (contains Tags + querying methods) in the TagStore. */

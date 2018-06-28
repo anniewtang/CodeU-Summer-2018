@@ -37,15 +37,6 @@ public class DishHandler {
     this.dishMap.put(id, dish);
   }
 
-  /** Adds/updates the average rating for this dish */
-  public void updateRating(UUID id, int rate) {
-    int oldRating = 0;
-    if (dishExists(id)) {
-      oldRating = getRating(id);
-    }
-    return (oldRating + rate) / 2;
-  }
-
   /** Returns true if this dish exists in our map */
   public boolean dishExists(UUID id) {
     returns this.dishMap.containsKey(id);
@@ -76,14 +67,26 @@ public class DishHandler {
     return dish.getAllTags();
   }
 
+  /** Updates the AVERAGE rating for this dish in handler */
+  public Dish updateRating(UUID id, int rate) {
+    Dish updatedDish = getDish(id);
+    int oldRating = 0;
+    if (dishExists(id)) {
+      oldRating = getRating(id);
+    }
+    updatedDish.setRating((oldRating + rate) / 2);
+    return updatedDish;
+  }
+
   /**
    * After user tags a particular Dish, DishHandler will update that Dish's
    * tag values within the Dish object via this Handler class.
    * @method updateDishTags
    * @param  id             id of the Dish that was just rated/tagged
    * @param  userTags       all the userTags of the form {tagType : {tagValues}}
+   * @return the Dish object that was updated to be rewritten into DataStore
    */
-  public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
+  public Dish updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
     Dish dish = getDish(id);
     dish.setUserTags(userTags);
   }

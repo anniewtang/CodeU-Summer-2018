@@ -113,14 +113,14 @@ public class PersistentStorageAgent {
     persistentDataStore.writeThrough(user);
   }
 
-  /** Write a DishHandler object to the Datastore service. */
-  public void writeThrough(DishHandler handler) {
-    persistentDataStore.writeThrough(handler);
+  /** Write a Dish object to the Datastore service. */
+  public void writeThrough(Dish dish) {
+    persistentDataStore.writeThrough(dish);
   }
 
-  /** Write a TagHandler object to the Datastore service. */
-  public void writeThrough(TagHandler handler) {
-    persistentDataStore.writeThrough(handler);
+  /** Write a Tag object to the Datastore service. */
+  public void writeThrough(Tag tag) {
+    persistentDataStore.writeThrough(tag);
   }
 
   /** Write a Review object to the Datastore service. */

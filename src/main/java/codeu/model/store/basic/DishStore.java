@@ -75,12 +75,21 @@ public class DishStore {
   /** Add a new Dish to the current set of dishes known to the application. */
   public void addDish(Dish dish) {
     handler.addDish(dish);
-    persistentStorageAgent.writeThrough(handler);
+    persistentStorageAgent.writeThrough(dish);
   }
 
   /** Returns {tagType : {tagValues}} for the given Dish */
   public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
     return handler.getTagsForDish(dishID);
+  }
+
+  public void updateRating(UUID id, int rate) {
+    Dish updatedDish = handler.updateRating(id, rate);
+    persistentStorageAgent.writeThrough(updatedDish);
+  }
+  public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
+    Dish updatedDish = handler.updateDishTags(id, userTags);
+    persistentStorageAgent.writeThrough(updatedDish);
   }
 
   /** Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore. */

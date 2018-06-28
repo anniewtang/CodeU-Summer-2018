@@ -22,15 +22,16 @@ import java.util.HashSet;
 
 /**
  * Data class representing a Dish.
- * Dish objects will be dynamically updated, as user adds more tags.
+ * Dish objects will be dynamically updated, as user adds more tags and reviews.
  */
 public class Dish {
 
   private final UUID dishID;
   private final String dishName;
   private final String restuarant;
-  private final HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
-  private final Set<String> allTags;
+  private int rating;
+  private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
+  private Set<String> allTags;
 
   /**
    * Constructs a new Dish object.
@@ -38,13 +39,13 @@ public class Dish {
    * @param id the ID of this dish
    * @param name the name of the dish
    * @param restaurant the name of the restaurant where this dish came from
-   * @param loc the location of the dish (/restaurant)
+   * @param tags the tags the user selected for this dish
    */
-   public Dish(UUID id, String name, String restaurant, Location loc, HashMap<String, Set<String>> tags) {
+   public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
      this.dishID = id;
      this.dishName = name;
      this.restaurant = restaurant;
-     this.location = loc;
+     this.rating = rating;
      this.tags = tags;
      this.allTags = new HashSet<>();
    }
@@ -80,6 +81,15 @@ public class Dish {
    /** Returns all the Reviews Dish has */
    public Set<Review> getReviews() {
      // pull from Dish store
+   }
+
+   /**
+    * Updates the average star rating a Dish has, after more users rate it.
+    * @method setRating
+    * @param  rating    updated average star rating
+    */
+   public void setRating(int rating) {
+     this.rating = rating;
    }
 
    /**
