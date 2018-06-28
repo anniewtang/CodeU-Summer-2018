@@ -83,10 +83,25 @@ public class DishStore {
     return handler.getTagsForDish(dishID);
   }
 
+  /**
+   * Updates the average rating of a dish, given a NEW rating from user.
+   * Also write this updated Dish into storage.
+   * @method updateRating
+   * @param  id           id of the dish we're updating
+   * @param  rate         rate (# stars) new user gave this Dish
+   */
   public void updateRating(UUID id, int rate) {
     Dish updatedDish = handler.updateRating(id, rate);
     persistentStorageAgent.writeThrough(updatedDish);
   }
+
+  /**
+   * Updates the tags belong to a dish after a NEW user rates it.
+   * Also writes this updated Dish into storage.
+   * @method updateDishTags
+   * @param  id             id of the dish we're updating
+   * @param  userTags       the tags the new user assigns to this dish
+   */
   public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
     Dish updatedDish = handler.updateDishTags(id, userTags);
     persistentStorageAgent.writeThrough(updatedDish);
