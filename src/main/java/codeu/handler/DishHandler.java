@@ -89,5 +89,6 @@ public class DishHandler {
   public Dish updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
     Dish dish = getDish(id);
     dish.setUserTags(userTags);
+    return dish;
   }
 }
