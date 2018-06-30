@@ -15,8 +15,10 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Dish;
-import codeu.model.data.query.DishHandler;
+import codeu.model.data.query.DishORM;
 import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.orm.DishORM;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -62,7 +64,7 @@ public class DishStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory store of DishORM. */
-  private DishHandler handler;
+  private DishORM handler;
 
   /**
    * This class is a singleton, so its constructor is private. Call getInstance() instead.
@@ -70,7 +72,7 @@ public class DishStore {
    */
   private DishStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    handler = new DishHandler();
+    handler = new DishORM();
   }
 
   /** Add a new Dish to the current set of dishes known to the application. */
@@ -109,7 +111,7 @@ public class DishStore {
   }
 
   /** Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore. */
-  public void setDishes(DishHandler dishHandler) {
-    this.handler = dishHandler;
+  public void setDishes(DishORM dishORM) {
+    this.handler = dishORM;
   }
 }

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package codeu.model.data.query;
+package codeu.orm;
 
-import codeu.controller.handler.Tag;
+import codeu.model.data.Tag;
+import java.util.Map.Entry;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Wrapper class that loads information from Data Store,
@@ -57,13 +57,14 @@ public class TagORM {
      * @return a Set of all the Tag objects that we updated so we can write them into Data Store
      * @method setTags
      */
-    public Set<Tag> updateTags(UUID id, HashMap<String, Set<String> userTags) {
+    public Set<Tag> updateTags(UUID id, HashMap<String, Set<String>> userTags) {
         Set<Tag> updatedTags = new HashSet<>();
-        for (String tagType : userTags) {
+        for (Entry<String, Set<String>> tagEntry : userTags.entrySet()) {
+            String tagType = tagEntry.getKey();
             Tag tag = getTagForType(tagType);
             updatedTags.add(tag);
             Set<String> tagValues = userTags.get(tagType);
-            tag.addDishToTagValue(id, userTags.get(tagType));
+            tag.addDishToTagValue(userTags.get(tagType), id);
         }
         return updatedTags;
     }

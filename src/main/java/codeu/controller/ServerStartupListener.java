@@ -28,11 +28,11 @@ public class ServerStartupListener implements ServletContextListener {
       List<User> users = PersistentStorageAgent.getInstance().loadUsers();
       UserStore.getInstance().setUsers(users);
 
-      DishHandler dishHandler = PersistentStorageAgent.getInstance().loadDishes();
-      DishStore.getInstance().setDishes(dishHandler);
+      DishORM dishORM = PersistentStorageAgent.getInstance().loadDishes();
+      DishStore.getInstance().setDishes(dishORM);
 
-      TagHandler tagHandler = PersistentStorageAgent.getInstance().loadTags();
-      TagStore.getInstance().setTags(tagHandler);
+      TagORM tagORM = PersistentStorageAgent.getInstance().loadTags();
+      TagStore.getInstance().setTags(tagORM);
 
       HashMap<UUID, Set<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
       ReviewStore.getInstance().setReviews(reviewsByDish);

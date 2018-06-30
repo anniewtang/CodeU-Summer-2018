@@ -14,12 +14,18 @@
 
 package codeu.model.store.persistence;
 
-import codeu.model.data.Conversation;
-import codeu.model.data.Message;
+import codeu.model.data.Review;
 import codeu.model.data.User;
 import codeu.model.store.basic.DishStore;
+import codeu.model.store.basic.ReviewStore;
+import codeu.model.store.basic.TagStore;
+import codeu.orm.DishORM;
 import codeu.model.store.persistence.PersistentDataStore;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * This class is the interface between the application and PersistentDataStore, which handles
@@ -70,11 +76,11 @@ public class PersistentStorageAgent {
     return persistentDataStore.loadUsers();
   }
 
-  DishHandler dishHandler = PersistentStorageAgent.getInstance().loadDishes();
-  DishStore.getInstance().setDishes(dishHandler);
+  DishORM dishORM = PersistentStorageAgent.getInstance().loadDishes();
+  DishStore.getInstance().setDishes(dishORM);
 
-  TagHandler tagHandler = PersistentStorageAgent.getInstance().loadTags();
-  TagStore.getInstance().setTags(tagHandler);
+  codeu.model.data.query.TagORM tagORM = PersistentStorageAgent.getInstance().loadTags();
+  TagStore.getInstance().setTags(tagORM);
 
   HashMap<UUID, Set<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
   ReviewStore.getInstance().setReviews(reviewsByDish);
@@ -85,7 +91,7 @@ public class PersistentStorageAgent {
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public DishHandler loadDishes() throws PersistentDataStoreException {
+  public DishORM loadDishes() throws PersistentDataStoreException {
     return persistentDataStore.loadDishes();
   }
 
@@ -105,7 +111,7 @@ public class PersistentStorageAgent {
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public TagHandler loadTags() throws PersistentDataStoreException {
+  public TagORM loadTags() throws PersistentDataStoreException {
     return persistentDataStore.loadTags();
   }
 

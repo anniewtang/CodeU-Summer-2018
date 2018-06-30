@@ -16,6 +16,7 @@ package codeu.model.store.basic;
 
 import codeu.model.data.Tag;
 import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.model.data.query.TagORM;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class TagStore {
    * Returns the singleton instance of TagStore that should be shared between all servlet
    * classes. Do not call this function from a test; use getTestInstance() instead.
    */
-  public static DishStore getInstance() {
+  public static TagStore getInstance() {
     if (instance == null) {
       instance = new TagStore(PersistentStorageAgent.getInstance());
     }
@@ -50,7 +51,7 @@ public class TagStore {
    *
    * @param persistentStorageAgent a mock used for testing
    */
-  public static DishStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
+  public static TagStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
     return new TagStore(persistentStorageAgent);
   }
 
@@ -61,29 +62,29 @@ public class TagStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory store of DishQuery. */
-  private TagHandler handler;
+  private TagORM orm;
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private TagStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    handler = new TagHandler();
+    orm = new TagORM();
   }
 
   /** Returns the Tag object associated with the tagType category */
   public Tag getTagForType(String tagType) {
-    return handler.getTagForType(tagType);
+    return orm.getTagForType(tagType);
   }
 
   /** Updates existing Tag objects with new user tags */
   public void updateTags(UUID dishID, HashMap<String, Set<String>> userTags) {
-    Set<Tag> updatedTags = handler.updateTags(dishID, userTags);
+    Set<Tag> updatedTags = orm.updateTags(dishID, userTags);
     for (Tag tag : updatedTags) {
         persistentStorageAgent.writeThrough(tag);
     }
   }
 
   /** Sets the Handler object (contains Tags + querying methods) in the TagStore. */
-  public void setTags(TagHandler handler) {
-    this.handler = handler;
+  public void setTags(TagORM orm) {
+    this.orm = orm;
   }
 }

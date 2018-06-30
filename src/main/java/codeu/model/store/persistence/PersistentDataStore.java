@@ -91,7 +91,7 @@ public class PersistentDataStore {
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public DishHandler loadDishes() throws PersistentDataStoreException {
+  public DishORM loadDishes() throws PersistentDataStoreException {
 
     List<Conversation> conversations = new ArrayList<>();
 
@@ -159,7 +159,7 @@ public class PersistentDataStore {
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
    */
-  public TagHandler loadTags() throws PersistentDataStoreException {
+  public TagORM loadTags() throws PersistentDataStoreException {
 
     List<Message> messages = new ArrayList<>();
 
