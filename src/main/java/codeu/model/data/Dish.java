@@ -16,15 +16,21 @@ package codeu.model.data;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
-/** Class representing a Dish. Dish objects are static and finalized during initialization */
+/**
+ * Data class representing a Dish.
+ * Dish objects will be dynamically updated, as user adds more tags.
+ */
 public class Dish {
 
   private final UUID dishID;
   private final String dishName;
   private final String restuarant;
-  private final Location location;
-  private final Tag tags;
+  private final HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
+  private final Set<String> allTags;
 
   /**
    * Constructs a new Dish object.
@@ -33,15 +39,14 @@ public class Dish {
    * @param name the name of the dish
    * @param restaurant the name of the restaurant where this dish came from
    * @param loc the location of the dish (/restaurant)
-   * @param userTags the first set of tags the user provides during the first review
    */
-   public Dish(UUID id, String name, String restaurant, Location loc, HashMap<String, List<String>> userTags) {
+   public Dish(UUID id, String name, String restaurant, Location loc, HashMap<String, Set<String>> tags) {
      this.dishID = id;
      this.dishName = name;
      this.restaurant = restaurant;
      this.location = loc;
-     this.tags = new Tag(id);
-     tags.setTags(userTags);
+     this.tags = tags;
+     this.allTags = new HashSet<>();
    }
 
    /** Returns id of the dish */
@@ -73,11 +78,41 @@ public class Dish {
    }
 
    /** Returns all the Reviews Dish has */
-   public List<Review> getReviews() {
+   public Set<Review> getReviews() {
      // pull from Dish store
    }
 
+   /**
+    * Update previously existing tags (if any) with newly given user-tags.
+    * Also updates collection of All Tags associated with this Dish.
+    * @method setUserTags
+    * @param  tags        new user-given tags in the form: {tagType : {tagValues}}
+    */
+   public void setUserTags(HashMap<String, Set<String> tags) {
+     for (String type : tags) {
+       updateTagsForType(type, tags);
+       updateAllTags(tags);
+     }
+   }
+
+   private void updateTagsForType(String type, Set<String> tags) {
+     Set<String> values = getValuesOfType(type);
+     values.addAll(tags);
+   }
+
+   private Set<String> getValuesOfType(String type) {
+     Set<String> values = this.tags.get(type);
+     if (values == null) {
+       values = new HashSet<>();
+     }
+     return values;
+   }
+
+   private void updateAllTags(Set<String> tags) {
+     this.allTags.addAll(tags);
+   }
+
    /** Returns all the Tags Dish has */
-   public List<String> getTags() {
-     return tags.getAllTags();
+   public Set<String> getAllTags() {
+     return this.allTags;
    }
