@@ -74,7 +74,7 @@ public class ReviewStore {
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private ReviewStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    reviewsByDish = new HashMap<<>>();
+    reviewsByDish = new HashMap<>();
   }
 
   /** Add a new review to the current set of reviews known to the application. */

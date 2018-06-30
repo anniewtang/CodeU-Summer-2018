@@ -1,3 +1,5 @@
+package codeu.model.data;
+
 // Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +15,14 @@
 // limitations under the License.
 
 public class Constants {
+  // TODO: change constants file to be statically typed STRINGS.
 
   /* Cuisine Types Constants*/
   enum CuisineType {
     // Regional
     ASIAN("Asian"), AMERICAN("American"), MEXICAN("Mexican"), EUROPEAN("European"),
     // Top Ethnic Food preferences in the USA (via Google)
-    CHINESE("Chinese"), MEXICAN("Mexican"), ITALIAN("Italian"), JAPANESE("Japanese"),
+    CHINESE("Chinese"), ITALIAN("Italian"), JAPANESE("Japanese"),
     GREEK("Greek"), FRENCH("French"), THAI("Thai"), SPANISH("Spanish"), INDIAN("Indian"),
     MEDITERRAENEAN("Mediterraenean"), CAJUN("Cajun"), SOUL("Soul"), GERMAN("German"),
     KOREAN("Korean"), VIETNAMESE("Vietnamese"), TURKISH("Turkish"), CARIBBEAN("Caribbean");
@@ -42,7 +45,7 @@ public class Constants {
     SWEET("Sweet"), SAVORY("Savory"), SALTY("Salty"), SOUR("Sour"),
     // Specific Categories
     SOUP("Soup"), BREAD("Bread"), PORRIDGE("Porridge"), EGGS("Eggs"), WAFFLES("Waffles"),
-    PANCAKES("Pancakes"), COFFEE("Coffee"), OATMEAL("Oatmeal"), YOGURT("Yogurt"), BAGEL("Bagel")
+    PANCAKES("Pancakes"), COFFEE("Coffee"), OATMEAL("Oatmeal"), YOGURT("Yogurt"), BAGEL("Bagel"),
     NOODLE("Noodle"), PASTA("Pasta"), RICE("Rice"), BURGER("Burger"), FASTFOOD("Fast Food"),
     SALAD("Salad"), SANDWICH("Sandwich"), FRUIT("Fruit"), ICECREAM("Ice Cream"), CAKE("Cake");
 

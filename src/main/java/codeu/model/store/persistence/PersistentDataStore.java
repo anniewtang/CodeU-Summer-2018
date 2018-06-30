@@ -85,7 +85,7 @@ public class PersistentDataStore {
   }
 
   /**
-   * Loads all Dish objects from the Datastore service and returns them in a DishHandler
+   * Loads all Dish objects from the Datastore service and returns them in a DishORM
    * with the appropriate mappings.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
@@ -154,7 +154,7 @@ public class PersistentDataStore {
 
   /**
    * Loads all Tag objects from the Datastore service and returns them in
-   * a TagHandler instance.
+   * a TagORM instance.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service

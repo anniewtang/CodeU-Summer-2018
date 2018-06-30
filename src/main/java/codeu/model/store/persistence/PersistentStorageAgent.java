@@ -17,6 +17,7 @@ package codeu.model.store.persistence;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.store.basic.DishStore;
 import codeu.model.store.persistence.PersistentDataStore;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class PersistentStorageAgent {
   ReviewStore.getInstance().setReviews(reviewsByDish);
 
   /**
-   * Retrieve all Dishes from the Datastore service in the form of a DishHandler.
+   * Retrieve all Dishes from the Datastore service in the form of a DishORM.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
@@ -99,7 +100,7 @@ public class PersistentStorageAgent {
   }
 
   /**
-   * Retrieve all Tag objects from the Datastore service in the form of a TagHandler.
+   * Retrieve all Tag objects from the Datastore service in the form of a TagORM.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
    *     Datastore service
