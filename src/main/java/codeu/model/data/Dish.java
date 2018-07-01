@@ -33,7 +33,7 @@ public class Dish {
     private final String restaurant;
     private int rating;
     private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
-    private Set<String> allTags;
+    private Set<String> allTagValues;
 
     /**
      * Constructs a new Dish object.
@@ -41,7 +41,7 @@ public class Dish {
      * @param id         the ID of this dish
      * @param name       the name of the dish
      * @param restaurant the name of the restaurant where this dish came from
-     * @param tags       the tags the user selected for this dish
+     * @param tags       the tag values for this dish, organized by tag TYPE
      */
     public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
         this.dishID = id;
@@ -49,7 +49,26 @@ public class Dish {
         this.restaurant = restaurant;
         this.rating = rating;
         this.tags = tags;
-        this.allTags = new HashSet<>();
+        this.allTagValues = new HashSet<>();
+    }
+
+    /**
+     * Overloaded Dish constructor.
+     * Used while loading Dish for PDS.
+     *
+     * @param id             the ID of this dish
+     * @param name           the name of the dish
+     * @param restaurant     the name of the restaurant where this dish came from
+     * @param tags           the tag values for this dish, organized by tag TYPE
+     * @param allTagValues   the collection of ALL tag values associated for dish
+     */
+    public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags, Set<String> allTagValues) {
+        this.dishID = id;
+        this.dishName = name;
+        this.restaurant = restaurant;
+        this.rating = rating;
+        this.tags = tags;
+        this.allTagValues = new HashSet<>();
     }
 
     /**
@@ -104,11 +123,6 @@ public class Dish {
     }
 
 
-    /** Used during loading from Persistent Data Store */
-    public void setAllTags(Set<String> allTags) {
-        this.allTags = allTags;
-    }
-
     /**
      * Updates the average star rating a Dish has, after more users rate it.
      *
@@ -131,7 +145,7 @@ public class Dish {
             String type = pair.getKey();
             Set<String> tags = pair.getValue();
             updateTagsForType(type, tags);
-            updateAllTags(tags);
+            updateAllTagValues(tags);
         }
     }
 
@@ -148,14 +162,14 @@ public class Dish {
         return values;
     }
 
-    private void updateAllTags(Set<String> tags) {
-        this.allTags.addAll(tags);
+    private void updateAllTagValues(Set<String> tags) {
+        this.allTagValues.addAll(tags);
     }
 
     /**
      * Returns all the Tags Dish has
      */
-    public Set<String> getAllTags() {
-        return this.allTags;
+    public Set<String> getAllTagValues() {
+        return this.allTagValues;
     }
 }

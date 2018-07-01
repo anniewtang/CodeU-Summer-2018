@@ -99,10 +99,9 @@ public class PersistentDataStore {
               String restaurant = (String) entity.getProperty("restaurant");
               int rating = Integer.parseInt((String) entity.getProperty("rating"));
               HashMap<String, Set<String> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
-              Set<String> allTags = (Set<String>) entity.getProperty("all_tags");
+              Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
-              Dish dish = new Dish(dishID, dishName, restaurant, rating, tags);
-              dish.setAllTags(allTags);
+              Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
               dishMap.put(dishID, dish);
               ratingMap.put(dishID, rating);
@@ -184,7 +183,7 @@ public class PersistentDataStore {
         dishEntity.setProperty("restaurant", dish.getRestaurant());
         dishEntity.setProperty("rating", dish.getRestaurant().toString());
         dishEntity.setProperty("tags", dish.getTags());
-        dishEntity.setProperty("all_tags", dish.getAllTags());
+        dishEntity.setProperty("all_tag_values", dish.getAllTagValues());
 //        dishEntity.setProperty("creation_time", dish.getCreationTime().toString());
         datastore.put(dishEntity);
     }
