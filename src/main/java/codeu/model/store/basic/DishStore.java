@@ -64,7 +64,7 @@ public class DishStore {
   private PersistentStorageAgent persistentStorageAgent;
 
   /** The in-memory store of DishORM. */
-  private DishORM handler;
+  private DishORM orm;
 
   /**
    * This class is a singleton, so its constructor is private. Call getInstance() instead.
@@ -72,18 +72,18 @@ public class DishStore {
    */
   private DishStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    handler = new DishORM();
+    orm = new DishORM();
   }
 
   /** Add a new Dish to the current set of dishes known to the application. */
   public void addDish(Dish dish) {
-    handler.addDish(dish);
+    orm.addDish(dish);
     persistentStorageAgent.writeThrough(dish);
   }
 
   /** Returns {tagType : {tagValues}} for the given Dish */
   public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
-    return handler.getTagsForDish(dishID);
+    return orm.getTagsForDish(dishID);
   }
 
   /**
@@ -94,7 +94,7 @@ public class DishStore {
    * @param  rate         rate (# stars) new user gave this Dish
    */
   public void updateRating(UUID id, int rate) {
-    Dish updatedDish = handler.updateRating(id, rate);
+    Dish updatedDish = orm.updateRating(id, rate);
     persistentStorageAgent.writeThrough(updatedDish);
   }
 
@@ -106,12 +106,12 @@ public class DishStore {
    * @param  userTags       the tags the new user assigns to this dish
    */
   public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
-    Dish updatedDish = handler.updateDishTags(id, userTags);
+    Dish updatedDish = orm.updateDishTags(id, userTags);
     persistentStorageAgent.writeThrough(updatedDish);
   }
 
   /** Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore. */
   public void setDishes(DishORM dishORM) {
-    this.handler = dishORM;
+    this.orm = dishORM;
   }
 }
