@@ -69,13 +69,16 @@ public class ReviewStore {
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private ReviewStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    // TODO: FIGURE THIS FOLLOWING CODE OUT
-    //    reviewsByDish = new HashMap<>();
   }
 
   /** Add a new review to the current set of reviews known to the application. */
   public void addReview(Review review) {
-    reviewsByDish.put(review.getDishID(), review.getTags());
+    Set<Review> reviews = reviewsByDish.get(review.getDishID());
+    if (reviews == null) {
+        reviews = new HashSet<>();
+        reviewsByDish.put(review.getDishID(), reviews);
+    }
+    reviews.add(review);
     updateTags(review);
     updateRating(review);
     persistentStorageAgent.writeThrough(review);
@@ -83,14 +86,16 @@ public class ReviewStore {
 
   /** Update the TagStore's tags for querying, given the new review */
   private void updateTags(Review review) {
-    TagStore.getInstance().updateTags(review.getDishID(), review.getTags());
+    TagStore store = TagStore.getInstance();
+    store.updateTags(review.getDishID(), review.getTags());
   }
 
   /** Update the DishStore's avg rating for this dish, given the new review */
   private void updateRating(Review review) {
-    DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
+    DishStore store = DishStore.getInstance();
+    store.updateRating(review.getDishID(), review.getStarRating());
   }
-
+  
   /** Sets the mapping of {dishID : Review} stored by this ReviewStore. */
   public void setReviews(HashMap<UUID, Set<Review>> reviewsByDish) {
     this.reviewsByDish = reviewsByDish;
