@@ -37,6 +37,7 @@ public class Tag {
    */
    public Tag(String type) {
      this.tagType = type;
+     // TODO: fix constructor to initalize all the data structures?
    }
 
    public String getTagType() {
@@ -70,6 +71,7 @@ public class Tag {
 
     /**
      * Associates a Dish with all its given user tags, for querying.
+     * Adds the tagValues into the allTagValues set as well
      * @method addDishToTag
      * @param  tagValues    the set of user tags, for this tag category
      * @param  dishID       id of the dish we're associating
@@ -78,6 +80,7 @@ public class Tag {
         for (String tagValue : tagValues) {
             Set<UUID> dishes = getDishesByValue(tagValue);
             dishes.add(dishID);
+            this.allTagValues.add(tagValue);
         }
     }
 
