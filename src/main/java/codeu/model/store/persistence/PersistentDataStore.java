@@ -116,17 +116,6 @@ public class PersistentDataStore {
     }
 
     /**
-     * Loads all Review objects from the Datastore service and returns them in
-     * a Map that organizes all the Reviews by dish, i.e. {dishID : {Reviews for that dish}}
-     *
-     * @throws PersistentDataStoreException if an error was detected during the load from the
-     *                                      Datastore service
-     */
-    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
-        return null;
-    }
-
-    /**
      * Loads all Tag objects from the Datastore service and returns them in
      * a TagORM instance.
      *
@@ -158,6 +147,64 @@ public class PersistentDataStore {
             }
         }
         return new TagORM(tagsByType);
+    }
+
+    /**
+     * Loads all Review objects from the Datastore service and returns them in
+     * a Map that organizes all the Reviews by dish, i.e. {dishID : {Reviews for that dish}}
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+        // Setting up Data Structures to load Review information into
+        HashMap<UUID, Set<Review>> reviewsByDish = new HashMap<>();
+
+        /**
+         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
+         reviewEntity.setProperty("review_id", review.getReviewID().toString());
+         reviewEntity.setProperty("author", review.getAuthor());
+         reviewEntity.setProperty("dish_id", review.getDishID());
+         reviewEntity.setProperty("num_stars", review.getStarRating());
+         reviewEntity.setProperty("desc", review.getDescription());
+         *
+         private final UUID reviewID;
+         private final UUID author;
+         private final UUID dishID;
+         private final int numStars;
+         private final String desc;
+         private final HashMap<String, Set<String>> tags;
+         * */
+
+        // Retrieve all Reviews from DataStore
+        Query query = new Query("reviews");
+        PreparedQuery results = datastore.prepare(query);
+
+        for (Entity entity : results.asIterable()) {
+            try {
+                UUID reviewID = UUID.fromString((String) entity.getProperty("review_id"));
+                UUID author = UUID.fromString((String) entity.getProperty("author"));
+                UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
+                Integer numStars = (Integer) entity.getProperty("num_stars");
+                String desc = (String) entity.getProperty("desc");
+                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+
+                Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
+
+                Set<Review> reviews = reviewsByDish.get(dishID);
+                if (reviews == null) {
+                    reviews = new HashSet<>();
+                    reviewsByDish.put(dishID, reviews);
+                }
+                reviews.add(review);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
+        return reviewsByDish;
     }
 
     /**
@@ -209,6 +256,7 @@ public class PersistentDataStore {
         reviewEntity.setProperty("dish_id", review.getDishID());
         reviewEntity.setProperty("num_stars", review.getStarRating());
         reviewEntity.setProperty("desc", review.getDescription());
+        reviewEntity.setProperty("tags", review.getTags());
         datastore.put(reviewEntity);
     }
 }
