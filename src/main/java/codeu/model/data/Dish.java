@@ -28,7 +28,7 @@ public class Dish {
 
   private final UUID dishID;
   private final String dishName;
-  private final String restuarant;
+  private final String restaurant;
   private int rating;
   private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
   private Set<String> allTags;
@@ -51,7 +51,7 @@ public class Dish {
    }
 
    /** Returns id of the dish */
-   public String getDishID() {
+   public UUID getDishID() {
      return this.dishID;
    }
 
@@ -62,16 +62,18 @@ public class Dish {
 
    /** Returns name of dish restaurant */
    public String getResturant() {
-     return this.restuarant;
+     return this.restaurant;
    }
 
-   /** Returns location of the dish */
-   public Location getLocation() {
-     // potentially don't just return the Location object itself
-     // depends on how we're representing location (via Yelp API?)
-     // if we're using a wrapper class or not
-     return this.location;
-   }
+    /** Returns avg rating of this dish */
+    public int getRating() {
+        return this.rating;
+    }
+
+    /** Returns all the tags for this dish in the format {tagType: {tagValues}}*/
+    public HashMap<String, Set<String>> getTags() {
+        return this.tags;
+    }
 
    /** Return the number of reviews Dish has*/
    public int getNumReviews() {

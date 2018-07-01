@@ -73,7 +73,7 @@ public class DishORM {
      */
     public HashMap<String, Set<String>> getTagsForDish(UUID id) {
         Dish dish = getDish(id);
-        return dish.getAllTags();
+        return dish.getTags();
     }
 
     /**
