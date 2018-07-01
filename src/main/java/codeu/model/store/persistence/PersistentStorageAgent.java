@@ -22,8 +22,8 @@ import codeu.model.store.basic.DishStore;
 import codeu.model.store.basic.ReviewStore;
 import codeu.model.store.basic.TagStore;
 import codeu.orm.DishORM;
-import codeu.model.store.persistence.PersistentDataStore;
 import codeu.orm.TagORM;
+//import codeu.model.store.persistence.PersistentDataStore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,100 +40,100 @@ import java.util.UUID;
  */
 public class PersistentStorageAgent {
 
-  private static PersistentStorageAgent instance;
+    private static PersistentStorageAgent instance;
 
-  private final PersistentDataStore persistentDataStore;
+    private final PersistentDataStore persistentDataStore;
 
-  /**
-   * Access the persistent storage agent, in order to perform object-level loads and/or stores. Do
-   * not call this function from a test; use getTestInstance() instead.
-   */
-  public static PersistentStorageAgent getInstance() {
-    if (instance == null) {
-      instance = new PersistentStorageAgent(new PersistentDataStore());
+    /**
+     * Access the persistent storage agent, in order to perform object-level loads and/or stores. Do
+     * not call this function from a test; use getTestInstance() instead.
+     */
+    public static PersistentStorageAgent getInstance() {
+        if (instance == null) {
+            instance = new PersistentStorageAgent(new PersistentDataStore());
+        }
+        return instance;
     }
-    return instance;
-  }
 
-  /**
-   * Instance getter function used for testing. Supply a mock for PersistentDataStore.
-   *
-   * @param mockPersistentDataStore a mock used for testing
-   */
-  static PersistentStorageAgent getTestInstance(PersistentDataStore mockPersistentDataStore) {
-    return new PersistentStorageAgent(mockPersistentDataStore);
-  }
+    /**
+     * Instance getter function used for testing. Supply a mock for PersistentDataStore.
+     *
+     * @param mockPersistentDataStore a mock used for testing
+     */
+    static PersistentStorageAgent getTestInstance(PersistentDataStore mockPersistentDataStore) {
+        return new PersistentStorageAgent(mockPersistentDataStore);
+    }
 
-  // Private constructor, accessible only through singleton interface
-  private PersistentStorageAgent(PersistentDataStore persistentDataStore) {
-    this.persistentDataStore = persistentDataStore;
-  }
+    // Private constructor, accessible only through singleton interface
+    private PersistentStorageAgent(PersistentDataStore persistentDataStore) {
+        this.persistentDataStore = persistentDataStore;
+    }
 
-  /**
-   * Retrieve all User objects from the Datastore service. The returned list may be empty.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public List<User> loadUsers() throws PersistentDataStoreException {
-    return persistentDataStore.loadUsers();
-  }
+    /**
+     * Retrieve all User objects from the Datastore service. The returned list may be empty.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public List<User> loadUsers() throws PersistentDataStoreException {
+        return persistentDataStore.loadUsers();
+    }
 
-  DishORM dishORM = PersistentStorageAgent.getInstance().loadDishes();
-  DishStore.getInstance().setDishes(dishORM);
+    /**
+     * Retrieve all Dishes from the Datastore service in the form of a DishORM.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public DishORM loadDishes() throws PersistentDataStoreException {
+        return persistentDataStore.loadDishes();
+    }
 
-  codeu.model.data.query.TagORM tagORM = PersistentStorageAgent.getInstance().loadTags();
-  TagStore.getInstance().setTags(tagORM);
+    /**
+     * Retrieve all Reviews from the Datastore service in the form of a map to its DishID.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+        return persistentDataStore.loadReviews();
+    }
 
-  HashMap<UUID, Set<Review>> reviewsByDish = PersistentStorageAgent.getInstance().loadReviews();
-  ReviewStore.getInstance().setReviews(reviewsByDish);
+    /**
+     * Retrieve all Tag objects from the Datastore service in the form of a TagORM.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public TagORM loadTags() throws PersistentDataStoreException {
+        return persistentDataStore.loadTags();
+    }
 
-  /**
-   * Retrieve all Dishes from the Datastore service in the form of a DishORM.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public DishORM loadDishes() throws PersistentDataStoreException {
-    return persistentDataStore.loadDishes();
-  }
+    /**
+     * Write a User object to the Datastore service.
+     */
+    public void writeThrough(User user) {
+        persistentDataStore.writeThrough(user);
+    }
 
-  /**
-   * Retrieve all Reviews from the Datastore service in the form of a map to its DishID.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
-    return persistentDataStore.loadReviews();
-  }
+    /**
+     * Write a Dish object to the Datastore service.
+     */
+    public void writeThrough(Dish dish) {
+        persistentDataStore.writeThrough(dish);
+    }
 
-  /**
-   * Retrieve all Tag objects from the Datastore service in the form of a TagORM.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public TagORM loadTags() throws PersistentDataStoreException {
-    return persistentDataStore.loadTags();
-  }
+    /**
+     * Write a Tag object to the Datastore service.
+     */
+    public void writeThrough(Tag tag) {
+        persistentDataStore.writeThrough(tag);
+    }
 
-  /** Write a User object to the Datastore service. */
-  public void writeThrough(User user) {
-    persistentDataStore.writeThrough(user);
-  }
-
-  /** Write a Dish object to the Datastore service. */
-  public void writeThrough(Dish dish) {
-    persistentDataStore.writeThrough(dish);
-  }
-
-  /** Write a Tag object to the Datastore service. */
-  public void writeThrough(Tag tag) {
-    persistentDataStore.writeThrough(tag);
-  }
-
-  /** Write a Review object to the Datastore service. */
-  public void writeThrough(Review review) {
-    persistentDataStore.writeThrough(review);
+    /**
+     * Write a Review object to the Datastore service.
+     */
+    public void writeThrough(Review review) {
+        persistentDataStore.writeThrough(review);
+    }
 }
