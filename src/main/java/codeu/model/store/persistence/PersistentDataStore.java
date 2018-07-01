@@ -121,6 +121,16 @@ public class PersistentDataStore {
     return null;
   }
 
+    /** Write a User object to the Datastore service. */
+  public void writeThrough(User user) {
+      Entity userEntity = new Entity("chat-users", user.getId().toString());
+      userEntity.setProperty("uuid", user.getId().toString());
+      userEntity.setProperty("username", user.getName());
+      userEntity.setProperty("password_hash", user.getPasswordHash());
+      userEntity.setProperty("creation_time", user.getCreationTime().toString());
+      datastore.put(userEntity);
+    }
+
     /** Write a Dish object to the Datastore service. */
     public void writeThrough(Dish dish) {
 //        Entity conversationEntity = new Entity("chat-conversations", conversation.getId().toString());
