@@ -17,6 +17,8 @@ package codeu.model.store.basic;
 import codeu.model.data.Tag;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import codeu.model.data.query.TagORM;
+import codeu.orm.TagORM;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +35,7 @@ import java.util.UUID;
 public class TagStore {
 
   /** Singleton instance of TagStore. */
-  private static DishStore instance;
+  private static TagStore instance;
 
   /**
    * Returns the singleton instance of TagStore that should be shared between all servlet
