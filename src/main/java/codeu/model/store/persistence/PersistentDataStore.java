@@ -77,8 +77,8 @@ public class PersistentDataStore {
     }
 
     /**
-     * Loads all Dish objects from the Datastore service and returns them in a DishORM
-     * with the appropriate mappings.
+     * Loads all Dish objects from the Datastore service
+     * Returns the Dishes in a DishORM via the appropriate mappings.
      *
      * @throws PersistentDataStoreException if an error was detected during the load from the
      *                                      Datastore service
@@ -92,8 +92,8 @@ public class PersistentDataStore {
         Query query = new Query("dishes");
         PreparedQuery results = datastore.prepare(query);
 
-      for (Entity entity : results.asIterable()) {
-          try {
+        for (Entity entity : results.asIterable()) {
+            try {
               UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
               String dishName = (String) entity.getProperty("dish_name");
               String restaurant = (String) entity.getProperty("restaurant");
@@ -106,14 +106,14 @@ public class PersistentDataStore {
 
               dishMap.put(dishID, dish);
               ratingMap.put(dishID, rating);
-          } catch (Exception e) {
+            } catch (Exception e) {
               // In a production environment, errors should be very rare. Errors which may
               // occur include network errors, Datastore service errors, authorization errors,
               // database entity definition mismatches, or service mismatches.
               throw new PersistentDataStoreException(e);
-          }
-      }
-      return new DishORM(dishMap, ratingMap);
+            }
+        }
+        return new DishORM(dishMap, ratingMap);
     }
 
     /**
@@ -135,7 +135,30 @@ public class PersistentDataStore {
      *                                      Datastore service
      */
     public TagORM loadTags() throws PersistentDataStoreException {
-        return null;
+        // Setting up Data Structures to load Tag information into
+        HashMap<String, Tag> tagsByType = new HashMap<>();
+
+        // Retrieve all Tags from DataStore
+        Query query = new Query("tags");
+        PreparedQuery results = datastore.prepare(query);
+
+        for (Entity entity : results.asIterable()) {
+            try {
+                String tagType = (String) entity.getProperty("tag_type");
+                HashMap<String, Set<UUID>> dishesByValue = (HashMap<String, Set<UUID>>) entity.getProperty("dishes_by_value");
+                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+
+                Tag tag = new Tag(tagType, dishesByValue, allTagValues);
+
+                tagsByType.put(tagType, tag);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
+        return new TagORM(tagsByType);
     }
 
     /**

@@ -27,8 +27,8 @@ import java.util.HashSet;
  */
 public class Tag {
   private final String tagType; // name of tag type/category
-  private final HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
-  private final Set<String> allTagValues; // {tagValues}
+  private HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
+  private Set<String> allTagValues; // {tagValues}
 
   /**
    * Constructs a new Tag.
@@ -37,7 +37,15 @@ public class Tag {
    */
    public Tag(String type) {
      this.tagType = type;
-     // TODO: fix constructor to initalize all the data structures?
+     this.dishesByValue = new HashMap<>();
+     this.allTagValues = = new HashSet<>();
+   }
+
+   /** Constructs a new Tag, for the loadTag from PDS */
+   public Tag(String type, HashMap<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
+       this.tagType = type;
+       this.dishesByValue = dishesByValue;
+       this.allTagValues = allTagValues;
    }
 
    public String getTagType() {
