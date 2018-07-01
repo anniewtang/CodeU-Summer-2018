@@ -14,6 +14,8 @@
 
 package codeu.model.data;
 
+import codeu.model.data.Review;
+
 import java.time.Instant;
 import java.util.UUID;
 import java.util.HashMap;
@@ -90,14 +92,16 @@ public class Dish {
      * Return the number of reviews Dish has
      */
     public int getNumReviews() {
-        // pull from Dish store
+        // TODO: pull from Dish store
+        return 0;
     }
 
     /**
      * Returns all the Reviews Dish has
      */
     public Set<Review> getReviews() {
-        // pull from Dish store
+        // TODO: pull from Dish store
+        return null;
     }
 
     /**

@@ -15,9 +15,10 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Dish;
-import codeu.model.data.query.DishORM;
-import codeu.model.store.persistence.PersistentStorageAgent;
 import codeu.orm.DishORM;
+
+import codeu.model.store.persistence.PersistentStorageAgent;
+
 
 import java.util.List;
 import java.util.Map;
@@ -72,12 +73,13 @@ public class DishStore {
    */
   private DishStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    orm = new DishORM();
+    // TODO: figure out if this is necessary or not
+    //    orm = new DishORM();
   }
 
   /** Add a new Dish to the current set of dishes known to the application. */
   public void addDish(Dish dish) {
-    orm.addDish(dish);
+    orm.addDish(dish.getDishID(), dish);
     persistentStorageAgent.writeThrough(dish);
   }
 
@@ -105,7 +107,7 @@ public class DishStore {
    * @param  id             id of the dish we're updating
    * @param  userTags       the tags the new user assigns to this dish
    */
-  public void updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
+  public void updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
     Dish updatedDish = orm.updateDishTags(id, userTags);
     persistentStorageAgent.writeThrough(updatedDish);
   }
