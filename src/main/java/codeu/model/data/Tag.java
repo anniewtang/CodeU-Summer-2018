@@ -46,9 +46,9 @@ public class Tag {
     * @param  dishID       id of the dish we're associating
     */
    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
-     for (String value : tagValues) {
+     for (String tagValue : tagValues) {
        Set<UUID> dishes = getDishesByValue(tagValue);
-       dishes.put(UUID);
+       dishes.add(dishID);
      }
    }
 
@@ -66,26 +66,6 @@ public class Tag {
      }
      return dishes;
    }
-
-   // /** Adds the user tags into the private HashMap */
-   // public void setTags(HashMap<String, List<String>> tagsFromUser) {
-   //   // take each key, value pair in hashmap and put them into the tags HashMap
-   // }
-   //
-   // /** Returns the type(s) of the Dish */
-   // public List<String> getDishType() {
-   //   return map.get("dishType");
-   // }
-   //
-   // /** Returns the cuisine type(s) of the Dish */
-   // public List<String> getCuisineType() {
-   //   return map.get("cuisineType");
-   // }
-   //
-   // /** Returns the dietary restriction(s) of the Dish */
-   // public List<String> getDietaryRestriction() {
-   //   return map.get("restrictions");
-   // }
 
    /** Returns all the tag values associated with this object */
    public Set<String> getAllTags() {
