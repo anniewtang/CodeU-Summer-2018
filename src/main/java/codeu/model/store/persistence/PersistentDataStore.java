@@ -171,7 +171,11 @@ public class PersistentDataStore {
      * Write a Tag object to the Datastore service.
      */
     public void writeThrough(Tag tag) {
-
+        Entity tagEntity = new Entity("tags", tag.getTagType());
+        tagEntity.setProperty("tag_type", tag.getTagType());
+        tagEntity.setProperty("dishes_by_value", tag.getAllDishesByValue());
+        tagEntity.setProperty("all_tag_values", tag.getAllTagValues());
+        datastore.put(tagEntity);
     }
 
     /**

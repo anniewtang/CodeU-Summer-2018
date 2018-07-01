@@ -28,7 +28,7 @@ import java.util.HashSet;
 public class Tag {
   private final String tagType; // name of tag type/category
   private final HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
-  private final Set<String> allTags; // {tagValues}
+  private final Set<String> allTagValues; // {tagValues}
 
   /**
    * Constructs a new Tag.
@@ -39,17 +39,8 @@ public class Tag {
      this.tagType = type;
    }
 
-   /**
-    * Associates a Dish with all its given user tags, for querying.
-    * @method addDishToTag
-    * @param  tagValues    the set of user tags, for this tag category
-    * @param  dishID       id of the dish we're associating
-    */
-   public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
-     for (String tagValue : tagValues) {
-       Set<UUID> dishes = getDishesByValue(tagValue);
-       dishes.add(dishID);
-     }
+   public String getTagType() {
+       return this.tagType;
    }
 
    /**
@@ -67,10 +58,28 @@ public class Tag {
      return dishes;
    }
 
-   /** Returns all the tag values associated with this object */
-   public Set<String> getAllTags() {
-     return allTags;
+   public HashMap<String, Set<UUID>> getAllDishesByValue() {
+       return this.dishesByValue;
    }
+
+   /** Returns all the tag values associated with this object */
+   public Set<String> getAllTagValues() {
+     return this.allTagValues;
+   }
+
+
+    /**
+     * Associates a Dish with all its given user tags, for querying.
+     * @method addDishToTag
+     * @param  tagValues    the set of user tags, for this tag category
+     * @param  dishID       id of the dish we're associating
+     */
+    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
+        for (String tagValue : tagValues) {
+            Set<UUID> dishes = getDishesByValue(tagValue);
+            dishes.add(dishID);
+        }
+    }
 
 
 }
