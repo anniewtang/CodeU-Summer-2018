@@ -95,7 +95,7 @@ public class ReviewStore {
     DishStore store = DishStore.getInstance();
     store.updateRating(review.getDishID(), review.getStarRating());
   }
-  
+
   /** Sets the mapping of {dishID : Review} stored by this ReviewStore. */
   public void setReviews(HashMap<UUID, Set<Review>> reviewsByDish) {
     this.reviewsByDish = reviewsByDish;
