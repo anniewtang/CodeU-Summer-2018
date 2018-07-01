@@ -15,9 +15,10 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Tag;
-import codeu.model.store.persistence.PersistentStorageAgent;
-import codeu.model.data.query.TagORM;
 import codeu.orm.TagORM;
+
+import codeu.model.store.persistence.PersistentStorageAgent;
+
 
 import java.util.List;
 import java.util.Map;
