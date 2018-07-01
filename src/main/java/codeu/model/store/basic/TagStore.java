@@ -69,7 +69,8 @@ public class TagStore {
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private TagStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
-    orm = new TagORM();
+    // TODO: FIGURE THIS FOLLOWING CODE OUT
+    //    orm = new TagORM();
   }
 
   /** Returns the Tag object associated with the tagType category */

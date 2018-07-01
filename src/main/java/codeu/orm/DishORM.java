@@ -25,9 +25,9 @@ import java.util.UUID;
  */
 public class DishORM {
     private HashMap<UUID, Dish> dishMap; // maps dishIDs to Dish objects
-    private HashMap<UUID, int> ratingMap; // maps dishIDs to average star ratings
+    private HashMap<UUID, Integer> ratingMap; // maps dishIDs to average star ratings
 
-    public DishORM(HashMap<UUID, Dish> dishMap, HashMap<UUID, int> ratingMap) {
+    public DishORM(HashMap<UUID, Dish> dishMap, HashMap<UUID, Integer> ratingMap) {
         this.dishMap = dishMap;
         this.ratingMap = ratingMap;
     }
@@ -98,7 +98,7 @@ public class DishORM {
      * @return the Dish object that was updated to be rewritten into DataStore
      * @method updateDishTags
      */
-    public Dish updateDishTags(UUID id, HashMap<String, Set<String> userTags) {
+    public Dish updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
         Dish dish = getDish(id);
         dish.setUserTags(userTags);
         return dish;
