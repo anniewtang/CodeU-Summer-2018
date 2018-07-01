@@ -27,107 +27,126 @@ import java.util.Map.Entry;
  */
 public class Dish {
 
-  private final UUID dishID;
-  private final String dishName;
-  private final String restaurant;
-  private int rating;
-  private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
-  private Set<String> allTags;
+    private final UUID dishID;
+    private final String dishName;
+    private final String restaurant;
+    private int rating;
+    private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
+    private Set<String> allTags;
 
-  /**
-   * Constructs a new Dish object.
-   *
-   * @param id the ID of this dish
-   * @param name the name of the dish
-   * @param restaurant the name of the restaurant where this dish came from
-   * @param tags the tags the user selected for this dish
-   */
-   public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
-     this.dishID = id;
-     this.dishName = name;
-     this.restaurant = restaurant;
-     this.rating = rating;
-     this.tags = tags;
-     this.allTags = new HashSet<>();
-   }
+    /**
+     * Constructs a new Dish object.
+     *
+     * @param id         the ID of this dish
+     * @param name       the name of the dish
+     * @param restaurant the name of the restaurant where this dish came from
+     * @param tags       the tags the user selected for this dish
+     */
+    public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
+        this.dishID = id;
+        this.dishName = name;
+        this.restaurant = restaurant;
+        this.rating = rating;
+        this.tags = tags;
+        this.allTags = new HashSet<>();
+    }
 
-   /** Returns id of the dish */
-   public UUID getDishID() {
-     return this.dishID;
-   }
+    /**
+     * Returns id of the dish
+     */
+    public UUID getDishID() {
+        return this.dishID;
+    }
 
-   /** Returns name of the dish */
-   public String getDishName() {
-     return this.dishName;
-   }
+    /**
+     * Returns name of the dish
+     */
+    public String getDishName() {
+        return this.dishName;
+    }
 
-   /** Returns name of dish restaurant */
-   public String getResturant() {
-     return this.restaurant;
-   }
+    /**
+     * Returns name of dish restaurant
+     */
+    public String getResturant() {
+        return this.restaurant;
+    }
 
-    /** Returns avg rating of this dish */
+    /**
+     * Returns avg rating of this dish
+     */
     public int getRating() {
         return this.rating;
     }
 
-    /** Returns all the tags for this dish in the format {tagType: {tagValues}}*/
+    /**
+     * Returns all the tags for this dish in the format {tagType: {tagValues}}
+     */
     public HashMap<String, Set<String>> getTags() {
         return this.tags;
     }
 
-   /** Return the number of reviews Dish has*/
-   public int getNumReviews() {
-    // pull from Dish store
-   }
+    /**
+     * Return the number of reviews Dish has
+     */
+    public int getNumReviews() {
+        // pull from Dish store
+    }
 
-   /** Returns all the Reviews Dish has */
-   public Set<Review> getReviews() {
-     // pull from Dish store
-   }
+    /**
+     * Returns all the Reviews Dish has
+     */
+    public Set<Review> getReviews() {
+        // pull from Dish store
+    }
 
-   /**
-    * Updates the average star rating a Dish has, after more users rate it.
-    * @method setRating
-    * @param  rating    updated average star rating
-    */
-   public void setRating(int rating) {
-     this.rating = rating;
-   }
+    /**
+     * Updates the average star rating a Dish has, after more users rate it.
+     *
+     * @param rating updated average star rating
+     * @method setRating
+     */
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
-   /**
-    * Update previously existing tags (if any) with newly given user-tags.
-    * Also updates collection of All Tags associated with this Dish.
-    * @method setUserTags
-    * @param  userTags        new user-given tags in the form: {tagType : {tagValues}}
-    */
-   public void setUserTags(HashMap<String, Set<String>> userTags) {
-     for (Entry<String, Set<String>> pair : userTags.entrySet()) {
-         String type = pair.getKey();
-         Set<String> tags = pair.getValue();
-         updateTagsForType(type, tags);
-         updateAllTags(tags);
-     }
-   }
+    /**
+     * Update previously existing tags (if any) with newly given user-tags.
+     * Also updates collection of All Tags associated with this Dish.
+     *
+     * @param userTags new user-given tags in the form: {tagType : {tagValues}}
+     * @method setUserTags
+     */
+    public void setUserTags(HashMap<String, Set<String>> userTags) {
+        for (Entry<String, Set<String>> pair : userTags.entrySet()) {
+            String type = pair.getKey();
+            Set<String> tags = pair.getValue();
+            updateTagsForType(type, tags);
+            updateAllTags(tags);
+        }
+    }
 
-   private void updateTagsForType(String type, Set<String> tags) {
-     Set<String> values = getValuesOfType(type);
-     values.addAll(tags);
-   }
+    private void updateTagsForType(String type, Set<String> tags) {
+        Set<String> values = getValuesOfType(type);
+        values.addAll(tags);
+    }
 
-   private Set<String> getValuesOfType(String type) {
-     Set<String> values = this.tags.get(type);
-     if (values == null) {
-       values = new HashSet<>();
-     }
-     return values;
-   }
+    private Set<String> getValuesOfType(String type) {
+        Set<String> values = this.tags.get(type);
+        if (values == null) {
+            values = new HashSet<>();
+        }
+        return values;
+    }
 
-   private void updateAllTags(Set<String> tags) {
-     this.allTags.addAll(tags);
-   }
+    private void updateAllTags(Set<String> tags) {
+        this.allTags.addAll(tags);
+    }
 
-   /** Returns all the Tags Dish has */
-   public Set<String> getAllTags() {
-     return this.allTags;
-   }
+    /**
+     * Returns all the Tags Dish has
+     */
+    public Set<String> getAllTags() {
+        return this.allTags;
+    }
+}
