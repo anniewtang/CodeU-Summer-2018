@@ -70,7 +70,7 @@ public class Dish {
     /**
      * Returns name of dish restaurant
      */
-    public String getResturant() {
+    public String getRestaurant() {
         return this.restaurant;
     }
 
