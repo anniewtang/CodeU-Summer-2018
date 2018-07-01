@@ -84,37 +84,36 @@ public class PersistentDataStore {
      *                                      Datastore service
      */
     public DishORM loadDishes() throws PersistentDataStoreException {
-//      public DishORM(HashMap<UUID, Dish> dishMap, HashMap<UUID, Integer> ratingMap)
+        // Setting up Data Structures to load information into
         HashMap<UUID, Dish> dishMap = new HashMap<>();
         HashMap<UUID, Integer> ratingMap = new HashMap<>();
 
         // Retrieve all Dishes from DataStore
         Query query = new Query("dishes");
+        PreparedQuery results = datastore.prepare(query);
 
+      for (Entity entity : results.asIterable()) {
+          try {
+              UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
+              String dishName = (String) entity.getProperty("dish_name");
+              String restaurant = (String) entity.getProperty("restaurant");
+              int rating = Integer.parseInt((String) entity.getProperty("rating"));
+              HashMap<String, Set<String> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+              Set<String> allTags = (Set<String>) entity.getProperty("all_tags");
 
-//      // Retrieve all users from the datastore.
-//      Query query = new Query("chat-users");
-//      PreparedQuery results = datastore.prepare(query);
-//
-//      for (Entity entity : results.asIterable()) {
-//          try {
-//              UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-//              String userName = (String) entity.getProperty("username");
-//              String passwordHash = (String) entity.getProperty("password_hash");
-//              Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-//              User user = new User(uuid, userName, passwordHash, creationTime);
-//              users.add(user);
-//          } catch (Exception e) {
-//              // In a production environment, errors should be very rare. Errors which may
-//              // occur include network errors, Datastore service errors, authorization errors,
-//              // database entity definition mismatches, or service mismatches.
-//              throw new PersistentDataStoreException(e);
-//          }
-//      }
-//
-//      return users;
+              Dish dish = new Dish(dishID, dishName, restaurant, rating, tags);
+              dish.setAllTags(allTags);
 
-        return null;
+              dishMap.put(dishID, dish);
+              ratingMap.put(dishID, rating);
+          } catch (Exception e) {
+              // In a production environment, errors should be very rare. Errors which may
+              // occur include network errors, Datastore service errors, authorization errors,
+              // database entity definition mismatches, or service mismatches.
+              throw new PersistentDataStoreException(e);
+          }
+      }
+      return new DishORM(dishMap, ratingMap);
     }
 
     /**

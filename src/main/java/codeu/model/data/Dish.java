@@ -28,7 +28,6 @@ import java.util.Map.Entry;
  * Dish objects will be dynamically updated, as user adds more tags and reviews.
  */
 public class Dish {
-
     private final UUID dishID;
     private final String dishName;
     private final String restaurant;
@@ -102,6 +101,12 @@ public class Dish {
     public Set<Review> getReviews() {
         // TODO: pull from Dish store
         return null;
+    }
+
+
+    /** Used during loading from Persistent Data Store */
+    public void setAllTags(Set<String> allTags) {
+        this.allTags = allTags;
     }
 
     /**
