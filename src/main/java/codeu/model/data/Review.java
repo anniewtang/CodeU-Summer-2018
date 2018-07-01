@@ -22,29 +22,37 @@ import java.util.ArrayList;
 
 /** Class representing an individual Review associated with a particualar dish */
 public class Review {
+    private final UUID reviewID;
     private final UUID author;
     private final UUID dishID;
     private final int numStars;
     private final String desc;
-    private final String restaurant;
     private final HashMap<String, Set<String>> tags;
 //  private final Photo photo; // LATER FEATURE
 
     /**
      * Constructs a new Review.
      *
-     * @param author   the author of the Review
-     * @param dishID   the ID of the dish
-     * @param numStars the number of stars the Dish was rated
-     * @param desc     the text body of the actual review
+     * @param id           the ID of the review
+     * @param author       the author of the Review
+     * @param dishID       the ID of the dish
+     * @param numStars     the number of stars this _specific_ review gave to Dish
+     * @param desc         the text body of the actual review
      */
-    public Review(UUID author, UUID dishID, int numStars, String desc, HashMap<String, Set<String>> tags, String restaurant) {
+    public Review(UUID id, UUID author, UUID dishID, int numStars, String desc, HashMap<String, Set<String>> tags) {
+        this.reviewID = id;
         this.author = author;
         this.dishID = dishID;
         this.numStars = numStars;
         this.desc = desc;
         this.tags = tags;
-        this.restaurant = restaurant;
+    }
+
+    /**
+     * Returns the UUID of the Review
+     */
+    public UUID getReviewID() {
+        return this.reviewID;
     }
 
     /**
@@ -52,13 +60,6 @@ public class Review {
      */
     public UUID getAuthor() {
         return this.author;
-    }
-
-    /**
-     * Returns the name of the dish restaurant
-     */
-    public String getRestaurant() {
-        return this.restaurant;
     }
 
     /**

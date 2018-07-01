@@ -157,10 +157,10 @@ public class PersistentDataStore {
     public void writeThrough(Dish dish) {
         Entity dishEntity = new Entity("dishes", dish.getDishID().toString());
         // TODO: ask why convert everything to string?
-        dishEntity.setProperty("uuid", dish.getDishID().toString());
+        dishEntity.setProperty("dish_id", dish.getDishID().toString());
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
-        dishEntity.setProperty("rating", dish.getRestaurant());
+        dishEntity.setProperty("rating", dish.getRestaurant().toString());
         dishEntity.setProperty("tags", dish.getTags());
         dishEntity.setProperty("all_tags", dish.getAllTags());
 //        dishEntity.setProperty("creation_time", dish.getCreationTime().toString());
@@ -182,6 +182,12 @@ public class PersistentDataStore {
      * Write a Review object to the Datastore service.
      */
     public void writeThrough(Review review) {
-//
+        Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
+        reviewEntity.setProperty("review_id", review.getReviewID().toString());
+        reviewEntity.setProperty("author", review.getAuthor());
+        reviewEntity.setProperty("dish_id", review.getDishID());
+        reviewEntity.setProperty("num_stars", review.getStarRating());
+        reviewEntity.setProperty("desc", review.getDescription());
+        datastore.put(reviewEntity);
     }
 }
