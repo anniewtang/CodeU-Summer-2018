@@ -37,11 +37,6 @@ public class ReviewStore {
   /** Singleton instance of ReviewStore. */
   private static ReviewStore instance; // singleton instance of ReviewStore
 
-  /** REMOVE?? KEEP??
-  private static TagStore tagStore; // singleton instance of TagStore
-  private static DishStore dishStore; // singleton instance of DishStore
-  */
-
   /**
    * Returns the singleton instance of ReviewStore that should be shared between all servlet
    * classes. Do not call this function from a test; use getTestInstance() instead.
@@ -96,7 +91,7 @@ public class ReviewStore {
   }
 
   /** Sets the mapping of {dishID : Review} stored by this ReviewStore. */
-  public void setReviews(HashMap<UUID, Set<<Review>> reviewsByDish) {
+  public void setReviews(HashMap<UUID, Set<Review>> reviewsByDish) {
     this.reviewsByDish = reviewsByDish;
   }
 }
