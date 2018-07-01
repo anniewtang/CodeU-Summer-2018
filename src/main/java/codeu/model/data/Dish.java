@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Map.Entry;
 
 /**
  * Data class representing a Dish.
@@ -98,12 +99,14 @@ public class Dish {
     * Update previously existing tags (if any) with newly given user-tags.
     * Also updates collection of All Tags associated with this Dish.
     * @method setUserTags
-    * @param  tags        new user-given tags in the form: {tagType : {tagValues}}
+    * @param  userTags        new user-given tags in the form: {tagType : {tagValues}}
     */
-   public void setUserTags(HashMap<String, Set<String> tags) {
-     for (String type : tags) {
-       updateTagsForType(type, tags);
-       updateAllTags(tags);
+   public void setUserTags(HashMap<String, Set<String>> userTags) {
+     for (Entry<String, Set<String>> pair : userTags.entrySet()) {
+         String type = pair.getKey();
+         Set<String> tags = pair.getValue();
+         updateTagsForType(type, tags);
+         updateAllTags(tags);
      }
    }
 
