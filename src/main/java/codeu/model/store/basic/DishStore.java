@@ -35,85 +35,97 @@ import java.util.UUID;
  */
 public class DishStore {
 
-  /** Singleton instance of DishStore. */
-  private static DishStore instance;
+    /**
+     * Singleton instance of DishStore.
+     */
+    private static DishStore instance;
 
-  /**
-   * Returns the singleton instance of DishStore that should be shared between all servlet
-   * classes. Do not call this function from a test; use getTestInstance() instead.
-   */
-  public static DishStore getInstance() {
-    if (instance == null) {
-      instance = new DishStore(PersistentStorageAgent.getInstance());
+    /**
+     * Returns the singleton instance of DishStore that should be shared between all servlet
+     * classes. Do not call this function from a test; use getTestInstance() instead.
+     */
+    public static DishStore getInstance() {
+        if (instance == null) {
+            instance = new DishStore(PersistentStorageAgent.getInstance());
+        }
+        return instance;
     }
-    return instance;
-  }
 
-  /**
-   * Instance getter function used for testing. Supply a mock for PersistentStorageAgent.
-   *
-   * @param persistentStorageAgent a mock used for testing
-   */
-  public static DishStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
-    return new DishStore(persistentStorageAgent);
-  }
+    /**
+     * Instance getter function used for testing. Supply a mock for PersistentStorageAgent.
+     *
+     * @param persistentStorageAgent a mock used for testing
+     */
+    public static DishStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
+        return new DishStore(persistentStorageAgent);
+    }
 
-  /**
-   * The PersistentStorageAgent responsible for loading Dishes from and saving Dishes
-   * to Datastore.
-   */
-  private PersistentStorageAgent persistentStorageAgent;
+    /**
+     * The PersistentStorageAgent responsible for loading Dishes from and saving Dishes
+     * to Datastore.
+     */
+    private PersistentStorageAgent persistentStorageAgent;
 
-  /** The in-memory store of DishORM. */
-  private DishORM orm;
+    /**
+     * The in-memory store of DishORM.
+     */
+    private DishORM orm;
 
-  /**
-   * This class is a singleton, so its constructor is private. Call getInstance() instead.
-   * Initializes a new orm (also a singleton), if this is the first time we're loading DishStore.
-   */
-  private DishStore(PersistentStorageAgent persistentStorageAgent) {
-    this.persistentStorageAgent = persistentStorageAgent;
-    // TODO: figure out if this is necessary or not
-    //    orm = new DishORM();
-  }
+    /**
+     * This class is a singleton, so its constructor is private. Call getInstance() instead.
+     * Initializes a new orm (also a singleton), if this is the first time we're loading DishStore.
+     */
+    private DishStore(PersistentStorageAgent persistentStorageAgent) {
+        this.persistentStorageAgent = persistentStorageAgent;
+        // TODO: figure out if this is necessary or not
+        //    orm = new DishORM();
+    }
 
-  /** Add a new Dish to the current set of dishes known to the application. */
-  public void addDish(Dish dish) {
-    orm.addDish(dish.getDishID(), dish);
-    persistentStorageAgent.writeThrough(dish);
-  }
+    /**
+     * Add a new Dish to the current set of dishes known to the application.
+     */
+    public void addDish(Dish dish) {
+        orm.addDish(dish.getDishID(), dish);
+        persistentStorageAgent.writeThrough(dish);
+    }
 
-  /** Returns {tagType : {tagValues}} for the given Dish */
-  public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
-    return orm.getTagsForDish(dishID);
-  }
+    /**
+     * Returns {tagType : {tagValues}} for the given Dish
+     */
+    public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
+        return orm.getTagsForDish(dishID);
+    }
 
-  /**
-   * Updates the average rating of a dish, given a NEW rating from user.
-   * Also write this updated Dish into storage.
-   * @method updateRating
-   * @param  id           id of the dish we're updating
-   * @param  rate         rate (# stars) new user gave this Dish
-   */
-  public void updateRating(UUID id, int rate) {
-    Dish updatedDish = orm.updateRating(id, rate);
-    persistentStorageAgent.writeThrough(updatedDish);
-  }
+    /**
+     * Updates the average rating of a dish, given a NEW rating from user.
+     * Also write this updated Dish into storage.
+     *
+     * @param id   id of the dish we're updating
+     * @param rate rate (# stars) new user gave this Dish
+     * @method updateRating
+     */
+    public void updateRating(UUID id, int rate) {
+        Dish updatedDish = orm.updateRating(id, rate);
+        persistentStorageAgent.writeThrough(updatedDish);
+    }
 
-  /**
-   * Updates the tags belong to a dish after a NEW user rates it.
-   * Also writes this updated Dish into storage.
-   * @method updateDishTags
-   * @param  id             id of the dish we're updating
-   * @param  userTags       the tags the new user assigns to this dish
-   */
-  public void updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
-    Dish updatedDish = orm.updateDishTags(id, userTags);
-    persistentStorageAgent.writeThrough(updatedDish);
-  }
+    /**
+     * Updates the tags belong to a dish after a NEW user rates it.
+     * Also writes this updated Dish into storage.
+     *
+     * @param id       id of the dish we're updating
+     * @param userTags the tags the new user assigns to this dish
+     * @method updateDishTags
+     */
+    public void updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
+        Dish updatedDish = orm.updateDishTags(id, userTags);
+        persistentStorageAgent.writeThrough(updatedDish);
+    }
 
-  /** Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore. */
-  public void setDishes(DishORM dishORM) {
-    this.orm = dishORM;
-  }
+    /**
+     * Sets the Handler object (Dishes + Querying/Setting methods) in the DishStore.
+     */
+    public void setDishes(DishORM dishORM) {
+        this.orm = dishORM;
+    }
 }

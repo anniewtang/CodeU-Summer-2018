@@ -38,7 +38,7 @@ import java.util.UUID;
  * interactions with Google App Engine's Datastore service. Currently this class simply passes
  * function calls through to PersistentDataStore, but this could be modified to make asynchronous
  * calls or to point to a different backend storage system.
- *
+ * <p>
  * <p>This is a singleton; the single instance is accessed through getInstance().
  */
 public class PersistentStorageAgent {

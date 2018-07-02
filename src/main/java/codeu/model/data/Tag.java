@@ -26,63 +26,69 @@ import java.util.HashSet;
  * as well as all the Dishes that have that tag value.
  */
 public class Tag {
-  private final String tagType; // name of tag type/category
-  private HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
-  private Set<String> allTagValues; // {tagValues}
+    private final String tagType; // name of tag type/category
+    private HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
+    private Set<String> allTagValues; // {tagValues}
 
-  /**
-   * Constructs a new Tag.
-   *
-   * @param dishID the ID of the dish
-   */
-   public Tag(String type) {
-     this.tagType = type;
-     this.dishesByValue = new HashMap<>();
-     this.allTagValues = = new HashSet<>();
-   }
+    /**
+     * Constructs a new Tag.
+     *
+     * @param dishID the ID of the dish
+     */
+    public Tag(String type) {
+        this.tagType = type;
+        this.dishesByValue = new HashMap<>();
+        this.allTagValues = new HashSet<>();
+    }
 
-   /** Constructs a new Tag, for the loadTag from PDS */
-   public Tag(String type, HashMap<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
-       this.tagType = type;
-       this.dishesByValue = dishesByValue;
-       this.allTagValues = allTagValues;
-   }
+    /**
+     * Constructs a new Tag, for the loadTag from PDS
+     */
+    public Tag(String type, HashMap<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
+        this.tagType = type;
+        this.dishesByValue = dishesByValue;
+        this.allTagValues = allTagValues;
+    }
 
-   public String getTagType() {
-       return this.tagType;
-   }
+    public String getTagType() {
+        return this.tagType;
+    }
 
-   /**
-    * Retrieves the dishes that have been tagged with a certain value,
-    * under this particular tag type/category.
-    * @method getDishesByValue
-    * @param  value            the tag value we're querying dishes for
-    * @return                  a set of all dishIDs tagged with this value
-    */
-   public Set<UUID> getDishesByValue(String value) {
-     Set<UUID> dishes = this.dishesByValue.get(value);
-     if (dishes == null) {
-       dishes = new HashSet<>();
-     }
-     return dishes;
-   }
+    /**
+     * Retrieves the dishes that have been tagged with a certain value,
+     * under this particular tag type/category.
+     *
+     * @param value the tag value we're querying dishes for
+     * @return a set of all dishIDs tagged with this value
+     * @method getDishesByValue
+     */
+    public Set<UUID> getDishesByValue(String value) {
+        Set<UUID> dishes = this.dishesByValue.get(value);
+        if (dishes == null) {
+            dishes = new HashSet<>();
+        }
+        return dishes;
+    }
 
-   public HashMap<String, Set<UUID>> getAllDishesByValue() {
-       return this.dishesByValue;
-   }
+    public HashMap<String, Set<UUID>> getAllDishesByValue() {
+        return this.dishesByValue;
+    }
 
-   /** Returns all the tag values associated with this object */
-   public Set<String> getAllTagValues() {
-     return this.allTagValues;
-   }
+    /**
+     * Returns all the tag values associated with this object
+     */
+    public Set<String> getAllTagValues() {
+        return this.allTagValues;
+    }
 
 
     /**
      * Associates a Dish with all its given user tags, for querying.
      * Adds the tagValues into the allTagValues set as well
+     *
+     * @param tagValues the set of user tags, for this tag category
+     * @param dishID    id of the dish we're associating
      * @method addDishToTag
-     * @param  tagValues    the set of user tags, for this tag category
-     * @param  dishID       id of the dish we're associating
      */
     public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {

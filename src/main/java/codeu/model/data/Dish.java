@@ -56,11 +56,11 @@ public class Dish {
      * Overloaded Dish constructor.
      * Used while loading Dish for PDS.
      *
-     * @param id             the ID of this dish
-     * @param name           the name of the dish
-     * @param restaurant     the name of the restaurant where this dish came from
-     * @param tags           the tag values for this dish, organized by tag TYPE
-     * @param allTagValues   the collection of ALL tag values associated for dish
+     * @param id           the ID of this dish
+     * @param name         the name of the dish
+     * @param restaurant   the name of the restaurant where this dish came from
+     * @param tags         the tag values for this dish, organized by tag TYPE
+     * @param allTagValues the collection of ALL tag values associated for dish
      */
     public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags, Set<String> allTagValues) {
         this.dishID = id;

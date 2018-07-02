@@ -20,7 +20,9 @@ import java.util.UUID;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-/** Class representing an individual Review associated with a particualar dish */
+/**
+ * Class representing an individual Review associated with a particualar dish
+ */
 public class Review {
     private final UUID reviewID;
     private final UUID author;
@@ -33,11 +35,11 @@ public class Review {
     /**
      * Constructs a new Review.
      *
-     * @param id           the ID of the review
-     * @param author       the author of the Review
-     * @param dishID       the ID of the dish
-     * @param numStars     the number of stars this _specific_ review gave to Dish
-     * @param desc         the text body of the actual review
+     * @param id       the ID of the review
+     * @param author   the author of the Review
+     * @param dishID   the ID of the dish
+     * @param numStars the number of stars this _specific_ review gave to Dish
+     * @param desc     the text body of the actual review
      */
     public Review(UUID id, UUID author, UUID dishID, int numStars, String desc, HashMap<String, Set<String>> tags) {
         this.reviewID = id;

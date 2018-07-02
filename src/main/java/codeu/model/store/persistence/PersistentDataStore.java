@@ -94,22 +94,22 @@ public class PersistentDataStore {
 
         for (Entity entity : results.asIterable()) {
             try {
-              UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
-              String dishName = (String) entity.getProperty("dish_name");
-              String restaurant = (String) entity.getProperty("restaurant");
-              int rating = Integer.parseInt((String) entity.getProperty("rating"));
-              HashMap<String, Set<String> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
-              Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+                UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
+                String dishName = (String) entity.getProperty("dish_name");
+                String restaurant = (String) entity.getProperty("restaurant");
+                int rating = Integer.parseInt((String) entity.getProperty("rating"));
+                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
-              Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
+                Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
-              dishMap.put(dishID, dish);
-              ratingMap.put(dishID, rating);
+                dishMap.put(dishID, dish);
+                ratingMap.put(dishID, rating);
             } catch (Exception e) {
-              // In a production environment, errors should be very rare. Errors which may
-              // occur include network errors, Datastore service errors, authorization errors,
-              // database entity definition mismatches, or service mismatches.
-              throw new PersistentDataStoreException(e);
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
             }
         }
         return new DishORM(dishMap, ratingMap);
