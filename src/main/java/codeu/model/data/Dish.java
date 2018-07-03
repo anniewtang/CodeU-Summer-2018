@@ -107,23 +107,6 @@ public class Dish {
     }
 
     /**
-     * Return the number of reviews Dish has
-     */
-    public int getNumReviews() {
-        // TODO: pull from Dish store
-        return 0;
-    }
-
-    /**
-     * Returns all the Reviews Dish has
-     */
-    public Set<Review> getReviews() {
-        // TODO: pull from Dish store
-        return null;
-    }
-
-
-    /**
      * Updates the average star rating a Dish has, after more users rate it.
      *
      * @param rating updated average star rating

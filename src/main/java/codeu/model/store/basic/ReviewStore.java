@@ -79,6 +79,15 @@ public class ReviewStore {
     }
 
     /**
+     * Returns the set of Reviews associated with a Dish.
+     * @param dishID
+     * @return
+     */
+    public Set<Review> getReviewsForDish(UUID dishID) {
+        return this.reviewsByDish.get(dishID);
+    }
+
+    /**
      * Add a new review to the current set of reviews known to the application.
      */
     public void addReview(Review review) {
