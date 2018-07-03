@@ -50,8 +50,27 @@ public class Tag {
         this.allTagValues = allTagValues;
     }
 
+    /**
+     * Essentially the identifier of this Tag object: the category.
+     * @return the tag type/category (i.e. cuisine, restriction, etc.)
+     */
     public String getTagType() {
         return this.tagType;
+    }
+
+    /**
+     * Used primarily for loading into the PDS.
+     * @return mapping {tagValue : {dishIDs}}
+     */
+    public HashMap<String, Set<UUID>> getAllDishesByValue() {
+        return this.dishesByValue;
+    }
+
+    /**
+     * Returns all the tag values associated with this object
+     */
+    public Set<String> getAllTagValues() {
+        return this.allTagValues;
     }
 
     /**
@@ -69,18 +88,6 @@ public class Tag {
         }
         return dishes;
     }
-
-    public HashMap<String, Set<UUID>> getAllDishesByValue() {
-        return this.dishesByValue;
-    }
-
-    /**
-     * Returns all the tag values associated with this object
-     */
-    public Set<String> getAllTagValues() {
-        return this.allTagValues;
-    }
-
 
     /**
      * Associates a Dish with all its given user tags, for querying.
