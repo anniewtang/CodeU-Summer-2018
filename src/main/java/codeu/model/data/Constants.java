@@ -16,6 +16,8 @@ package codeu.model.data;
 
 public class Constants {
     /* Cuisine Types Constants*/
+        public static final String CUISINE = "Cuisine";
+
         public static final String ASIAN = "Asian";
         public static final String AMERICAN = "American";
         public static final String MEXICAN = "Mexican";
@@ -38,6 +40,7 @@ public class Constants {
         public static final String CARIBBEAN = "Caribbean";
 
     /* Dish Type Constants */
+        public static final String DISH = "Dish";
         // Main Categories
         public static final String APPETIZER = "Appetizer";
         public static final String ENTREE = "Entree";
@@ -78,6 +81,8 @@ public class Constants {
         public static final String CAKE = "Cake";
 
     /*  Dietary Restriction Constants */
+        public static final String RESTRICTION = "Restriction";
+
         public static final String PESCETARIAN = "Pescetarian";
         public static final String VEGETARIAN = "Vegetarian";
         public static final String VEGAN = "Vegan";
