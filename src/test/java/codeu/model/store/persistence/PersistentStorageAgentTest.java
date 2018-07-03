@@ -34,18 +34,6 @@ public class PersistentStorageAgentTest {
     }
 
     @Test
-    public void testLoadConversations() throws PersistentDataStoreException {
-        persistentStorageAgent.loadConversations();
-        Mockito.verify(mockPersistentDataStore).loadConversations();
-    }
-
-    @Test
-    public void testLoadMessages() throws PersistentDataStoreException {
-        persistentStorageAgent.loadMessages();
-        Mockito.verify(mockPersistentDataStore).loadMessages();
-    }
-
-    @Test
     public void testWriteThroughUser() {
         User user =
                 new User(
@@ -55,22 +43,5 @@ public class PersistentStorageAgentTest {
                         Instant.now());
         persistentStorageAgent.writeThrough(user);
         Mockito.verify(mockPersistentDataStore).writeThrough(user);
-    }
-
-    @Test
-    public void testWriteThroughConversation() {
-        Conversation conversation =
-                new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now());
-        persistentStorageAgent.writeThrough(conversation);
-        Mockito.verify(mockPersistentDataStore).writeThrough(conversation);
-    }
-
-    @Test
-    public void testWriteThroughMessage() {
-        Message message =
-                new Message(
-                        UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "test content", Instant.now());
-        persistentStorageAgent.writeThrough(message);
-        Mockito.verify(mockPersistentDataStore).writeThrough(message);
     }
 }
