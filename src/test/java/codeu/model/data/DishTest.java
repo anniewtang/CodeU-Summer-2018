@@ -51,18 +51,8 @@ public class DishTest {
     }
 
     @Test
-    public void createBasicDish() {
+    public void testCreateDish() {
         dish = new Dish(dishID, name, restaurant, rating, tags);
-        testGetMethods();
-    }
-
-    @Test
-    public void createFilledDish() {
-        dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
-        testGetMethods();
-    }
-
-    private void testGetMethods() {
         Assert.assertEquals(dishID, dish.getDishID());
         Assert.assertEquals(name, dish.getDishName());
         Assert.assertEquals(restaurant, dish.getRestaurant());
@@ -77,7 +67,7 @@ public class DishTest {
     }
 
     @Test
-    public testAddUserTags() {
+    public void testAddUserTags() {
 
     }
 }
