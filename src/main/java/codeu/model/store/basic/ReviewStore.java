@@ -88,6 +88,13 @@ public class ReviewStore {
     }
 
     /**
+     * Returns the total number of reviews associated with Dish.
+     */
+    public int getNumReviews(UUID dishID) {
+        return getReviewsForDish(dishID).size();
+    }
+
+    /**
      * Add a new review to the current set of reviews known to the application.
      */
     public void addReview(Review review) {

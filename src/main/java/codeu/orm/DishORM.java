@@ -13,6 +13,7 @@ package codeu.orm;// Copyright 2017 Google Inc.
 // limitations under the License.
 
 import codeu.model.data.Dish;
+import codeu.model.store.basic.ReviewStore;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -63,6 +64,10 @@ public class DishORM {
         return rating;
     }
 
+    public int getNumReviews(UUID id) {
+        return ReviewStore.getInstance().getNumReviews(id);
+    }
+
     /**
      * Retrieves all the tags for a particular Dish.
      * Good for UI display (i.e. showing _all_ tags for one dish for the user)
@@ -83,9 +88,9 @@ public class DishORM {
         Dish updatedDish = getDish(id);
         int oldRating = 0;
         if (dishExists(id)) {
-            oldRating = getRating(id);
+            oldRating = getRating(id) * getNumReviews(id);
         }
-        updatedDish.updateRating((oldRating + rate) / 2);
+        updatedDish.setRating((oldRating + rate) / 2);
         return updatedDish;
     }
 
