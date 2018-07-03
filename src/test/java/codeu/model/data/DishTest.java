@@ -39,43 +39,47 @@ public class DishTest {
         name = "Sesame Noodles";
         restaurant = "Asian Fusion";
         rating = 4;
-        tags = new HashMap<>();
 
+        tags = new HashMap<>();
         restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));
         cuisine = new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN));
-
         tags.put(Constants.RESTRICTION, restrictions);
         tags.put(Constants.CUISINE, cuisine);
 
         allTagValues = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.JAPANESE, Constants.ASIAN));
+
+        dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
     }
 
     @Test
     public void testCreateDish() {
         // run
-        dish = new Dish(dishID, name, restaurant, rating, tags);
+        Dish basicDish = new Dish(dishID, name, restaurant, rating, tags);
 
         // verify
-        Assert.assertEquals(dishID, dish.getDishID());
-        Assert.assertEquals(name, dish.getDishName());
-        Assert.assertEquals(restaurant, dish.getRestaurant());
-        Assert.assertEquals(rating, dish.getRating());
-        Assert.assertEquals(tags, dish.getTags());
-        Assert.assertEquals(allTagValues, dish.getAllTagValues());
+        Assert.assertEquals(dishID, basicDish.getDishID());
+        Assert.assertEquals(name, basicDish.getDishName());
+        Assert.assertEquals(restaurant, basicDish.getRestaurant());
+        Assert.assertEquals(rating, basicDish.getRating());
+        Assert.assertEquals(tags, basicDish.getTags());
+        Assert.assertEquals(allTagValues, basicDish.getAllTagValues());
     }
 
     @Test
     public void testUpdateRating() {
+        // run
+        dish.setRating(2);
+
+        // verify
+        Assert.assertEquals(2, dish.getRating());
     }
 
     @Test
     public void testAddUserTags() {
         // setup
-        dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
-
         HashMap<String, Set<String>> newUserTags = new HashMap<>();
         newUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.NUTFREE)));
-        newUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE));
+        newUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE)));
 
         // run
         dish.addUserTags(newUserTags);
@@ -85,7 +89,7 @@ public class DishTest {
         correctUpdatedUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE)));
         correctUpdatedUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN)));
 
-        Set<String> correctUpdatedAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN)));
+        Set<String> correctUpdatedAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN));
 
         Assert.assertEquals(correctUpdatedUserTags, dish.getTags());
         Assert.assertEquals(correctUpdatedAllTags, dish.getAllTagValues());

@@ -116,7 +116,7 @@ public class Dish {
      * @param rating updated average star rating
      * @method updateRating
      */
-    public void updateRating(int rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
