@@ -14,20 +14,16 @@
 
 package codeu.model.store.persistence;
 
-import codeu.model.data.Conversation;
-import codeu.model.data.Message;
+import codeu.model.data.Dish;
+import codeu.model.data.Review;
+import codeu.model.data.Tag;
 import codeu.model.data.User;
-import codeu.model.store.persistence.PersistentDataStoreException;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
+import codeu.orm.DishORM;
+import codeu.orm.TagORM;
+import com.google.appengine.api.datastore.*;
+
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class handles all interactions with Google App Engine's Datastore service. On startup it
@@ -36,148 +32,231 @@ import java.util.UUID;
  */
 public class PersistentDataStore {
 
-  // Handle to Google AppEngine's Datastore service.
-  private DatastoreService datastore;
+    // Handle to Google AppEngine's Datastore service.
+    private DatastoreService datastore;
 
-  /**
-   * Constructs a new PersistentDataStore and sets up its state to begin loading objects from the
-   * Datastore service.
-   */
-  public PersistentDataStore() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
-  }
-
-  /**
-   * Loads all User objects from the Datastore service and returns them in a List.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public List<User> loadUsers() throws PersistentDataStoreException {
-
-    List<User> users = new ArrayList<>();
-
-    // Retrieve all users from the datastore.
-    Query query = new Query("chat-users");
-    PreparedQuery results = datastore.prepare(query);
-
-    for (Entity entity : results.asIterable()) {
-      try {
-        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-        String userName = (String) entity.getProperty("username");
-        String passwordHash = (String) entity.getProperty("password_hash");
-        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-        User user = new User(uuid, userName, passwordHash, creationTime);
-        users.add(user);
-      } catch (Exception e) {
-        // In a production environment, errors should be very rare. Errors which may
-        // occur include network errors, Datastore service errors, authorization errors,
-        // database entity definition mismatches, or service mismatches.
-        throw new PersistentDataStoreException(e);
-      }
+    /**
+     * Constructs a new PersistentDataStore and sets up its state to begin loading objects from the
+     * Datastore service.
+     */
+    public PersistentDataStore() {
+        datastore = DatastoreServiceFactory.getDatastoreService();
     }
 
-    return users;
-  }
+    /**
+     * Loads all User objects from the Datastore service and returns them in a List.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public List<User> loadUsers() throws PersistentDataStoreException {
 
-  /**
-   * Loads all Conversation objects from the Datastore service and returns them in a List, sorted in
-   * ascending order by creation time.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public List<Conversation> loadConversations() throws PersistentDataStoreException {
+        List<User> users = new ArrayList<>();
 
-    List<Conversation> conversations = new ArrayList<>();
+        // Retrieve all users from the datastore.
+        Query query = new Query("chat-users");
+        PreparedQuery results = datastore.prepare(query);
 
-    // Retrieve all conversations from the datastore.
-    Query query = new Query("chat-conversations").addSort("creation_time", SortDirection.ASCENDING);
-    PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+            try {
+                UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+                String userName = (String) entity.getProperty("username");
+                String passwordHash = (String) entity.getProperty("password_hash");
+                Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+                User user = new User(uuid, userName, passwordHash, creationTime);
+                users.add(user);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
 
-    for (Entity entity : results.asIterable()) {
-      try {
-        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-        UUID ownerUuid = UUID.fromString((String) entity.getProperty("owner_uuid"));
-        String title = (String) entity.getProperty("title");
-        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-        Conversation conversation = new Conversation(uuid, ownerUuid, title, creationTime);
-        conversations.add(conversation);
-      } catch (Exception e) {
-        // In a production environment, errors should be very rare. Errors which may
-        // occur include network errors, Datastore service errors, authorization errors,
-        // database entity definition mismatches, or service mismatches.
-        throw new PersistentDataStoreException(e);
-      }
+        return users;
     }
 
-    return conversations;
-  }
+    /**
+     * Loads all Dish objects from the Datastore service
+     * Returns the Dishes in a DishORM via the appropriate mappings.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public DishORM loadDishes() throws PersistentDataStoreException {
+        // Setting up Data Structures to load information into
+        HashMap<UUID, Dish> dishMap = new HashMap<>();
+        HashMap<UUID, Integer> ratingMap = new HashMap<>();
 
-  /**
-   * Loads all Message objects from the Datastore service and returns them in a List, sorted in
-   * ascending order by creation time.
-   *
-   * @throws PersistentDataStoreException if an error was detected during the load from the
-   *     Datastore service
-   */
-  public List<Message> loadMessages() throws PersistentDataStoreException {
+        // Retrieve all Dishes from DataStore
+        Query query = new Query("dishes");
+        PreparedQuery results = datastore.prepare(query);
 
-    List<Message> messages = new ArrayList<>();
+        for (Entity entity : results.asIterable()) {
+            try {
+                UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
+                String dishName = (String) entity.getProperty("dish_name");
+                String restaurant = (String) entity.getProperty("restaurant");
+                int rating = Integer.parseInt((String) entity.getProperty("rating"));
+                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
-    // Retrieve all messages from the datastore.
-    Query query = new Query("chat-messages").addSort("creation_time", SortDirection.ASCENDING);
-    PreparedQuery results = datastore.prepare(query);
+                Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
-    for (Entity entity : results.asIterable()) {
-      try {
-        UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-        UUID conversationUuid = UUID.fromString((String) entity.getProperty("conv_uuid"));
-        UUID authorUuid = UUID.fromString((String) entity.getProperty("author_uuid"));
-        Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-        String content = (String) entity.getProperty("content");
-        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime);
-        messages.add(message);
-      } catch (Exception e) {
-        // In a production environment, errors should be very rare. Errors which may
-        // occur include network errors, Datastore service errors, authorization errors,
-        // database entity definition mismatches, or service mismatches.
-        throw new PersistentDataStoreException(e);
-      }
+                dishMap.put(dishID, dish);
+                ratingMap.put(dishID, rating);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
+        return new DishORM(dishMap, ratingMap);
     }
 
-    return messages;
-  }
+    /**
+     * Loads all Tag objects from the Datastore service and returns them in
+     * a TagORM instance.
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public TagORM loadTags() throws PersistentDataStoreException {
+        // Setting up Data Structures to load Tag information into
+        HashMap<String, Tag> tagsByType = new HashMap<>();
 
-  /** Write a User object to the Datastore service. */
-  public void writeThrough(User user) {
-    Entity userEntity = new Entity("chat-users", user.getId().toString());
-    userEntity.setProperty("uuid", user.getId().toString());
-    userEntity.setProperty("username", user.getName());
-    userEntity.setProperty("password_hash", user.getPasswordHash());
-    userEntity.setProperty("creation_time", user.getCreationTime().toString());
-    datastore.put(userEntity);
-  }
+        // Retrieve all Tags from DataStore
+        Query query = new Query("tags");
+        PreparedQuery results = datastore.prepare(query);
 
-  /** Write a Message object to the Datastore service. */
-  public void writeThrough(Message message) {
-    Entity messageEntity = new Entity("chat-messages", message.getId().toString());
-    messageEntity.setProperty("uuid", message.getId().toString());
-    messageEntity.setProperty("conv_uuid", message.getConversationId().toString());
-    messageEntity.setProperty("author_uuid", message.getAuthorId().toString());
-    messageEntity.setProperty("content", message.getContent());
-    messageEntity.setProperty("creation_time", message.getCreationTime().toString());
-    datastore.put(messageEntity);
-  }
+        for (Entity entity : results.asIterable()) {
+            try {
+                String tagType = (String) entity.getProperty("tag_type");
+                HashMap<String, Set<UUID>> dishesByValue = (HashMap<String, Set<UUID>>) entity.getProperty("dishes_by_value");
+                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
-  /** Write a Conversation object to the Datastore service. */
-  public void writeThrough(Conversation conversation) {
-    Entity conversationEntity = new Entity("chat-conversations", conversation.getId().toString());
-    conversationEntity.setProperty("uuid", conversation.getId().toString());
-    conversationEntity.setProperty("owner_uuid", conversation.getOwnerId().toString());
-    conversationEntity.setProperty("title", conversation.getTitle());
-    conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
-    datastore.put(conversationEntity);
-  }
+                Tag tag = new Tag(tagType, dishesByValue, allTagValues);
+
+                tagsByType.put(tagType, tag);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
+        return new TagORM(tagsByType);
+    }
+
+    /**
+     * Loads all Review objects from the Datastore service and returns them in
+     * a Map that organizes all the Reviews by dish, i.e. {dishID : {Reviews for that dish}}
+     *
+     * @throws PersistentDataStoreException if an error was detected during the load from the
+     *                                      Datastore service
+     */
+    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+        // Setting up Data Structures to load Review information into
+        HashMap<UUID, Set<Review>> reviewsByDish = new HashMap<>();
+
+        /**
+         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
+         reviewEntity.setProperty("review_id", review.getReviewID().toString());
+         reviewEntity.setProperty("author", review.getAuthor());
+         reviewEntity.setProperty("dish_id", review.getDishID());
+         reviewEntity.setProperty("num_stars", review.getStarRating());
+         reviewEntity.setProperty("desc", review.getDescription());
+         *
+         private final UUID reviewID;
+         private final UUID author;
+         private final UUID dishID;
+         private final int numStars;
+         private final String desc;
+         private final HashMap<String, Set<String>> tags;
+         * */
+
+        // Retrieve all Reviews from DataStore
+        Query query = new Query("reviews");
+        PreparedQuery results = datastore.prepare(query);
+
+        for (Entity entity : results.asIterable()) {
+            try {
+                UUID reviewID = UUID.fromString((String) entity.getProperty("review_id"));
+                UUID author = UUID.fromString((String) entity.getProperty("author"));
+                UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
+                Integer numStars = (Integer) entity.getProperty("num_stars");
+                String desc = (String) entity.getProperty("desc");
+                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+
+                Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
+
+                Set<Review> reviews = reviewsByDish.get(dishID);
+                if (reviews == null) {
+                    reviews = new HashSet<>();
+                    reviewsByDish.put(dishID, reviews);
+                }
+                reviews.add(review);
+            } catch (Exception e) {
+                // In a production environment, errors should be very rare. Errors which may
+                // occur include network errors, Datastore service errors, authorization errors,
+                // database entity definition mismatches, or service mismatches.
+                throw new PersistentDataStoreException(e);
+            }
+        }
+        return reviewsByDish;
+    }
+
+    /**
+     * Write a User object to the Datastore service.
+     */
+    public void writeThrough(User user) {
+        Entity userEntity = new Entity("chat-users", user.getId().toString());
+        userEntity.setProperty("uuid", user.getId().toString());
+        userEntity.setProperty("username", user.getName());
+        userEntity.setProperty("password_hash", user.getPasswordHash());
+        userEntity.setProperty("creation_time", user.getCreationTime().toString());
+        datastore.put(userEntity);
+    }
+
+    /**
+     * Write a Dish object to the Datastore service.
+     */
+    public void writeThrough(Dish dish) {
+        Entity dishEntity = new Entity("dishes", dish.getDishID().toString());
+        // TODO: ask why convert everything to string?
+        dishEntity.setProperty("dish_id", dish.getDishID().toString());
+        dishEntity.setProperty("dish_name", dish.getDishName());
+        dishEntity.setProperty("restaurant", dish.getRestaurant());
+        dishEntity.setProperty("rating", dish.getRestaurant().toString());
+        dishEntity.setProperty("tags", dish.getTags());
+        dishEntity.setProperty("all_tag_values", dish.getAllTagValues());
+//        dishEntity.setProperty("creation_time", dish.getCreationTime().toString());
+        datastore.put(dishEntity);
+    }
+
+    /**
+     * Write a Tag object to the Datastore service.
+     */
+    public void writeThrough(Tag tag) {
+        Entity tagEntity = new Entity("tags", tag.getTagType());
+        tagEntity.setProperty("tag_type", tag.getTagType());
+        tagEntity.setProperty("dishes_by_value", tag.getAllDishesByValue());
+        tagEntity.setProperty("all_tag_values", tag.getAllTagValues());
+        datastore.put(tagEntity);
+    }
+
+    /**
+     * Write a Review object to the Datastore service.
+     */
+    public void writeThrough(Review review) {
+        Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
+        reviewEntity.setProperty("review_id", review.getReviewID().toString());
+        reviewEntity.setProperty("author", review.getAuthor());
+        reviewEntity.setProperty("dish_id", review.getDishID());
+        reviewEntity.setProperty("num_stars", review.getStarRating());
+        reviewEntity.setProperty("desc", review.getDescription());
+        reviewEntity.setProperty("tags", review.getTags());
+        datastore.put(reviewEntity);
+    }
 }
-

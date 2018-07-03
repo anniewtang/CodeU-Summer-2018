@@ -16,40 +16,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
-  <link rel="stylesheet" href="/css/main.css">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-  <nav>
+<nav>
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
     <% } else { %>
-      <a href="/login">Login</a>
+    <a href="/login">Login</a>
     <% } %>
     <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
-  </nav>
+</nav>
 
-  <div id="container">
+<div id="container">
     <h1>Register</h1>
 
     <% if (request.getAttribute("error") != null) { %>
-      <h2 style="color:red"><%= request.getAttribute("error") %></h2>
+    <h2 style="color:red"><%= request.getAttribute("error") %>
+    </h2>
     <% } %>
 
     <form action="/register" method="POST">
-      <label for="username">Username: </label>
-      <br/>
-      <input type="text" name="username" id="username">
-      <br/>
-      <label for="password">Password: </label>
-      <br/>
-      <input type="password" name="password" id="password">
-      <br/><br/>
-      <button type="submit">Submit</button>
+        <label for="username">Username: </label>
+        <br/>
+        <input type="text" name="username" id="username">
+        <br/>
+        <label for="password">Password: </label>
+        <br/>
+        <input type="password" name="password" id="password">
+        <br/><br/>
+        <button type="submit">Submit</button>
     </form>
-  </div>
+</div>
 </body>
 </html>

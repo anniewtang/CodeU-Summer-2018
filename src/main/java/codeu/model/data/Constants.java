@@ -1,3 +1,5 @@
+package codeu.model.data;
+
 // Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,63 +15,74 @@
 // limitations under the License.
 
 public class Constants {
+    /* Cuisine Types Constants*/
+        public static final String ASIAN = "Asian";
+        public static final String AMERICAN = "American");
+        public static final String MEXICAN = "Mexican");
+        public static final String EUROPEAN = "European");
+        public static final String CHINESE = "Chinese");
+        public static final String ITALIAN = "Italian");
+        public static final String JAPANESE = "Japanese");
+        public static final String GREEK = "Greek");
+        public static final String FRENCH = "French");
+        public static final String THAI = "Thai");
+        public static final String SPANISH = "Spanish");
+        public static final String INDIAN = "Indian");
+        public static final String MEDITERRAENEAN = "Mediterraenean");
+        public static final String CAJUN = "Cajun");
+        public static final String SOUL = "Soul");
+        public static final String GERMAN = "German");
+        public static final String KOREAN = "Korean");
+        public static final String VIETNAMESE = "Vietnamese");
+        public static final String TURKISH = "Turkish");
+        public static final String CARIBBEAN = "Caribbean");
 
-  /* Cuisine Types Constants*/
-  enum CuisineType {
-    // Regional
-    ASIAN("Asian"), AMERICAN("American"), MEXICAN("Mexican"), EUROPEAN("European"),
-    // Top Ethnic Food preferences in the USA (via Google)
-    CHINESE("Chinese"), MEXICAN("Mexican"), ITALIAN("Italian"), JAPANESE("Japanese"),
-    GREEK("Greek"), FRENCH("French"), THAI("Thai"), SPANISH("Spanish"), INDIAN("Indian"),
-    MEDITERRAENEAN("Mediterraenean"), CAJUN("Cajun"), SOUL("Soul"), GERMAN("German"),
-    KOREAN("Korean"), VIETNAMESE("Vietnamese"), TURKISH("Turkish"), CARIBBEAN("Caribbean");
+    /* Dish Type Constants */
+        // Main Categories
+        public static final String APPETIZER = "Appetizer";
+        public static final String ENTREE = "Entree";
+        public static final String DESSERT = "Dessert";
 
-    private String type;
-    CuisineType(String type) {
-      this.type = type;
-    }
+        public static final String BREAKFAST = "Breakfast";
+        public static final String LUNCH = "Lunch";
+        public static final String DINNER = "Dinner";
 
-    public String getType() {
-      return this.type;
-    }
-  }
+        public static final String SWEET = "Sweet";
+        public static final String SAVORY = "Savory";
+        public static final String SALTY = "Salty";
+        public static final String SOUR = "Sour";
 
-  /* Dish Type Constants */
-  enum DishType {
-    // Main Categories
-    APPETIZER("Appetizer"), ENTREE("Entree"), DESSERT("Dessert"),
-    BREAKFAST("Breakfast"), LUNCH("Lunch"), DINNER("Dinner"),
-    SWEET("Sweet"), SAVORY("Savory"), SALTY("Salty"), SOUR("Sour"),
-    // Specific Categories
-    SOUP("Soup"), BREAD("Bread"), PORRIDGE("Porridge"), EGGS("Eggs"), WAFFLES("Waffles"),
-    PANCAKES("Pancakes"), COFFEE("Coffee"), OATMEAL("Oatmeal"), YOGURT("Yogurt"), BAGEL("Bagel")
-    NOODLE("Noodle"), PASTA("Pasta"), RICE("Rice"), BURGER("Burger"), FASTFOOD("Fast Food"),
-    SALAD("Salad"), SANDWICH("Sandwich"), FRUIT("Fruit"), ICECREAM("Ice Cream"), CAKE("Cake");
+        // Specific Categories
+        public static final String SOUP = "Soup";
+        public static final String BREAD = "Bread";
+        public static final String PORRIDGE = "Porridge";
+        public static final String EGGS = "Eggs";
+        public static final String WAFFLES = "Waffles";
 
-    private String type;
-    DishType(String type) {
-      this.type = type;
-    }
+        public static final String PANCAKES = "Pancakes";
+        public static final String COFFEE = "Coffee";
+        public static final String OATMEAL = "Oatmeal";
+        public static final String YOGURT = "Yogurt";
+        public static final String BAGEL = "Bagel";
 
-    public String getType() {
-      return this.type;
-    }
-  }
-  /*  Dietary Restriction Constants */
-  enum Restrictions {
-    PESCETARIAN("Pescetarian"), VEGETARIAN("Vegetarian"), VEGAN("Vegan"),
-    GLUTENFREE("Gluten-Free"), DAIRYFREE("Dairy-Free"), NUTFREE("Nut-Free");
+        public static final String NOODLE = "Noodle";
+        public static final String PASTA = "Pasta";
+        public static final String RICE = "Rice";
+        public static final String BURGER = "Burger";
+        public static final String FASTFOOD = "Fast Food";
 
-    private String type;
-    Restrictions(String type) {
-      this.type = type;
-    }
+        public static final String SALAD = "Salad";
+        public static final String SANDWICH = "Sandwich";
+        public static final String FRUIT = "Fruit";
+        public static final String ICECREAM = "Ice Cream";
+        public static final String CAKE = "Cake";
 
-    public String getType() {
-      return this.type;
-    }
-  }
+    /*  Dietary Restriction Constants */
+        public static final String PESCETARIAN = "Pescetarian";
+        public static final String VEGETARIAN = "Vegetarian";
+        public static final String VEGAN = "Vegan";
 
-  /* Location Constants */
-  /** fill out with location constants if time permits */
+        public static final String GLUTENFREE = "Gluten-Free";
+        public static final String DAIRYFREE = "Dairy-Free";
+        public static final String NUTFREE = "Nut-Free";
 }

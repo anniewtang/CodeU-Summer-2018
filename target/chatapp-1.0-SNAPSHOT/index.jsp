@@ -16,47 +16,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CodeU Chat App</title>
-  <link rel="stylesheet" href="/css/main.css">
+    <title>CodeU Chat App</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-  <nav>
+<nav>
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
     <% } else { %>
-      <a href="/login">Login</a>
+    <a href="/login">Login</a>
     <% } %>
     <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
-  </nav>
+</nav>
 
-  <div id="container">
+<div id="container">
     <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>Dishcussion</h1>
+        <h1>Dishcussion</h1>
 
-      <!-- ADD SEARCH BAR -->
-      <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
-
-
-      <form action="/results" method="get">
-        <input id="go" type="submit" class="button" value="Go">
-      </form>
+        <!-- ADD SEARCH BAR -->
+        <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
 
 
-      <br>
-      
-      <!-- ADD REVIEW BUTTON -->
-      <form action="/review" method="get">
-        <input id="add-review" type="submit" class="button" value="Add Review">
-      </form>      
+        <form action="/results" method="get">
+            <input id="go" type="submit" class="button" value="Go">
+        </form>
 
-      <!-- IF user is signed in... use recommendations based on history & current location -->
-      <!-- IF user is not signed in... use recommendations based on current location --> 
+
+        <br>
+
+        <!-- ADD REVIEW BUTTON -->
+        <form action="/review" method="get">
+            <input id="add-review" type="submit" class="button" value="Add Review">
+        </form>
+
+        <!-- IF user is signed in... use recommendations based on history & current location -->
+        <!-- IF user is not signed in... use recommendations based on current location -->
 
     </div>
-  </div>
+</div>
 </body>
 </html>

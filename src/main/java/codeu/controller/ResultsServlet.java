@@ -16,25 +16,25 @@ import codeu.model.store.basic.UserStore;
 
 public class ResultsServlet extends HttpServlet {
 
-  /**
-   * Set up state for handling registration-related requests. This method is only called when
-   * running in a server, not when running in a test.
-   */
-  @Override
-  public void init() throws ServletException {
-    super.init();
-  }
+    /**
+     * Set up state for handling registration-related requests. This method is only called when
+     * running in a server, not when running in a test.
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+    }
 
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, ServletException {
-    request.getRequestDispatcher("/WEB-INF/view/results.jsp").forward(request, response);
-  }
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        request.getRequestDispatcher("/WEB-INF/view/results.jsp").forward(request, response);
+    }
 
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, ServletException {
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
 
-  }
+    }
 }
