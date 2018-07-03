@@ -66,6 +66,10 @@ public class DishTest {
 
     @Test
     public void testUpdateRating() {
+    }
+
+    @Test
+    public void testAddUserTags() {
         // setup
         dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
 
@@ -85,10 +89,5 @@ public class DishTest {
 
         Assert.assertEquals(correctUpdatedUserTags, dish.getTags());
         Assert.assertEquals(correctUpdatedAllTags, dish.getAllTagValues());
-    }
-
-    @Test
-    public void testAddUserTags() {
-
     }
 }
