@@ -27,7 +27,6 @@ public class TagTest {
     private HashSet<UUID> chineseDishes;
     private Set<String> allTagValues;
 
-
     @Before
     public void setup() {
         // setup
