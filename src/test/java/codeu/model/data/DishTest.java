@@ -18,20 +18,51 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.*;
+
 
 public class DishTest {
-    @Test
-    public void setup() {
+    private Dish dish;
+    private UUID dishID;
+    private String name;
+    private String restaurant;
+    private int rating;
+    private HashMap<String, Set<String>> tags;
+    private Set<String> restrictions;
+    private Set<String> cuisine;
+    private Set<String> allTagValues;
 
+
+    @Before
+    public void setup() {
+        dishID = UUID.randomUUID();
+        name = "Shitake Onigiri";
+        restaurant = "Onigilly";
+        rating = 4;
+        tags = new HashMap<>();
+
+        restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));
+        cuisine = new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN));
+
+        tags.put(Constants.RESTRICTION, restrictions);
+        tags.put(Constants.CUISINE, cuisine);
+
+        allTagValues = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.JAPANESE, Constants.ASIAN));
     }
 
     @Test
     public void createBasicDish() {
-
+        dish = new Dish(dishID, name, restaurant, rating, tags);
+        Assert.assertEquals(dishID, dish.getDishID());
+        Assert.assertEquals(name, dish.getDishName());
+        Assert.assertEquals(restaurant, dish.getRestaurant());
+        Assert.assertEquals(rating, dish.getRating());
+        Assert.assertEquals(tags, dish.getTags());
+        Assert.assertEquals(allTagValues, dish.getAllTagValues());
     }
 
     @Test
     public void createFilledDish() {
-
+        dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
     }
 }
