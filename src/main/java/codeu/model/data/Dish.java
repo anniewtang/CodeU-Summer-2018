@@ -37,6 +37,8 @@ public class Dish {
 
     /**
      * Constructs a new Dish object.
+     * Used when the user FIRST rates a new Dish
+     * i.e. first time ever this Dish enters our system.
      *
      * @param id         the ID of this dish
      * @param name       the name of the dish
@@ -44,12 +46,7 @@ public class Dish {
      * @param tags       the tag values for this dish, organized by tag TYPE
      */
     public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
-        this.dishID = id;
-        this.dishName = name;
-        this.restaurant = restaurant;
-        this.rating = rating;
-        this.tags = tags;
-        this.allTagValues = initializeAllTagValues(tags);
+        this(id, name, restaurant, rating, tags, aggregateAllTagValues(tags));
     }
 
     /**
@@ -128,14 +125,15 @@ public class Dish {
      * Also updates collection of All Tags associated with this Dish.
      *
      * @param userTags new user-given tags in the form: {tagType : {tagValues}}
-     * @method setUserTags
+     * @method addUserTags
      */
-    public void setUserTags(HashMap<String, Set<String>> userTags) {
+    public void addUserTags(HashMap<String, Set<String>> userTags) {
         for (Entry<String, Set<String>> pair : userTags.entrySet()) {
             String type = pair.getKey();
             Set<String> tags = pair.getValue();
+
             updateTagsForType(type, tags);
-            updateAllTagValues(tags);
+            this.allTagValues.addAll(tags);
         }
     }
 
@@ -153,10 +151,6 @@ public class Dish {
         return values;
     }
 
-    private void updateAllTagValues(Set<String> tags) {
-        this.allTagValues.addAll(tags);
-    }
-
     /**
      * Private helper method meant to help initialize this.allTagValues,
      * during the basic initialization when we create the first apperance
@@ -164,7 +158,7 @@ public class Dish {
      * @param tags mapping of the given user tags {tagType : {tagValues}}
      * @return a set with all the tag values
      */
-    private Set<String> initializeAllTagValues(HashMap<String, Set<String>> tags) {
+    private static Set<String> aggregateAllTagValues(HashMap<String, Set<String>> tags) {
         Set<String> allTagValues = new HashSet<>();
         for (Entry<String, Set<String>> pair : tags.entrySet()) {
             allTagValues.addAll(pair.getValue());

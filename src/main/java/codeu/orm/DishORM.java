@@ -100,7 +100,7 @@ public class DishORM {
      */
     public Dish updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
         Dish dish = getDish(id);
-        dish.setUserTags(userTags);
+        dish.addUserTags(userTags);
         return dish;
     }
 }
