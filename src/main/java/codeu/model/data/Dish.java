@@ -107,12 +107,19 @@ public class Dish {
     }
 
     /**
+     * Returns all the Tags Dish has
+     */
+    public Set<String> getAllTagValues() {
+        return this.allTagValues;
+    }
+
+    /**
      * Updates the average star rating a Dish has, after more users rate it.
      *
      * @param rating updated average star rating
-     * @method setRating
+     * @method updateRating
      */
-    public void setRating(int rating) {
+    public void updateRating(int rating) {
         this.rating = rating;
     }
 
@@ -137,6 +144,7 @@ public class Dish {
         values.addAll(tags);
     }
 
+    // TODO: TAKE ANOTHER LOOK AT THIS
     private Set<String> getValuesOfType(String type) {
         Set<String> values = this.tags.get(type);
         if (values == null) {
@@ -149,10 +157,4 @@ public class Dish {
         this.allTagValues.addAll(tags);
     }
 
-    /**
-     * Returns all the Tags Dish has
-     */
-    public Set<String> getAllTagValues() {
-        return this.allTagValues;
-    }
 }

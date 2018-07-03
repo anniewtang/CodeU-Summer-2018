@@ -85,7 +85,7 @@ public class DishORM {
         if (dishExists(id)) {
             oldRating = getRating(id);
         }
-        updatedDish.setRating((oldRating + rate) / 2);
+        updatedDish.updateRating((oldRating + rate) / 2);
         return updatedDish;
     }
 
