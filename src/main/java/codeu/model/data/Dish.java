@@ -144,9 +144,10 @@ public class Dish {
 
     // TODO: TAKE ANOTHER LOOK AT THIS
     private Set<String> getValuesOfType(String type) {
-        Set<String> values = this.tags.get(type);
+        Set<String> values = tags.get(type);
         if (values == null) {
             values = new HashSet<>();
+            tags.put(type, values);
         }
         return values;
     }
