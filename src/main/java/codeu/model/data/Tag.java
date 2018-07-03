@@ -85,13 +85,16 @@ public class Tag {
         Set<UUID> dishes = this.dishesByValue.get(value);
         if (dishes == null) {
             dishes = new HashSet<>();
+            getAllDishesByValue().put(value, dishes);
         }
         return dishes;
     }
 
     /**
-     * Associates a Dish with all its given user tags, for querying.
-     * Adds the tagValues into the allTagValues set as well
+     * Associates a Dish with all its given user tags for this particular Tag Category
+     * Used by TagORM to help with querying.
+     *
+     * Adds all the provided tagValues into {allTagValues} as well
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
@@ -104,6 +107,4 @@ public class Tag {
             this.allTagValues.add(tagValue);
         }
     }
-
-
 }
