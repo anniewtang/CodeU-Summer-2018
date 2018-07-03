@@ -25,17 +25,16 @@ public class TagTest {
     private String type = Constants.CUISINE;
     private HashMap<String, Set<UUID>> dishesByValue;
     private HashSet<UUID> chineseDishes;
+    private Set<UUID> asianDishes;
     private Set<String> allTagValues;
 
     @Before
     public void setup() {
         // setup
+        chineseDishes = new HashSet<>(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()));
+        asianDishes = new HashSet<>(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()));
         dishesByValue = new HashMap<>();
-        chineseDishes = new HashSet<>();
-        chineseDishes.addAll(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()));
         dishesByValue.put(Constants.CHINESE, chineseDishes);
-        Set<UUID> asianDishes = new HashSet<>();
-        asianDishes.addAll(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()));
         dishesByValue.put(Constants.ASIAN, asianDishes);
 
         allTagValues = new HashSet<>();
@@ -68,6 +67,7 @@ public class TagTest {
         Assert.assertEquals(dishesByValue, tag.getAllDishesByValue());
         Assert.assertEquals(allTagValues, tag.getAllTagValues());
         Assert.assertEquals(chineseDishes, tag.getDishesByValue(Constants.CHINESE));
+        Assert.assertEquals(asianDishes, tag.getDishesByValue(Constants.ASIAN));
     }
 
     @Test
