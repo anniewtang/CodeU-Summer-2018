@@ -84,13 +84,15 @@ public class DishORM {
     /**
      * Updates the AVERAGE rating for this dish in orm
      */
+    // TODO: SEE IF REVIEWSTORE IS UPDATED BEFORE THIS OR NOT? may need to change prevNumReviews depending on that.
     public Dish updateRating(UUID id, int rate) {
         Dish updatedDish = getDish(id);
         int oldRating = 0;
         if (dishExists(id)) {
-            oldRating = getRating(id) * getNumReviews(id);
+            oldRating = getRating(id);
         }
-        updatedDish.setRating((oldRating + rate) / 2);
+        int prevNumReviews = getNumReviews(id);
+        updatedDish.setRating((oldRating * prevNumReviews + rate) / (prevNumReviews + 1));
         return updatedDish;
     }
 
