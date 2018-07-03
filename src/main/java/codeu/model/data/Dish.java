@@ -49,7 +49,7 @@ public class Dish {
         this.restaurant = restaurant;
         this.rating = rating;
         this.tags = tags;
-        this.allTagValues = new HashSet<>();
+        this.allTagValues = initializeAllTagValues(tags);
     }
 
     /**
@@ -68,7 +68,7 @@ public class Dish {
         this.restaurant = restaurant;
         this.rating = rating;
         this.tags = tags;
-        this.allTagValues = new HashSet<>();
+        this.allTagValues = allTagValues;
     }
 
     /**
@@ -155,6 +155,21 @@ public class Dish {
 
     private void updateAllTagValues(Set<String> tags) {
         this.allTagValues.addAll(tags);
+    }
+
+    /**
+     * Private helper method meant to help initialize this.allTagValues,
+     * during the basic initialization when we create the first apperance
+     * of this particular Dish (i.e. never rated by a user before).
+     * @param tags mapping of the given user tags {tagType : {tagValues}}
+     * @return a set with all the tag values
+     */
+    private Set<String> initializeAllTagValues(HashMap<String, Set<String>> tags) {
+        Set<String> allTagValues = new HashSet<>();
+        for (Entry<String, Set<String>> pair : tags.entrySet()) {
+            allTagValues.addAll(pair.getValue());
+        }
+        return allTagValues;
     }
 
 }
