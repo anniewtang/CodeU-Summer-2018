@@ -47,7 +47,7 @@ public class DishORM {
      * @param id of the dish we want avg rating of
      * @return INTEGER average rating associated with the given dish.
      */
-    public int getRating(UUID id) {
+    public int getAverageRating(UUID id) {
         return this.avgRatingMap.get(id);
     }
 
@@ -84,15 +84,20 @@ public class DishORM {
     }
 
     /**
-     * Updates the AVERAGE rating for this dish in orm
+     * Use when a user enters a NEW review for this Dish, so we need to update Dish's avg rating.
+     * Also use during LOADING from PDS to update avgRatingMap.
+     * Should always be called when the Dish already exists in our HashMap.
+     * Should also be called BEFORE the new review is added into ReviewStore.
+     * TODO: should we handle the mistake of calling this function with an irrelevant dishID?
+     *
+     * @param id of the dish
+     * @param rate incoming rating we factor into the avg
+     * @return Dish object with the updated avg rating.
      */
-    // TODO: SEE IF REVIEWSTORE IS UPDATED BEFORE THIS OR NOT? may need to change prevNumReviews depending on that.
     public Dish updateRating(UUID id, int rate) {
         Dish updatedDish = getDish(id);
-        int oldRating = 0;
-        if (dishMap.containsKey(id)) {
-            oldRating = getRating(id);
-        }
+        int oldRating = getAverageRating(id);
+
         int prevNumReviews = getNumReviews(id);
         updatedDish.setRating((oldRating * prevNumReviews + rate) / (prevNumReviews + 1));
         return updatedDish;
