@@ -14,11 +14,8 @@
 
 package codeu.model.data;
 
-import codeu.model.data.Review;
-
-import java.time.Instant;
 import java.util.UUID;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -32,7 +29,7 @@ public class Dish {
     private final String dishName;
     private final String restaurant;
     private int rating;
-    private HashMap<String, Set<String>> tags; // {tagType : {tagValues}}
+    private Map<String, Set<String>> tags; // {tagType : {tagValues}}
     private Set<String> allTagValues;
 
     /**
@@ -45,7 +42,7 @@ public class Dish {
      * @param restaurant the name of the restaurant where this dish came from
      * @param tags       the tag values for this dish, organized by tag TYPE
      */
-    public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags) {
+    public Dish(UUID id, String name, String restaurant, int rating, Map<String, Set<String>> tags) {
         this(id, name, restaurant, rating, tags, aggregateAllTagValues(tags));
     }
 
@@ -59,7 +56,7 @@ public class Dish {
      * @param tags         the tag values for this dish, organized by tag TYPE
      * @param allTagValues the collection of ALL tag values associated for dish
      */
-    public Dish(UUID id, String name, String restaurant, int rating, HashMap<String, Set<String>> tags, Set<String> allTagValues) {
+    public Dish(UUID id, String name, String restaurant, int rating, Map<String, Set<String>> tags, Set<String> allTagValues) {
         this.dishID = id;
         this.dishName = name;
         this.restaurant = restaurant;
@@ -99,7 +96,7 @@ public class Dish {
     /**
      * Returns all the tags for this dish in the format {tagType: {tagValues}}
      */
-    public HashMap<String, Set<String>> getTags() {
+    public Map<String, Set<String>> getTags() {
         return this.tags;
     }
 
@@ -127,7 +124,7 @@ public class Dish {
      * @param userTags new user-given tags in the form: {tagType : {tagValues}}
      * @method addUserTags
      */
-    public void addUserTags(HashMap<String, Set<String>> userTags) {
+    public void addUserTags(Map<String, Set<String>> userTags) {
         for (Entry<String, Set<String>> pair : userTags.entrySet()) {
             String type = pair.getKey();
             Set<String> tags = pair.getValue();
@@ -159,7 +156,7 @@ public class Dish {
      * @param tags mapping of the given user tags {tagType : {tagValues}}
      * @return a set with all the tag values
      */
-    private static Set<String> aggregateAllTagValues(HashMap<String, Set<String>> tags) {
+    private static Set<String> aggregateAllTagValues(Map<String, Set<String>> tags) {
         Set<String> allTagValues = new HashSet<>();
         for (Entry<String, Set<String>> pair : tags.entrySet()) {
             allTagValues.addAll(pair.getValue());

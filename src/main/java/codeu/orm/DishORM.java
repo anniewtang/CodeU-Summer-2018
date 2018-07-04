@@ -83,8 +83,6 @@ public class DishORM {
         this.dishMap.put(id, dish);
     }
 
-
-
     /**
      * Updates the AVERAGE rating for this dish in orm
      */
