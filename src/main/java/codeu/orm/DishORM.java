@@ -35,25 +35,19 @@ public class DishORM {
     }
 
     /**
+     * Retrieves the Dish object associated with the given id.
+     * @param id
+     * @return
+     */
+    public Dish getDish(UUID id) {
+        return this.dishMap.get(id);
+    }
+
+    /**
      * Adds a new Dish into our dishMap
      */
     public void addDish(UUID id, Dish dish) {
         this.dishMap.put(id, dish);
-    }
-
-    /**
-     * Returns true if this dish exists in our map
-     */
-    public boolean dishExists(UUID id) {
-        return this.dishMap.containsKey(id);
-    }
-
-    /**
-     * Returns Dish
-     * Should only be called if Dish exists in our map
-     */
-    public Dish getDish(UUID id) {
-        return this.dishMap.get(id);
     }
 
     /**
@@ -89,7 +83,7 @@ public class DishORM {
     public Dish updateRating(UUID id, int rate) {
         Dish updatedDish = getDish(id);
         int oldRating = 0;
-        if (dishExists(id)) {
+        if (dishMap.containsKey(id)) {
             oldRating = getRating(id);
         }
         int prevNumReviews = getNumReviews(id);
