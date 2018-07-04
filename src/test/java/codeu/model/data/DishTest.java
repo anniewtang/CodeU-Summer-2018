@@ -14,43 +14,14 @@
 
 package codeu.model.data;
 
+import codeu.superclass.DishTests;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
 
-public class DishTest {
-    private Dish dish;
-    private UUID dishID;
-    private String name;
-    private String restaurant;
-    private int rating;
-    private Map<String, Set<String>> tags;
-    private Set<String> restrictions;
-    private Set<String> cuisine;
-    private Set<String> allTagValues;
-
-
-    @Before
-    public void setup() {
-        dishID = UUID.randomUUID();
-        name = "Sesame Noodles";
-        restaurant = "Asian Fusion";
-        rating = 4;
-
-        tags = new HashMap<>();
-        restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));
-        cuisine = new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN));
-        tags.put(Constants.RESTRICTION, restrictions);
-        tags.put(Constants.CUISINE, cuisine);
-
-        allTagValues = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.JAPANESE, Constants.ASIAN));
-
-        dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
-    }
-
+public class DishTest extends DishTests {
     @Test
     public void testCreateDish() {
         // run

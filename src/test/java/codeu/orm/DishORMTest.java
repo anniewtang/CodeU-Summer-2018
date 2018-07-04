@@ -14,15 +14,43 @@
 
 package codeu.orm;
 
-import org.junit.Assert;
-import org.junit.Before;
+import codeu.superclass.DishTests;
 import org.junit.Test;
 
-public class DishORMTest {
+public class DishORMTest extends DishTests {
 
-    @Before
-    public void setup() {
+    @Test
+    public void testGetDish() {
 
     }
 
+    @Test
+    public void testGetAverageRating() {
+
+    }
+
+    @Test
+    public void testGetNumReviews() {
+
+    }
+
+    @Test
+    public void testGetTagsForDish() {
+
+    }
+
+    @Test
+    public void testAddDish() {
+
+    }
+
+    @Test
+    public void testUpdateRating() {
+
+    }
+
+    @Test
+    public void testUpdateDishTags() {
+
+    }
 }
