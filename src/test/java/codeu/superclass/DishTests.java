@@ -22,15 +22,15 @@ import org.junit.Before;
 import java.util.*;
 
 public class DishTests {
-    public static Dish dish;
-    public static UUID dishID;
-    public static String name;
-    public static String restaurant;
-    public static int rating;
-    public static Map<String, Set<String>> tags;
-    public static Set<String> restrictions;
-    public static Set<String> cuisine;
-    public static Set<String> allTagValues;
+    public Dish dish;
+    public UUID dishID;
+    public String name;
+    public String restaurant;
+    public int rating;
+    public Map<String, Set<String>> tags;
+    public Set<String> restrictions;
+    public Set<String> cuisine;
+    public Set<String> allTagValues;
 
     @Before
     public void setup() {
