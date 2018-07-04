@@ -160,22 +160,6 @@ public class PersistentDataStore {
         // Setting up Data Structures to load Review information into
         HashMap<UUID, Set<Review>> reviewsByDish = new HashMap<>();
 
-        /**
-         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
-         reviewEntity.setProperty("review_id", review.getReviewID().toString());
-         reviewEntity.setProperty("author", review.getAuthor());
-         reviewEntity.setProperty("dish_id", review.getDishID());
-         reviewEntity.setProperty("num_stars", review.getStarRating());
-         reviewEntity.setProperty("desc", review.getDescription());
-         *
-         private final UUID reviewID;
-         private final UUID author;
-         private final UUID dishID;
-         private final int numStars;
-         private final String desc;
-         private final HashMap<String, Set<String>> tags;
-         * */
-
         // Retrieve all Reviews from DataStore
         Query query = new Query("reviews");
         PreparedQuery results = datastore.prepare(query);
