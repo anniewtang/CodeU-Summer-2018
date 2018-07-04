@@ -16,7 +16,7 @@ package codeu.orm;
 import codeu.model.data.Dish;
 import codeu.model.store.basic.ReviewStore;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,55 +26,64 @@ import java.util.UUID;
  * and abstracts the process of querying.
  */
 public class DishORM {
-    private HashMap<UUID, Dish> dishMap; // maps dishIDs to Dish objects
-    private HashMap<UUID, Integer> ratingMap; // maps dishIDs to average star ratings
+    private Map<UUID, Dish> dishMap; // maps dishIDs to Dish objects
+    private Map<UUID, Integer> avgRatingMap; // maps dishIDs to average star ratings
 
-    public DishORM(HashMap<UUID, Dish> dishMap, HashMap<UUID, Integer> ratingMap) {
+    public DishORM(Map<UUID, Dish> dishMap, Map<UUID, Integer> avgRatingMap) {
         this.dishMap = dishMap;
-        this.ratingMap = ratingMap;
+        this.avgRatingMap = avgRatingMap;
     }
 
     /**
      * Retrieves the Dish object associated with the given id.
-     * @param id
-     * @return
      */
     public Dish getDish(UUID id) {
         return this.dishMap.get(id);
     }
 
     /**
-     * Adds a new Dish into our dishMap
+     * Should only be called in the context that the Dish exists,
+     * since we're querying with some known dishID.
+     * @param id of the dish we want avg rating of
+     * @return INTEGER average rating associated with the given dish.
      */
-    public void addDish(UUID id, Dish dish) {
-        this.dishMap.put(id, dish);
+    public int getRating(UUID id) {
+        return this.avgRatingMap.get(id);
     }
 
     /**
-     * Get rating of a particular dish.
-     * Only called under the conditions that ID exists in our dishMap
+     * Used to calculate the average rating for each dish.
+     * Also can be used as a display/UI detail (i.e. # of reviews per dish).
+     * @param id of the dish
+     * @return INTEGER number of reviews per dish.
      */
-    public int getRating(UUID id) {
-        int rating = this.ratingMap.get(id);
-        return rating;
-    }
-
     public int getNumReviews(UUID id) {
         return ReviewStore.getInstance().getNumReviews(id);
     }
 
     /**
-     * Retrieves all the tags for a particular Dish.
      * Good for UI display (i.e. showing _all_ tags for one dish for the user)
+     * Returns the tags for the dish mapped by CATEGORY.
      *
      * @param id id of the dish we want all tags of
-     * @return returns {tag type : {tag values}}
-     * @method getTagsForDish
+     * @return all the tags for a particular Dish || {tag type : {tag values}}
      */
-    public HashMap<String, Set<String>> getTagsForDish(UUID id) {
+    public Map<String, Set<String>> getTagsForDish(UUID id) {
         Dish dish = getDish(id);
         return dish.getTags();
     }
+
+    /**
+     * Use when adding in a NEW DISH for the first time into our DishORM memory.
+     * Puts it in the dishMap {dishID : Dish object}
+     * @param id of the dish
+     * @param dish object
+     */
+    public void addDish(UUID id, Dish dish) {
+        this.dishMap.put(id, dish);
+    }
+
+
 
     /**
      * Updates the AVERAGE rating for this dish in orm
@@ -100,7 +109,7 @@ public class DishORM {
      * @return the Dish object that was updated to be rewritten into DataStore
      * @method updateDishTags
      */
-    public Dish updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
+    public Dish updateDishTags(UUID id, Map<String, Set<String>> userTags) {
         Dish dish = getDish(id);
         dish.addUserTags(userTags);
         return dish;
