@@ -69,7 +69,7 @@ public class ReviewStore {
     /**
      * The in-memory mapping of dishIDs to Reviews
      */
-    private HashMap<UUID, Set<Review>> reviewsByDish;
+    private Map<UUID, Set<Review>> reviewsByDish;
 
     /**
      * This class is a singleton, so its constructor is private. Call getInstance() instead.
@@ -136,7 +136,7 @@ public class ReviewStore {
     /**
      * Sets the mapping of {dishID : Review} stored by this ReviewStore.
      */
-    public void setReviews(HashMap<UUID, Set<Review>> reviewsByDish) {
+    public void setReviews(Map<UUID, Set<Review>> reviewsByDish) {
         this.reviewsByDish = reviewsByDish;
     }
 }

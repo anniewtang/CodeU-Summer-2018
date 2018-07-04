@@ -28,10 +28,7 @@ import codeu.orm.TagORM;
 
 //import codeu.model.store.persistence.PersistentDataStore;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class is the interface between the application and PersistentDataStore, which handles
@@ -98,7 +95,7 @@ public class PersistentStorageAgent {
      * @throws PersistentDataStoreException if an error was detected during the load from the
      *                                      Datastore service
      */
-    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+    public Map<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
         return persistentDataStore.loadReviews();
     }
 

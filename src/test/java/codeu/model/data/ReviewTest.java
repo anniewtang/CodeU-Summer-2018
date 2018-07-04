@@ -31,7 +31,7 @@ public class ReviewTest {
         int numStars = 4;
         String desc = "This is a review.";
 
-        HashMap<String, Set<String>> tags = new HashMap<>();
+        Map<String, Set<String>> tags = new HashMap<>();
         tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN)));
         tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN)));
 

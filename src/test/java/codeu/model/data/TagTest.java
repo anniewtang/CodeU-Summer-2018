@@ -23,7 +23,7 @@ import java.util.*;
 public class TagTest {
     private Tag tag;
     private String type = Constants.CUISINE;
-    private HashMap<String, Set<UUID>> dishesByValue;
+    private Map<String, Set<UUID>> dishesByValue;
     private HashSet<UUID> chineseDishes;
     private Set<UUID> asianDishes;
     private Set<String> allTagValues;

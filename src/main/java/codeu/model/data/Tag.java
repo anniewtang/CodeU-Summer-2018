@@ -14,11 +14,7 @@
 
 package codeu.model.data;
 
-import java.time.Instant;
-import java.util.UUID;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Each Tag object is identified by its tag type/category.
@@ -27,7 +23,7 @@ import java.util.HashSet;
  */
 public class Tag {
     private final String tagType; // name of tag type/category
-    private HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
+    private Map<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
     private Set<String> allTagValues; // {tagValues}
 
     /**
@@ -44,7 +40,7 @@ public class Tag {
     /**
      * Constructs a new Tag, for the loadTag from PDS
      */
-    public Tag(String type, HashMap<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
+    public Tag(String type, Map<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
         this.tagType = type;
         this.dishesByValue = dishesByValue;
         this.allTagValues = allTagValues;
@@ -62,7 +58,7 @@ public class Tag {
      * Used primarily for loading into the PDS.
      * @return mapping {tagValue : {dishIDs}}
      */
-    public HashMap<String, Set<UUID>> getAllDishesByValue() {
+    public Map<String, Set<UUID>> getAllDishesByValue() {
         return this.dishesByValue;
     }
 

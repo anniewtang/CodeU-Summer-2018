@@ -27,7 +27,7 @@ public class DishTest {
     private String name;
     private String restaurant;
     private int rating;
-    private HashMap<String, Set<String>> tags;
+    private Map<String, Set<String>> tags;
     private Set<String> restrictions;
     private Set<String> cuisine;
     private Set<String> allTagValues;
@@ -77,7 +77,7 @@ public class DishTest {
     @Test
     public void testAddUserTags() {
         // setup
-        HashMap<String, Set<String>> newUserTags = new HashMap<>();
+        Map<String, Set<String>> newUserTags = new HashMap<>();
         newUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.NUTFREE)));
         newUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE)));
 
@@ -85,7 +85,7 @@ public class DishTest {
         dish.addUserTags(newUserTags);
 
         // verify
-        HashMap<String, Set<String>> correctUpdatedUserTags = new HashMap<>();
+        Map<String, Set<String>> correctUpdatedUserTags = new HashMap<>();
         correctUpdatedUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE)));
         correctUpdatedUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN)));
 
