@@ -3,13 +3,14 @@ package codeu.model.store.persistence;
 import codeu.model.data.User;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Test class for PersistentDataStore. The PersistentDataStore class relies on DatastoreService,
@@ -63,11 +64,12 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(nameOne, resultUserOne.getName());
     Assert.assertEquals(passwordHashOne, resultUserOne.getPasswordHash());
     Assert.assertEquals(creationOne, resultUserOne.getCreationTime());
+    Assert.assertEquals(aboutMeOne, resultUserOne.getAboutMe());
 
     User resultUserTwo = resultUsers.get(1);
     Assert.assertEquals(idTwo, resultUserTwo.getId());
     Assert.assertEquals(nameTwo, resultUserTwo.getName());
     Assert.assertEquals(passwordHashTwo, resultUserTwo.getPasswordHash());
-    Assert.assertEquals(creationTwo, resultUserTwo.getCreationTime());
+    Assert.assertEquals(aboutMeTwo, resultUserTwo.getAboutMe());
   }
 }

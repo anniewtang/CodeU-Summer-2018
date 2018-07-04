@@ -18,46 +18,47 @@
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%
-Conversation conversation = (Conversation) request.getAttribute("conversation");
-List<Message> messages = (List<Message>) request.getAttribute("messages");
+    Conversation conversation = (Conversation) request.getAttribute("conversation");
+    List<Message> messages = (List<Message>) request.getAttribute("messages");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= conversation.getTitle() %></title>
-  <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <title><%= conversation.getTitle() %>
+    </title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
 
-  <style>
-    #chat {
-      background-color: white;
-      height: 500px;
-      overflow-y: scroll
-    }
-  </style>
+    <style>
+        #chat {
+            background-color: white;
+            height: 500px;
+            overflow-y: scroll
+        }
+    </style>
 
-  <script>
-    // scroll the chat div to the bottom
-    function scrollChat() {
-      var chatDiv = document.getElementById('chat');
-      chatDiv.scrollTop = chatDiv.scrollHeight;
-    };
-  </script>
+    <script>
+        // scroll the chat div to the bottom
+        function scrollChat() {
+            var chatDiv = document.getElementById('chat');
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        };
+    </script>
 </head>
 <body onload="scrollChat()">
 
-  <nav>
+<nav>
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
     <% } else { %>
-      <a href="/login">Login</a>
+    <a href="/login">Login</a>
     <% } %>
     <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
-  </nav>
+</nav>
 
-  <div id="container">
+<div id="container">
 
     <h1><%= conversation.getTitle() %>
         <a href="" style="float: right">&#8635;</a></h1>
@@ -65,30 +66,31 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
     <div id="chat">
-      <ul>
-        <% for (Message message : messages) {
-          String author = UserStore.getInstance()
-              .getUser(message.getAuthorId()).getName(); %>
-          <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
-        <% } %>
-      </ul>
+        <ul>
+            <% for (Message message : messages) {
+                String author = UserStore.getInstance()
+                        .getUser(message.getAuthorId()).getName(); %>
+            <li><strong><%= author %>:</strong> <%= message.getContent() %>
+            </li>
+            <% } %>
+        </ul>
     </div>
 
     <hr/>
 
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <form action="/chat/<%= conversation.getTitle() %>" method="POST">
+    <form action="/chat/<%= conversation.getTitle() %>" method="POST">
         <input type="text" name="message">
         <br/>
         <button type="submit">Send</button>
-      </form>
+    </form>
     <% } else { %>
-      <p><a href="/login">Login</a> to send a message.</p>
+    <p><a href="/login">Login</a> to send a message.</p>
     <% } %>
 
     <hr/>
 
-  </div>
+</div>
 
 </body>
 </html>

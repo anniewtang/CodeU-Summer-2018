@@ -16,61 +16,63 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%
-List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
+    List<Conversation> conversations = (List<Conversation>) request.getAttribute("conversations");
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Conversations</title>
-  <link rel="stylesheet" href="/css/main.css">
+    <title>Conversations</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-  <nav>
+<nav>
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
     <% } else { %>
-      <a href="/login">Login</a>
+    <a href="/login">Login</a>
     <% } %>
     <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
-  </nav>
+</nav>
 
-  <div id="container">
+<div id="container">
 
     <% if (request.getAttribute("error") != null) { %>
-      <h2 style="color:red"><%= request.getAttribute("error") %></h2>
+    <h2 style="color:red"><%= request.getAttribute("error") %>
+    </h2>
     <% } %>
 
     <% if (request.getSession().getAttribute("user") != null) { %>
-      <h1>New Conversation</h1>
-      <form action="/conversations" method="POST">
+    <h1>New Conversation</h1>
+    <form action="/conversations" method="POST">
         <div class="form-group">
-          <label class="form-control-label">Title:</label>
-          <input type="text" name="conversationTitle">
+            <label class="form-control-label">Title:</label>
+            <input type="text" name="conversationTitle">
         </div>
 
         <button type="submit">Create</button>
-      </form>
+    </form>
 
-      <hr/>
+    <hr/>
     <% } %>
 
     <h1>Conversations</h1>
 
     <% if (conversations == null || conversations.isEmpty()) { %>
-      <p>Create a conversation to get started.</p>
+    <p>Create a conversation to get started.</p>
     <% } else { %>
-      <ul class="mdl-list">
+    <ul class="mdl-list">
         <% for (Conversation conversation : conversations) { %>
-          <li><a href="/chat/<%= conversation.getTitle() %>">
-              <%= conversation.getTitle() %></a></li>
+        <li><a href="/chat/<%= conversation.getTitle() %>">
+            <%= conversation.getTitle() %>
+        </a></li>
         <% } %>
-      </ul>
+    </ul>
     <% } %>
     <hr/>
-  </div>
+</div>
 </body>
 </html>

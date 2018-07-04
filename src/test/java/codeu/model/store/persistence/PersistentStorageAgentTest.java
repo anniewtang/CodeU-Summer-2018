@@ -1,8 +1,10 @@
 package codeu.model.store.persistence;
 
 import codeu.model.data.User;
+
 import java.time.Instant;
 import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -15,19 +17,31 @@ import org.mockito.Mockito;
  */
 public class PersistentStorageAgentTest {
 
-  private PersistentDataStore mockPersistentDataStore;
-  private PersistentStorageAgent persistentStorageAgent;
+    private PersistentDataStore mockPersistentDataStore;
+    private PersistentStorageAgent persistentStorageAgent;
 
-  @Before
-  public void setup() {
-    mockPersistentDataStore = Mockito.mock(PersistentDataStore.class);
-    persistentStorageAgent = PersistentStorageAgent.getTestInstance(mockPersistentDataStore);
-  }
+    @Before
+    public void setup() {
+        mockPersistentDataStore = Mockito.mock(PersistentDataStore.class);
+        persistentStorageAgent = PersistentStorageAgent.getTestInstance(mockPersistentDataStore);
+    }
 
-  @Test
-  public void testLoadUsers() throws PersistentDataStoreException {
-    persistentStorageAgent.loadUsers();
-    Mockito.verify(mockPersistentDataStore).loadUsers();
-  }
-  
+    @Test
+    public void testLoadUsers() throws PersistentDataStoreException {
+        persistentStorageAgent.loadUsers();
+        Mockito.verify(mockPersistentDataStore).loadUsers();
+    }
+
+    @Test
+    public void testWriteThroughUser() {
+        User user =
+                new User(
+                        UUID.randomUUID(),
+                        "test_username",
+                        "$2a$10$5GNCbSPS1sqqM9.hdiE2hexn1w.vnNoR.CaHIztFEhdAD7h82tqX.",
+                        Instant.now(),
+                        "");
+        persistentStorageAgent.writeThrough(user);
+        Mockito.verify(mockPersistentDataStore).writeThrough(user);
+    }
 }
