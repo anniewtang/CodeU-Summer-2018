@@ -24,7 +24,7 @@ import java.util.*;
  * Wrapper class that loads information from Data Store,
  * handles the setting & getting of information for Tags,
  * and abstracts away the process of querying for SEARCH.
- * <p>
+ *
  * Can return the DISHES associated with TAG VALUES.
  */
 public class TagORM {
