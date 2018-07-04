@@ -96,11 +96,14 @@ public class ReviewStore {
 
     /**
      * Incorporate the new user review into our app by:
-     * 1.) Updating the TagStore with the new user tags given by this review for its dish.
+     * 1.) Updating the TagStore & Dish object with this review's given user tags.
      * 2.) Updating the Average Star Rating associated with its dish.
      * 3.) Add the new review into our in-memory & persistent storage
+     *
      * @param review
      */
+    // TODO || Dependency: make sure addReview is called AFTER DishORM.addDish
+    // TODO || it relies on the DishORM already having the Dish.
     public void addReview(Review review) {
         updateTags(review);
         updateRating(review);
@@ -109,11 +112,17 @@ public class ReviewStore {
     }
 
     /**
-     * Update the TagStore's tags for querying, given the new review
+     * Incorporating the review's given user tags by:
+     * 1.) Updating the TagStore (aggregated tags by type)
+     * 2.) Updating the Dish object's tags via DishStore.
+     * @param review
      */
     private void updateTags(Review review) {
-        TagStore store = TagStore.getInstance();
-        store.updateTags(review.getDishID(), review.getTags());
+        UUID id = review.getDishID();
+        Map<String, Set<String>> tags = review.getTags();
+
+        TagStore.getInstance().updateTags(id, tags);
+        DishStore.getInstance().updateDishTags(id, tags);
     }
 
     /**
