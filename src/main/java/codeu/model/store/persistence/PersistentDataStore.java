@@ -84,6 +84,8 @@ public class PersistentDataStore {
      *                                      Datastore service
      */
     public DishORM loadDishes() throws PersistentDataStoreException {
+        // TODO: change this up so we initialize the DishORM first and then use its provided methods to add in dishes/ratings?
+
         // Setting up Data Structures to load information into
         HashMap<UUID, Dish> dishMap = new HashMap<>();
         HashMap<UUID, Integer> ratingMap = new HashMap<>();
