@@ -66,7 +66,7 @@ public class DishTest {
     }
 
     @Test
-    public void testUpdateRating() {
+    public void testSetRating() {
         // run
         dish.setRating(2);
 
