@@ -30,9 +30,9 @@ import java.util.*;
 public class TagORM {
 
     // maps tag categories to their associated Tag object
-    private HashMap<String, Tag> tagsByType;
+    private Map<String, Tag> tagsByType;
 
-    public TagORM(HashMap<String, Tag> tagsByType) {
+    public TagORM(Map<String, Tag> tagsByType) {
         this.tagsByType = tagsByType;
     }
 
@@ -58,7 +58,7 @@ public class TagORM {
      * @return a Set of all the Tag objects that we updated so we can write them into Data Store
      * @method setTags
      */
-    public Set<Tag> updateTags(UUID id, HashMap<String, Set<String>> userTags) {
+    public Set<Tag> updateTags(UUID id, Map<String, Set<String>> userTags) {
         Set<Tag> updatedTags = new HashSet<>();
         for (Entry<String, Set<String>> tagEntry : userTags.entrySet()) {
             String tagType = tagEntry.getKey();
