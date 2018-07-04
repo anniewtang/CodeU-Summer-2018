@@ -95,17 +95,16 @@ public class ReviewStore {
     }
 
     /**
-     * Add a new review to the current set of reviews known to the application.
+     * Incorporate the new user review into our app by:
+     * 1.) Updating the TagStore with the new user tags given by this review for its dish.
+     * 2.) Updating the Average Star Rating associated with its dish.
+     * 3.) Add the new review into our in-memory & persistent storage
+     * @param review
      */
     public void addReview(Review review) {
-        Set<Review> reviews = reviewsByDish.get(review.getDishID());
-        if (reviews == null) {
-            reviews = new HashSet<>();
-            reviewsByDish.put(review.getDishID(), reviews);
-        }
-        reviews.add(review);
         updateTags(review);
         updateRating(review);
+        reviewsByDish.computeIfAbsent(review.getDishID(), id -> new HashSet<>()).add(review);
         persistentStorageAgent.writeThrough(review);
     }
 
