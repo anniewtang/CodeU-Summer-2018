@@ -20,4 +20,9 @@ import org.junit.Test;
 
 public class DishORMTest {
 
+    @Before
+    public void setup() {
+
+    }
+
 }
