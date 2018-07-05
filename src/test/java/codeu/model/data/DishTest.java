@@ -24,6 +24,9 @@ import java.util.*;
 public class DishTest extends TestFramework {
     @Test
     public void testCreateDish() {
+        // setup
+        Set<String> basicAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.CHINESE, Constants.ASIAN));
+
         // run
         Dish basicDish = new Dish(dishID, name, restaurant, rating, tags);
 
@@ -33,7 +36,7 @@ public class DishTest extends TestFramework {
         Assert.assertEquals(restaurant, basicDish.getRestaurant());
         Assert.assertEquals(rating, basicDish.getRating());
         Assert.assertEquals(tags, basicDish.getTags());
-        Assert.assertEquals(allTagValues, basicDish.getAllTagValues());
+        Assert.assertEquals(basicAllTags, basicDish.getAllTagValues());
     }
 
     @Test
@@ -49,18 +52,18 @@ public class DishTest extends TestFramework {
     public void testAddUserTags() {
         // setup
         Map<String, Set<String>> newUserTags = new HashMap<>();
-        newUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.NUTFREE)));
-        newUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE)));
+        newUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
+        newUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
 
         // run
         dish.addUserTags(newUserTags);
 
         // verify
         Map<String, Set<String>> correctUpdatedUserTags = new HashMap<>();
-        correctUpdatedUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE)));
-        correctUpdatedUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN)));
+        correctUpdatedUserTags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.DAIRYFREE, Constants.GLUTENFREE)));
+        correctUpdatedUserTags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.CHINESE, Constants.ASIAN)));
 
-        Set<String> correctUpdatedAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.NUTFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN));
+        Set<String> correctUpdatedAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.GLUTENFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN, Constants.DAIRYFREE));
 
         Assert.assertEquals(correctUpdatedUserTags, dish.getTags());
         Assert.assertEquals(correctUpdatedAllTags, dish.getAllTagValues());

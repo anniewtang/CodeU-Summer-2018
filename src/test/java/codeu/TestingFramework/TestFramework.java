@@ -112,6 +112,8 @@ public class TestFramework {
         cuisineOne = new HashSet<>(Arrays.asList(Constants.ASIAN));
         tagsOne.put(Constants.RESTRICTION, restrictionsOne);
         tagsOne.put(Constants.CUISINE, cuisineOne);
+        tags.get(Constants.RESTRICTION).addAll(restrictionsOne);
+        tags.get(Constants.CUISINE).addAll(cuisineOne);
 
         allTagValues = new HashSet<>(Arrays.asList(Constants.GLUTENFREE, Constants.VEGETARIAN, Constants.VEGAN, Constants.CHINESE, Constants.ASIAN));
         dish = new Dish(dishID, name, restaurant, rating, tags, allTagValues);
