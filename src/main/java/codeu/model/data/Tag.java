@@ -61,9 +61,11 @@ public class Tag {
     public Map<String, Set<UUID>> getAllDishesByValue() {
         return this.dishesByValue;
     }
-
+    
     /**
-     * Returns all the tag values associated with this object
+     * Used during search querying/filtering, so that
+     * users can see WHAT they could filter by within this category.
+     * @return all the USED tag values within this category.
      */
     public Set<String> getAllTagValues() {
         return this.allTagValues;
