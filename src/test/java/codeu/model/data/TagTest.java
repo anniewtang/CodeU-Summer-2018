@@ -14,36 +14,14 @@
 
 package codeu.model.data;
 
+import codeu.superclass.TestConstants;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
-public class TagTest {
-    private Tag tag;
-    private String type = Constants.CUISINE;
-    private Map<String, Set<UUID>> dishesByValue;
-    private HashSet<UUID> chineseDishes;
-    private Set<UUID> asianDishes;
-    private Set<String> allTagValues;
-
-    @Before
-    public void setup() {
-        // setup
-        chineseDishes = new HashSet<>(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()));
-        asianDishes = new HashSet<>(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()));
-        dishesByValue = new HashMap<>();
-        dishesByValue.put(Constants.CHINESE, chineseDishes);
-        dishesByValue.put(Constants.ASIAN, asianDishes);
-
-        allTagValues = new HashSet<>();
-        allTagValues.addAll(Arrays.asList(Constants.CHINESE, Constants.ASIAN));
-
-        // initializing the Tag object
-        tag = new Tag(type, dishesByValue, allTagValues);
-    }
-
+public class TagTest extends TestConstants {
     /**
      * Checks the construction of a basic Tag initializer.
      * Doesn't use setup()
@@ -63,11 +41,11 @@ public class TagTest {
     @Test
     public void testFilledTag() {
         // verify
-        Assert.assertEquals(Constants.CUISINE, tag.getTagType());
-        Assert.assertEquals(dishesByValue, tag.getAllDishesByValue());
-        Assert.assertEquals(allTagValues, tag.getAllTagValues());
-        Assert.assertEquals(chineseDishes, tag.getDishesByValue(Constants.CHINESE));
-        Assert.assertEquals(asianDishes, tag.getDishesByValue(Constants.ASIAN));
+        Assert.assertEquals(Constants.CUISINE, cuisineTag.getTagType());
+        Assert.assertEquals(dishesByValue, cuisineTag.getAllDishesByValue());
+        Assert.assertEquals(cuisineAllTags, cuisineTag.getAllTagValues());
+        Assert.assertEquals(cuisineChineseDishes, cuisineTag.getDishesByValue(Constants.CHINESE));
+        Assert.assertEquals(cuisineAsianDishes, cuisineTag.getDishesByValue(Constants.ASIAN));
     }
 
     @Test
@@ -78,25 +56,25 @@ public class TagTest {
         Set<String> tagValues = new HashSet<>();
         tagValues.addAll(Arrays.asList(Constants.ASIAN, Constants.JAPANESE));
 
-        this.allTagValues.addAll(tagValues);
+        this.cuisineAllTags.addAll(tagValues);
 
         // run
-        tag.addDishToTagValue(tagValues, dishID);
+        cuisineTag.addDishToTagValue(tagValues, dishID);
 
         // verify
-        Set<UUID> asian = tag.getDishesByValue(Constants.ASIAN);
+        Set<UUID> asian = cuisineTag.getDishesByValue(Constants.ASIAN);
         Assert.assertTrue(asian.contains(dishID));
 
-        Set<UUID> japanese = tag.getDishesByValue(Constants.JAPANESE);
+        Set<UUID> japanese = cuisineTag.getDishesByValue(Constants.JAPANESE);
         Assert.assertTrue(japanese.contains(dishID));
 
-        Set<UUID> chinese = tag.getDishesByValue(Constants.CHINESE);
-        Assert.assertEquals(chinese, chineseDishes);
+        Set<UUID> chinese = cuisineTag.getDishesByValue(Constants.CHINESE);
+        Assert.assertEquals(chinese, cuisineChineseDishes);
 
         Assert.assertTrue(asian.size() == 4);
         Assert.assertTrue(chinese.size() == 2);
         Assert.assertTrue(japanese.size() == 1);
 
-        Assert.assertEquals(allTagValues, tag.getAllTagValues());
+        Assert.assertEquals(cuisineAllTags, cuisineTag.getAllTagValues());
     }
 }

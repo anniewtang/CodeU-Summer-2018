@@ -14,35 +14,22 @@
 
 package codeu.model.data;
 
+import codeu.superclass.TestConstants;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
-public class ReviewTest {
+public class ReviewTest extends TestConstants {
 
     @Test
     public void testCreateReview() {
-        // setup
-        UUID id = UUID.randomUUID();
-        UUID author = UUID.randomUUID();
-        UUID dishID = UUID.randomUUID();
-        int numStars = 4;
-        String desc = "This is a review.";
-
-        Map<String, Set<String>> tags = new HashMap<>();
-        tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN)));
-        tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN)));
-
-        // run
-        Review review = new Review(id, author,dishID, numStars, desc, tags);
-
         // verify
-        Assert.assertEquals(id, review.getReviewID());
+        Assert.assertEquals(reviewID, review.getReviewID());
         Assert.assertEquals(author, review.getAuthor());
         Assert.assertEquals(dishID, review.getDishID());
-        Assert.assertEquals(numStars, review.getStarRating());
+        Assert.assertEquals(rating, review.getStarRating());
         Assert.assertEquals(desc, review.getDescription());
         Assert.assertEquals(tags, review.getTags());
     }
