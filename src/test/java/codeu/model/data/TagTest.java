@@ -14,14 +14,13 @@
 
 package codeu.model.data;
 
-import codeu.superclass.TestConstants;
+import codeu.TestingFramework.TestFramework;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
-public class TagTest extends TestConstants {
+public class TagTest extends TestFramework {
     /**
      * Checks the construction of a basic Tag initializer.
      * Doesn't use setup()

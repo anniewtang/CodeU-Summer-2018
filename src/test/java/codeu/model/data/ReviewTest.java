@@ -14,14 +14,11 @@
 
 package codeu.model.data;
 
-import codeu.superclass.TestConstants;
+import codeu.TestingFramework.TestFramework;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
-
-public class ReviewTest extends TestConstants {
+public class ReviewTest extends TestFramework {
 
     @Test
     public void testCreateReview() {

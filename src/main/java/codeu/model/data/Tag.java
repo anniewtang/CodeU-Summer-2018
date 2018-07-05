@@ -61,7 +61,7 @@ public class Tag {
     public Map<String, Set<UUID>> getAllDishesByValue() {
         return this.dishesByValue;
     }
-    
+
     /**
      * Used during search querying/filtering, so that
      * users can see WHAT they could filter by within this category.

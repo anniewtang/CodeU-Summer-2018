@@ -16,7 +16,7 @@ package codeu.orm;
 
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
-import codeu.superclass.TestConstants;
+import codeu.TestingFramework.TestFramework;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class DishORMTest extends TestConstants {
+public class DishORMTest extends TestFramework {
     private Map<UUID, Dish> dishMap;
     private Map<UUID, Integer> avgRatingMap;
     private DishORM orm;

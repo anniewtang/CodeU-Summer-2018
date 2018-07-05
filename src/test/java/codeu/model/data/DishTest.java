@@ -14,14 +14,14 @@
 
 package codeu.model.data;
 
-import codeu.superclass.TestConstants;
+import codeu.TestingFramework.TestFramework;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
 
 
-public class DishTest extends TestConstants {
+public class DishTest extends TestFramework {
     @Test
     public void testCreateDish() {
         // run
