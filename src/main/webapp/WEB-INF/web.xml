@@ -37,13 +37,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ConversationServlet</servlet-name>
-        <servlet-class>codeu.controller.ConversationServlet</servlet-class>
+        <servlet-name>ReviewServlet</servlet-name>
+        <servlet-class>codeu.controller.ReviewServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ConversationServlet</servlet-name>
-        <url-pattern>/conversations</url-pattern>
+        <servlet-name>ReviewServlet</servlet-name>
+        <url-pattern>/review</url-pattern>
     </servlet-mapping>
 
     <servlet>
