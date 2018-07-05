@@ -39,6 +39,7 @@ public class TestFramework {
     public Set<String> restrictions;
     public Set<String> cuisine;
     public Set<String> allTagValues;
+
     public Map<String, Set<String>> tagsOne;
     public Set<String> restrictionsOne;
     public Set<String> cuisineOne;
@@ -58,21 +59,25 @@ public class TestFramework {
     public UUID reviewID = UUID.randomUUID();
     public UUID author = UUID.randomUUID();
     public String desc = "Desc for review 0";
+    public int numStars = 3;
 
     public Review reviewOne;
     public UUID reviewIDOne = UUID.randomUUID();
     public UUID authorOne = UUID.randomUUID();
     public String descOne = "Desc for review 1";
+    public int numStarsOne = 5;
 
     public Review reviewTwo;
     public UUID reviewIDTwo = UUID.randomUUID();
     public UUID authorTwo = UUID.randomUUID();
     public String descTwo = "Desc for review 2";
+    public int numStarsTwo = 2;
 
     public Review reviewThree;
     public UUID reviewIDThree = UUID.randomUUID();
     public UUID authorThree = UUID.randomUUID();
     public String descThree = "Desc for review 3";
+    public int numStarsThree = 4;
 
 
     // Tag Attributes
@@ -121,11 +126,11 @@ public class TestFramework {
         dishTwo = new Dish(dishIDTwo, nameTwo, restaurantTwo, ratingTwo, tagsTwo, allTagValuesTwo);
 
         // Reviews
-        review = new Review(reviewID, author, dishID, rating, desc, tags);
-        reviewOne = new Review(reviewIDOne, authorOne, dishID, rating, descOne, tagsOne);
+        review = new Review(reviewID, author, dishID, numStars, desc, tags);
+        reviewOne = new Review(reviewIDOne, authorOne, dishID, numStarsOne, descOne, tagsOne);
 
-        reviewTwo = new Review(reviewIDTwo, authorTwo, dishIDTwo, ratingTwo, descTwo, tagsTwo);
-        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, ratingTwo, descThree, tagsTwo);
+        reviewTwo = new Review(reviewIDTwo, authorTwo, dishIDTwo, numStarsTwo, descTwo, tagsTwo);
+        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, numStarsThree, descThree, tagsTwo);
 
         // Tag: Cuisine
         cuisineChineseDishes = new HashSet<>(Arrays.asList(dishID));

@@ -37,7 +37,6 @@ public class DishORMTest extends TestFramework {
         dishMap.put(dish.getDishID(), dish);
         avgRatingMap.put(dish.getDishID(), dish.getRating());
         orm = new DishORM(dishMap, avgRatingMap);
-
     }
 
     @Test
