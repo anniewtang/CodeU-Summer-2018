@@ -14,19 +14,43 @@
 
 package codeu.orm;
 
-import codeu.superclass.DishTests;
+import codeu.model.data.Dish;
+import codeu.model.data.Review;
+import codeu.superclass.TestConstants;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
-public class DishORMTest extends DishTests {
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
-    @Test
-    public void testGetDish() {
+public class DishORMTest extends TestConstants {
+    private Map<UUID, Dish> dishMap;
+    private Map<UUID, Integer> avgRatingMap;
+    private DishORM orm;
+
+    private Set<Review> reviews;
+
+    @Before
+    public void setup() {
+        dishMap.put(dish.getDishID(), dish);
+        avgRatingMap.put(dish.getDishID(), dish.getRating());
+        orm = new DishORM(dishMap, avgRatingMap);
 
     }
 
     @Test
-    public void testGetAverageRating() {
+    public void testGetDish() {
+        // run + verify
+        Dish d = orm.getDish(dish.getDishID());
+        Assert.assertEquals(d, dish);
+    }
 
+    @Test
+    public void testGetAverageRating() {
+        // run + verify
+        Assert.assertEquals(4, orm.getAverageRating(dish.getDishID()));
     }
 
     @Test

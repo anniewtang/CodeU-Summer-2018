@@ -21,7 +21,7 @@ import org.junit.Before;
 
 import java.util.*;
 
-public class DishTests {
+public class TestConstants {
     public Dish dish;
     public UUID dishID;
     public String name;
