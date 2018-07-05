@@ -50,29 +50,32 @@ public class TagTest extends TestFramework {
     @Test
     public void testAddDishToTagValue() {
         // setup
-        UUID dishID = UUID.randomUUID();
+        UUID dishIDThree = UUID.randomUUID();
 
         Set<String> tagValues = new HashSet<>();
         tagValues.addAll(Arrays.asList(Constants.ASIAN, Constants.JAPANESE));
 
-        this.cuisineAllTags.addAll(tagValues);
+        cuisineAllTags.addAll(tagValues);
 
         // run
-        cuisineTag.addDishToTagValue(tagValues, dishID);
+        cuisineTag.addDishToTagValue(tagValues, dishIDThree);
 
         // verify
         Set<UUID> asian = cuisineTag.getDishesByValue(Constants.ASIAN);
         Assert.assertTrue(asian.contains(dishID));
+        Assert.assertTrue(asian.contains(dishIDTwo));
+        Assert.assertTrue(asian.contains(dishIDThree));
 
         Set<UUID> japanese = cuisineTag.getDishesByValue(Constants.JAPANESE);
-        Assert.assertTrue(japanese.contains(dishID));
+        Assert.assertTrue(japanese.contains(dishIDTwo));
+        Assert.assertTrue(japanese.contains(dishIDThree));
 
         Set<UUID> chinese = cuisineTag.getDishesByValue(Constants.CHINESE);
         Assert.assertEquals(chinese, cuisineChineseDishes);
 
-        Assert.assertTrue(asian.size() == 4);
-        Assert.assertTrue(chinese.size() == 2);
-        Assert.assertTrue(japanese.size() == 1);
+        Assert.assertTrue(asian.size() == 3);
+        Assert.assertTrue(chinese.size() == 1);
+        Assert.assertTrue(japanese.size() == 2);
 
         Assert.assertEquals(cuisineAllTags, cuisineTag.getAllTagValues());
     }
