@@ -29,7 +29,7 @@ public class Tag {
     /**
      * Constructs a new Tag.
      *
-     * @param dishID the ID of the dish
+     * @param type the tag category this object represents.
      */
     public Tag(String type) {
         this.tagType = type;
