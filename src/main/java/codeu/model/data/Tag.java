@@ -72,6 +72,16 @@ public class Tag {
     }
 
     /**
+     * Used while user writes reviews.
+     * Shows users WHAT values they can use to tag their review.
+     * @return {tagValues} for this category from the Constants file.
+     */
+    // TODO: write this method!!
+    public Set<String> getAllTagValuesFromConstants() {
+        return null;
+    }
+
+    /**
      * Retrieves the dishes that have been tagged with a certain value,
      * under this particular tag type/category.
      *
