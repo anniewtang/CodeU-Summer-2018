@@ -90,6 +90,7 @@ public class TestFramework {
     public Set<UUID> restrictionVeganDishes;
     public Set<UUID> restrictionVegetarianDishes;
     public Set<UUID> restrictionGlutenFreeDishes;
+    public Set<UUID> restrictionNutFreeDishes;
     public Set<String> restrictionAllTags;
 
     @Before
@@ -134,26 +135,21 @@ public class TestFramework {
         dishesByValue.put(Constants.CHINESE, cuisineChineseDishes);
         dishesByValue.put(Constants.JAPANESE, cuisineJapaneseDishes);
         dishesByValue.put(Constants.ASIAN, cuisineAsianDishes);
-        cuisineAllTags = new HashSet<>();
-        cuisineAllTags.addAll(Arrays.asList(Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN));
+        cuisineAllTags = new HashSet<>(Arrays.asList(Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN));
         cuisineTag = new Tag(cuisineType, dishesByValue, cuisineAllTags);
 
         // Tag: Restriction
         restrictionVeganDishes = new HashSet<>(Arrays.asList(dishID));
         restrictionVegetarianDishes = new HashSet<>(Arrays.asList(dishID, dishIDTwo));
         restrictionGlutenFreeDishes = new HashSet<>(Arrays.asList(dishID));
+        restrictionNutFreeDishes = new HashSet<>(Arrays.asList(dishIDTwo));
         restrictionAllTags = new HashSet<>(Arrays.asList(Constants.VEGAN, Constants.VEGETARIAN, Constants.GLUTENFREE, Constants.NUTFREE));
-
-    }
-
-    @After
-    public void teardown() {
-        dish = null;
-        dishID = null;
-        restaurant = name = null;
-        rating = 0;
-        tags = null;
-        restrictions = cuisine = allTagValues = null;
-
+        dishesByValueTwo = new HashMap<>();
+        dishesByValueTwo.put(Constants.VEGAN, restrictionVeganDishes);
+        dishesByValueTwo.put(Constants.VEGETARIAN, restrictionVegetarianDishes);
+        dishesByValueTwo.put(Constants.GLUTENFREE, restrictionGlutenFreeDishes);
+        dishesByValueTwo.put(Constants.NUTFREE, restrictionNutFreeDishes);
+        restrictionAllTags = new HashSet<>(Arrays.asList(Constants.VEGAN, Constants.VEGETARIAN, Constants.GLUTENFREE, Constants.NUTFREE));
+        restrictionTag = new Tag(restrictionType, dishesByValueTwo, restrictionAllTags);
     }
 }
