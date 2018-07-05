@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -34,16 +35,22 @@ public class DishORMTest extends TestFramework {
 
     @Before
     public void setup() {
-        dishMap.put(dish.getDishID(), dish);
-        avgRatingMap.put(dish.getDishID(), dish.getRating());
+        dishMap = new HashMap<>();
+        dishMap.put(dishID, dish);
+        dishMap.put(dishIDTwo, dishTwo);
+        avgRatingMap.put(dishID, dish.getRating());
+        avgRatingMap.put(dishIDTwo, dishTwo.getRating());
         orm = new DishORM(dishMap, avgRatingMap);
     }
 
     @Test
     public void testGetDish() {
         // run + verify
-        Dish d = orm.getDish(dish.getDishID());
+        Dish d = orm.getDish(dishID);
         Assert.assertEquals(d, dish);
+
+        Dish d2 = orm.getDish(dishIDTwo);
+        Assert.assertEquals(d2, dishTwo);
     }
 
     @Test
