@@ -52,29 +52,30 @@ public class PersistentDataStore {
     public List<User> loadUsers() throws PersistentDataStoreException {
 
         List<User> users = new ArrayList<>();
-
+    
         // Retrieve all users from the datastore.
         Query query = new Query("chat-users");
         PreparedQuery results = datastore.prepare(query);
-
+    
         for (Entity entity : results.asIterable()) {
-            try {
-                UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-                String userName = (String) entity.getProperty("username");
-                String passwordHash = (String) entity.getProperty("password_hash");
-                Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-                User user = new User(uuid, userName, passwordHash, creationTime);
-                users.add(user);
-            } catch (Exception e) {
-                // In a production environment, errors should be very rare. Errors which may
-                // occur include network errors, Datastore service errors, authorization errors,
-                // database entity definition mismatches, or service mismatches.
-                throw new PersistentDataStoreException(e);
-            }
+          try {
+            UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+            String userName = (String) entity.getProperty("username");
+            String passwordHash = (String) entity.getProperty("password_hash");
+            Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+            String aboutMe = (String) entity.getProperty("aboutMe");
+            User user = new User(uuid, userName, passwordHash, creationTime, aboutMe);
+            users.add(user);
+          } catch (Exception e) {
+            // In a production environment, errors should be very rare. Errors which may
+            // occur include network errors, Datastore service errors, authorization errors,
+            // database entity definition mismatches, or service mismatches.
+            throw new PersistentDataStoreException(e);
+          }
         }
-
+    
         return users;
-    }
+      }
 
     /**
      * Loads all Dish objects from the Datastore service
@@ -216,6 +217,7 @@ public class PersistentDataStore {
         userEntity.setProperty("username", user.getName());
         userEntity.setProperty("password_hash", user.getPasswordHash());
         userEntity.setProperty("creation_time", user.getCreationTime().toString());
+        userEntity.setProperty("About me",user.getAboutMe().toString());
         datastore.put(userEntity);
     }
 

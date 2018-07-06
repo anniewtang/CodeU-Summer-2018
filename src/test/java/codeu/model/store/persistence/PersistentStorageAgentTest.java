@@ -1,6 +1,5 @@
 package codeu.model.store.persistence;
 
-
 import codeu.model.data.User;
 
 import java.time.Instant;
@@ -40,7 +39,8 @@ public class PersistentStorageAgentTest {
                         UUID.randomUUID(),
                         "test_username",
                         "$2a$10$5GNCbSPS1sqqM9.hdiE2hexn1w.vnNoR.CaHIztFEhdAD7h82tqX.",
-                        Instant.now());
+                        Instant.now(),
+                        "");
         persistentStorageAgent.writeThrough(user);
         Mockito.verify(mockPersistentDataStore).writeThrough(user);
     }

@@ -16,26 +16,28 @@ package codeu.model.data;
 
 public class Constants {
     /* Cuisine Types Constants*/
+        public static final String CUISINE = "Cuisine";
+
         public static final String ASIAN = "Asian";
-        public static final String AMERICAN = "American");
-        public static final String MEXICAN = "Mexican");
-        public static final String EUROPEAN = "European");
-        public static final String CHINESE = "Chinese");
-        public static final String ITALIAN = "Italian");
-        public static final String JAPANESE = "Japanese");
-        public static final String GREEK = "Greek");
-        public static final String FRENCH = "French");
-        public static final String THAI = "Thai");
-        public static final String SPANISH = "Spanish");
-        public static final String INDIAN = "Indian");
-        public static final String MEDITERRAENEAN = "Mediterraenean");
-        public static final String CAJUN = "Cajun");
-        public static final String SOUL = "Soul");
-        public static final String GERMAN = "German");
-        public static final String KOREAN = "Korean");
-        public static final String VIETNAMESE = "Vietnamese");
-        public static final String TURKISH = "Turkish");
-        public static final String CARIBBEAN = "Caribbean");
+        public static final String AMERICAN = "American";
+        public static final String MEXICAN = "Mexican";
+        public static final String EUROPEAN = "European";
+        public static final String CHINESE = "Chinese";
+        public static final String ITALIAN = "Italian";
+        public static final String JAPANESE = "Japanese";
+        public static final String GREEK = "Greek";
+        public static final String FRENCH = "French";
+        public static final String THAI = "Thai";
+        public static final String SPANISH = "Spanish";
+        public static final String INDIAN = "Indian";
+        public static final String MEDITERRAENEAN = "Mediterraenean";
+        public static final String CAJUN = "Cajun";
+        public static final String SOUL = "Soul";
+        public static final String GERMAN = "German";
+        public static final String KOREAN = "Korean";
+        public static final String VIETNAMESE = "Vietnamese";
+        public static final String TURKISH = "Turkish";
+        public static final String CARIBBEAN = "Caribbean";
 
     /* Dish Type Constants */
         // Main Categories
@@ -78,6 +80,8 @@ public class Constants {
         public static final String CAKE = "Cake";
 
     /*  Dietary Restriction Constants */
+        public static final String RESTRICTION = "Restriction";
+
         public static final String PESCETARIAN = "Pescetarian";
         public static final String VEGETARIAN = "Vegetarian";
         public static final String VEGAN = "Vegan";
