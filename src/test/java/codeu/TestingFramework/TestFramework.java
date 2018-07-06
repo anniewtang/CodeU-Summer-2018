@@ -99,7 +99,7 @@ public class TestFramework {
     public Set<String> restrictionAllTags;
 
     @Before
-    public void setup() {
+    public void setupBase() {
         // Dish 1
         tags = new HashMap<>();
         restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));

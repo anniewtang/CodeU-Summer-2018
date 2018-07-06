@@ -17,6 +17,7 @@ package codeu.orm;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.TestingFramework.TestFramework;
+import codeu.model.store.basic.ReviewStore;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +39,8 @@ public class DishORMTest extends TestFramework {
         dishMap = new HashMap<>();
         dishMap.put(dishID, dish);
         dishMap.put(dishIDTwo, dishTwo);
+
+        avgRatingMap = new HashMap<>();
         avgRatingMap.put(dishID, dish.getRating());
         avgRatingMap.put(dishIDTwo, dishTwo.getRating());
         orm = new DishORM(dishMap, avgRatingMap);
@@ -57,11 +60,14 @@ public class DishORMTest extends TestFramework {
     public void testGetAverageRating() {
         // run + verify
         Assert.assertEquals(4, orm.getAverageRating(dish.getDishID()));
+        Assert.assertEquals(3, orm.getAverageRating(dishTwo.getDishID()));
     }
 
     @Test
     public void testGetNumReviews() {
-
+        // TODO: Mock ReviewStore
+        Assert.assertEquals(2, orm.getNumReviews(dish.getDishID()));
+        Assert.assertEquals(1, orm.getNumReviews(dishTwo.getDishID()));
     }
 
     @Test
