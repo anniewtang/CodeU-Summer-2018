@@ -77,8 +77,6 @@ public class DishStore {
      */
     private DishStore(PersistentStorageAgent persistentStorageAgent) {
         this.persistentStorageAgent = persistentStorageAgent;
-        // TODO: figure out if this is necessary or not
-        //    orm = new DishORM();
     }
 
     /**

@@ -18,9 +18,11 @@ import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.TestingFramework.TestFramework;
 import codeu.model.store.basic.ReviewStore;
+import codeu.model.store.persistence.PersistentStorageAgent;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,11 @@ public class DishORMTest extends TestFramework {
 
     private Set<Review> reviews;
 
+    private ReviewStore reviewStore;
+    @Mock private PersistentStorageAgent mockPersistentStorageAgent;
+
+
+
     @Before
     public void setup() {
         dishMap = new HashMap<>();
@@ -44,6 +51,8 @@ public class DishORMTest extends TestFramework {
         avgRatingMap.put(dishID, dish.getRating());
         avgRatingMap.put(dishIDTwo, dishTwo.getRating());
         orm = new DishORM(dishMap, avgRatingMap);
+
+        reviewStore = ReviewStore.getTestInstance(mockPersistentStorageAgent);
     }
 
     @Test
