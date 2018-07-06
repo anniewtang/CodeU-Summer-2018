@@ -203,7 +203,7 @@ public class PersistentDataStore {
         userEntity.setProperty("username", user.getName());
         userEntity.setProperty("password_hash", user.getPasswordHash());
         userEntity.setProperty("creation_time", user.getCreationTime().toString());
-        userEntity.setProperty("About me",user.getAboutMe().toString());
+        userEntity.setProperty("aboutMe", user.getAboutMe().toString());
         datastore.put(userEntity);
     }
 

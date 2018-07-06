@@ -25,10 +25,10 @@
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
     <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/review">Review</a>
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
-    <!--a href="/conversations">Conversations</a-->
     <a href="/about.jsp">About</a>
 </nav>
 

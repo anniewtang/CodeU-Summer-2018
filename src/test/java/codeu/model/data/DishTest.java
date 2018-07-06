@@ -25,7 +25,7 @@ public class DishTest extends TestFramework {
     @Test
     public void testCreateDish() {
         // setup
-        Set<String> basicAllTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.CHINESE, Constants.ASIAN));
+        Set<String> basicAllTags = new HashSet<>(Arrays.asList(Constants.GLUTENFREE, Constants.VEGETARIAN, Constants.VEGAN, Constants.CHINESE, Constants.ASIAN));
 
         // run
         Dish basicDish = new Dish(dishID, name, restaurant, rating, tags);
