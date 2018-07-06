@@ -23,7 +23,7 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -90,7 +90,7 @@ public class TagStore {
     /**
      * Updates existing Tag objects with new user tags
      */
-    public void updateTags(UUID dishID, HashMap<String, Set<String>> userTags) {
+    public void updateTags(UUID dishID, Map<String, Set<String>> userTags) {
         Set<Tag> updatedTags = orm.updateTags(dishID, userTags);
         for (Tag tag : updatedTags) {
             persistentStorageAgent.writeThrough(tag);

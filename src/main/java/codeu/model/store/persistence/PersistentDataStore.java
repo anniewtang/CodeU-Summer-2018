@@ -85,9 +85,11 @@ public class PersistentDataStore {
      *                                      Datastore service
      */
     public DishORM loadDishes() throws PersistentDataStoreException {
+        // TODO: change this up so we initialize the DishORM first and then use its provided methods to add in dishes/ratings?
+
         // Setting up Data Structures to load information into
-        HashMap<UUID, Dish> dishMap = new HashMap<>();
-        HashMap<UUID, Integer> ratingMap = new HashMap<>();
+        Map<UUID, Dish> dishMap = new HashMap<>();
+        Map<UUID, Integer> ratingMap = new HashMap<>();
 
         // Retrieve all Dishes from DataStore
         Query query = new Query("dishes");
@@ -99,7 +101,7 @@ public class PersistentDataStore {
                 String dishName = (String) entity.getProperty("dish_name");
                 String restaurant = (String) entity.getProperty("restaurant");
                 int rating = Integer.parseInt((String) entity.getProperty("rating"));
-                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
                 Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
                 Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
@@ -125,7 +127,7 @@ public class PersistentDataStore {
      */
     public TagORM loadTags() throws PersistentDataStoreException {
         // Setting up Data Structures to load Tag information into
-        HashMap<String, Tag> tagsByType = new HashMap<>();
+        Map<String, Tag> tagsByType = new HashMap<>();
 
         // Retrieve all Tags from DataStore
         Query query = new Query("tags");
@@ -134,7 +136,7 @@ public class PersistentDataStore {
         for (Entity entity : results.asIterable()) {
             try {
                 String tagType = (String) entity.getProperty("tag_type");
-                HashMap<String, Set<UUID>> dishesByValue = (HashMap<String, Set<UUID>>) entity.getProperty("dishes_by_value");
+                Map<String, Set<UUID>> dishesByValue = (Map<String, Set<UUID>>) entity.getProperty("dishes_by_value");
                 Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
 
                 Tag tag = new Tag(tagType, dishesByValue, allTagValues);
@@ -157,25 +159,9 @@ public class PersistentDataStore {
      * @throws PersistentDataStoreException if an error was detected during the load from the
      *                                      Datastore service
      */
-    public HashMap<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
+    public Map<UUID, Set<Review>> loadReviews() throws PersistentDataStoreException {
         // Setting up Data Structures to load Review information into
-        HashMap<UUID, Set<Review>> reviewsByDish = new HashMap<>();
-
-        /**
-         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
-         reviewEntity.setProperty("review_id", review.getReviewID().toString());
-         reviewEntity.setProperty("author", review.getAuthor());
-         reviewEntity.setProperty("dish_id", review.getDishID());
-         reviewEntity.setProperty("num_stars", review.getStarRating());
-         reviewEntity.setProperty("desc", review.getDescription());
-         *
-         private final UUID reviewID;
-         private final UUID author;
-         private final UUID dishID;
-         private final int numStars;
-         private final String desc;
-         private final HashMap<String, Set<String>> tags;
-         * */
+        Map<UUID, Set<Review>> reviewsByDish = new HashMap<>();
 
         // Retrieve all Reviews from DataStore
         Query query = new Query("reviews");
@@ -188,7 +174,7 @@ public class PersistentDataStore {
                 UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
                 Integer numStars = (Integer) entity.getProperty("num_stars");
                 String desc = (String) entity.getProperty("desc");
-                HashMap<String, Set<String>> tags = (HashMap<String, Set<String>>) entity.getProperty("tags");
+                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
 
                 Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
 

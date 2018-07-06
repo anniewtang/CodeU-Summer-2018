@@ -23,7 +23,7 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -92,7 +92,7 @@ public class DishStore {
     /**
      * Returns {tagType : {tagValues}} for the given Dish
      */
-    public HashMap<String, Set<String>> getTagsForDish(UUID dishID) {
+    public Map<String, Set<String>> getTagsForDish(UUID dishID) {
         return orm.getTagsForDish(dishID);
     }
 
@@ -117,7 +117,7 @@ public class DishStore {
      * @param userTags the tags the new user assigns to this dish
      * @method updateDishTags
      */
-    public void updateDishTags(UUID id, HashMap<String, Set<String>> userTags) {
+    public void updateDishTags(UUID id, Map<String, Set<String>> userTags) {
         Dish updatedDish = orm.updateDishTags(id, userTags);
         persistentStorageAgent.writeThrough(updatedDish);
     }

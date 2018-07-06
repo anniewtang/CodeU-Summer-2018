@@ -40,6 +40,7 @@ public class Constants {
         public static final String CARIBBEAN = "Caribbean";
 
     /* Dish Type Constants */
+        public static final String DISH = "Dish";
         // Main Categories
         public static final String APPETIZER = "Appetizer";
         public static final String ENTREE = "Entree";
