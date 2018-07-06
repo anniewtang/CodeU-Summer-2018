@@ -31,5 +31,7 @@
     <a href="/about.jsp">About</a>
 </nav>
 
+  <h1><%= request.getSession().getAttribute("entry")%></h1>
+
 </body>
 </html>

@@ -38,11 +38,9 @@
         <h1>Dishcussion</h1>
 
         <!-- ADD SEARCH BAR -->
-        <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
-
-
-        <form action="/results" method="get">
-            <input id="go" type="submit" class="button" value="Go">
+        <form action="/results" method="POST">
+            <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
+            <input id="go" type="submit" name="go" class="button" value="Go">
         </form>
 
 
