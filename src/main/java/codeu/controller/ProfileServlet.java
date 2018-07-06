@@ -27,7 +27,8 @@ public class ProfileServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
      // Checks to see if the user is logged into his or her page
-     if (request.getSession().getAttribute("user") != null) {
+     String username = request.getParameter("username");
+     if (username != null) {
       request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
       return;
     }

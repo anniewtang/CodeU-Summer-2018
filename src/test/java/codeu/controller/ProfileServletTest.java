@@ -1,21 +1,18 @@
 package codeu.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-
+import java.time.Instant;
 import codeu.model.data.User;
-import codeu.model.store.basic.UserStore;
 
 public class ProfileServletTest{
 
@@ -36,8 +33,16 @@ public class ProfileServletTest{
 
     @Test
     public void testDoGet() throws IOException, ServletException {
-        profileServlet.doGet(mockRequest, mockResponse);
+        User user =
+        new User(
+            UUID.randomUUID(),
+            "test username",
+            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
+            Instant.now(),
+            "This is content about me.");
 
+        Mockito.when(mockRequest.getParameter("username")).thenReturn(user.getName());
+        profileServlet.doGet(mockRequest, mockResponse);
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
 }
