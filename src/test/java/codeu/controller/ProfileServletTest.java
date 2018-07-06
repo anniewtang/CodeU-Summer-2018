@@ -33,15 +33,8 @@ public class ProfileServletTest{
 
     @Test
     public void testDoGet() throws IOException, ServletException {
-        User user =
-        new User(
-            UUID.randomUUID(),
-            "test username",
-            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
-            Instant.now(),
-            "This is content about me.");
 
-        Mockito.when(mockRequest.getParameter("username")).thenReturn(user.getName());
+        Mockito.when(mockRequest.getParameter("username")).thenReturn("test user");
         profileServlet.doGet(mockRequest, mockResponse);
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
