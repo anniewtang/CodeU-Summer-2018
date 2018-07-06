@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 
     /**
      * Sets the UserStore used by this servlet. This function provides a common setup method for use
-     * by the test framework or the servlet's init() function.
+     * by the test TestingFramework or the servlet's init() function.
      */
     void setUserStore(UserStore userStore) {
         this.userStore = userStore;

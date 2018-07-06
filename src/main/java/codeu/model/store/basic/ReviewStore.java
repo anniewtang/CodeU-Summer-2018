@@ -69,7 +69,7 @@ public class ReviewStore {
     /**
      * The in-memory mapping of dishIDs to Reviews
      */
-    private HashMap<UUID, Set<Review>> reviewsByDish;
+    private Map<UUID, Set<Review>> reviewsByDish;
 
     /**
      * This class is a singleton, so its constructor is private. Call getInstance() instead.
@@ -79,26 +79,50 @@ public class ReviewStore {
     }
 
     /**
-     * Add a new review to the current set of reviews known to the application.
+     * Returns the set of Reviews associated with a Dish.
+     * @param dishID
+     * @return
      */
+    public Set<Review> getReviewsForDish(UUID dishID) {
+        return this.reviewsByDish.get(dishID);
+    }
+
+    /**
+     * Returns the total number of reviews associated with Dish.
+     */
+    public int getNumReviews(UUID dishID) {
+        return getReviewsForDish(dishID).size();
+    }
+
+    /**
+     * Incorporate the new user review into our app by:
+     * 1.) Updating the TagStore & Dish object with this review's given user tags.
+     * 2.) Updating the Average Star Rating associated with its dish.
+     * 3.) Add the new review into our in-memory & persistent storage
+     *
+     * @param review
+     */
+    // TODO || Dependency: make sure addReview is called AFTER DishORM.addDish
+    // TODO || it relies on the DishORM already having the Dish.
     public void addReview(Review review) {
-        Set<Review> reviews = reviewsByDish.get(review.getDishID());
-        if (reviews == null) {
-            reviews = new HashSet<>();
-            reviewsByDish.put(review.getDishID(), reviews);
-        }
-        reviews.add(review);
         updateTags(review);
         updateRating(review);
+        reviewsByDish.computeIfAbsent(review.getDishID(), id -> new HashSet<>()).add(review);
         persistentStorageAgent.writeThrough(review);
     }
 
     /**
-     * Update the TagStore's tags for querying, given the new review
+     * Incorporating the review's given user tags by:
+     * 1.) Updating the TagStore (aggregated tags by type)
+     * 2.) Updating the Dish object's tags via DishStore.
+     * @param review
      */
     private void updateTags(Review review) {
-        TagStore store = TagStore.getInstance();
-        store.updateTags(review.getDishID(), review.getTags());
+        UUID id = review.getDishID();
+        Map<String, Set<String>> tags = review.getTags();
+
+        TagStore.getInstance().updateTags(id, tags);
+        DishStore.getInstance().updateDishTags(id, tags);
     }
 
     /**
@@ -112,7 +136,7 @@ public class ReviewStore {
     /**
      * Sets the mapping of {dishID : Review} stored by this ReviewStore.
      */
-    public void setReviews(HashMap<UUID, Set<Review>> reviewsByDish) {
+    public void setReviews(Map<UUID, Set<Review>> reviewsByDish) {
         this.reviewsByDish = reviewsByDish;
     }
 }

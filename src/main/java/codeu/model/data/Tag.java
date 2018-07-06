@@ -14,11 +14,7 @@
 
 package codeu.model.data;
 
-import java.time.Instant;
-import java.util.UUID;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Each Tag object is identified by its tag type/category.
@@ -27,13 +23,13 @@ import java.util.HashSet;
  */
 public class Tag {
     private final String tagType; // name of tag type/category
-    private HashMap<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
+    private Map<String, Set<UUID>> dishesByValue; // {tagValue : {dishIDs}}
     private Set<String> allTagValues; // {tagValues}
 
     /**
      * Constructs a new Tag.
      *
-     * @param dishID the ID of the dish
+     * @param type the tag category this object represents.
      */
     public Tag(String type) {
         this.tagType = type;
@@ -44,14 +40,45 @@ public class Tag {
     /**
      * Constructs a new Tag, for the loadTag from PDS
      */
-    public Tag(String type, HashMap<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
+    public Tag(String type, Map<String, Set<UUID>> dishesByValue, Set<String> allTagValues) {
         this.tagType = type;
         this.dishesByValue = dishesByValue;
         this.allTagValues = allTagValues;
     }
 
+    /**
+     * Essentially the identifier of this Tag object: the category.
+     * @return the tag type/category (i.e. cuisine, restriction, etc.)
+     */
     public String getTagType() {
         return this.tagType;
+    }
+
+    /**
+     * Used primarily for loading into the PDS.
+     * @return mapping {tagValue : {dishIDs}}
+     */
+    public Map<String, Set<UUID>> getAllDishesByValue() {
+        return this.dishesByValue;
+    }
+
+    /**
+     * Used during search querying/filtering, so that
+     * users can see WHAT they could filter by within this category.
+     * @return all the USED tag values within this category.
+     */
+    public Set<String> getAllTagValues() {
+        return this.allTagValues;
+    }
+
+    /**
+     * Used while user writes reviews.
+     * Shows users WHAT values they can use to tag their review.
+     * @return {tagValues} for this category from the Constants file.
+     */
+    // TODO: write this method!!
+    public Set<String> getAllTagValuesFromConstants() {
+        return null;
     }
 
     /**
@@ -66,25 +93,16 @@ public class Tag {
         Set<UUID> dishes = this.dishesByValue.get(value);
         if (dishes == null) {
             dishes = new HashSet<>();
+            getAllDishesByValue().put(value, dishes);
         }
         return dishes;
     }
 
-    public HashMap<String, Set<UUID>> getAllDishesByValue() {
-        return this.dishesByValue;
-    }
-
     /**
-     * Returns all the tag values associated with this object
-     */
-    public Set<String> getAllTagValues() {
-        return this.allTagValues;
-    }
-
-
-    /**
-     * Associates a Dish with all its given user tags, for querying.
-     * Adds the tagValues into the allTagValues set as well
+     * Associates a Dish with all its given user tags for this particular Tag Category
+     * Used by TagORM to help with querying.
+     *
+     * Adds all the provided tagValues into {allTagValues} as well
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
@@ -97,6 +115,4 @@ public class Tag {
             this.allTagValues.add(tagValue);
         }
     }
-
-
 }

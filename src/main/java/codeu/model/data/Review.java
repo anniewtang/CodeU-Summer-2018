@@ -17,8 +17,7 @@ package codeu.model.data;
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Class representing an individual Review associated with a particualar dish
@@ -29,8 +28,7 @@ public class Review {
     private final UUID dishID;
     private final int numStars;
     private final String desc;
-    private final HashMap<String, Set<String>> tags;
-//  private final Photo photo; // LATER FEATURE
+    private final Map<String, Set<String>> tags;
 
     /**
      * Constructs a new Review.
@@ -41,7 +39,7 @@ public class Review {
      * @param numStars the number of stars this _specific_ review gave to Dish
      * @param desc     the text body of the actual review
      */
-    public Review(UUID id, UUID author, UUID dishID, int numStars, String desc, HashMap<String, Set<String>> tags) {
+    public Review(UUID id, UUID author, UUID dishID, int numStars, String desc, Map<String, Set<String>> tags) {
         this.reviewID = id;
         this.author = author;
         this.dishID = dishID;
@@ -88,7 +86,7 @@ public class Review {
     /**
      * Returns the text description of the Review
      */
-    public HashMap<String, Set<String>> getTags() {
+    public Map<String, Set<String>> getTags() {
         return this.tags;
     }
 }
