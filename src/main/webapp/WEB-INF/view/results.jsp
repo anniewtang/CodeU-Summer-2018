@@ -14,6 +14,9 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
+<%@ page import="codeu.model.data.Results" %>
+<%@ page import="codeu.model.data.Dish" %>
+
 <html>
 <head>
     <link rel="stylesheet" href="/css/main.css">
@@ -32,7 +35,7 @@
 </nav>
 
   <%
-    String userEntry = request.getSession().getAttribute("entry");
+    String userEntry = (String) request.getSession().getAttribute("entry");
   %>
   <h1>Results for: <%=userEntry%></h1>
   <%
@@ -43,8 +46,9 @@
       Dish currDish = searchResults.getResult(i);
   %>
       <!-- format each result -->
-      <h3><%=currDish.getDishName()%> | <%=currDish.getDishName()%> | <%=currDish.getRating()%></h3>
-      <br>
+      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()%> ||| Rating: <%=currDish.getRating()%></h3>
+      <!-- TODO: preview highest rated review here-->
+      <hr>
   <%
     }
   %>

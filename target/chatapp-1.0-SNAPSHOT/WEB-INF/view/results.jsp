@@ -14,6 +14,9 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
+<%@ page import="codeu.model.data.Results" %>
+<%@ page import="codeu.model.data.Dish" %>
+
 <html>
 <head>
     <link rel="stylesheet" href="/css/main.css">
@@ -31,14 +34,30 @@
     <a href="/about.jsp">About</a>
 </nav>
 
-  <h1>Results for: <%=request.getSession().getAttribute("entry")%></h1>
+  <%
+    String userEntry = (String) request.getSession().getAttribute("entry");
+  %>
+  <h1>Results for: <%=userEntry%></h1>
+  <%
+    Results searchResults = new Results(userEntry);
+    searchResults.sortByRatings();
+
+    for (int i = 0; i < searchResults.getResultsCount(); i++) {
+      Dish currDish = searchResults.getResult(i);
+  %>
+      <!-- format each result -->
+      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()%> | <%=currDish.getRating()%></h3>
+      <hr>
+  <%
+    }
+  %>
 
   <!--
     Pull Results object and display by looping:
-      Result searchResults = request.getSession().getAttribute("results");
       - Sort by highest ratings to lowest ratings
       - loop through dishes using getter/setters and display
   -->
+
 
 </body>
 </html>
