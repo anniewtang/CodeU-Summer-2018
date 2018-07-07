@@ -46,7 +46,8 @@
       Dish currDish = searchResults.getResult(i);
   %>
       <!-- format each result -->
-      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()%> | <%=currDish.getRating()%></h3>
+      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()%> ||| Rating: <%=currDish.getRating()%></h3>
+      <!-- TODO: preview highest rated review here-->
       <hr>
   <%
     }
