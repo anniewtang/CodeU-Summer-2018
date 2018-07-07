@@ -31,7 +31,14 @@
     <a href="/about.jsp">About</a>
 </nav>
 
-  <h1>Results for: <%= request.getSession().getAttribute("entry")%></h1>
+  <h1>Results for: <%=request.getSession().getAttribute("entry")%></h1>
+
+  <!--
+    Pull Results object and display by looping:
+      Result searchResults = request.getSession().getAttribute("results");
+      - Sort by highest ratings to lowest ratings
+      - loop through dishes using getter/setters and display
+  -->
 
 </body>
 </html>

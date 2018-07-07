@@ -31,15 +31,30 @@
     <a href="/about.jsp">About</a>
 </nav>
 
-  <h1>Results for: <%=request.getSession().getAttribute("entry")%></h1>
+  <%
+    String userEntry = request.getSession().getAttribute("entry");
+  %>
+  <h1>Results for: <%=userEntry%></h1>
+  <%
+    Results searchResults = new Results(userEntry);
+    searchResults.sortByRatings();
+
+    for (int i = 0; i < searchResults.getResultsCount(); i++) {
+      Dish currDish = searchResults.getResult(i);
+  %>
+      <!-- format each result -->
+      <h3><%=currDish.getDishName()%> | <%=currDish.getDishName()%> | <%=currDish.getRating()%></h3>
+      <br>
+  <%
+    }
+  %>
 
   <!--
     Pull Results object and display by looping:
-      Result searchResults = request.getSession().getAttribute("results");
-      - Put drop down option of how to sort - by resemblance? by most stars?
-      - re-sort searchResults by different function calls
+      - Sort by highest ratings to lowest ratings
       - loop through dishes using getter/setters and display
   -->
+
 
 </body>
 </html>
