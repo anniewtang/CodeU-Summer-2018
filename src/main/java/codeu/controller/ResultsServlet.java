@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
 
@@ -35,6 +33,12 @@ public class ResultsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        String userEntry = request.getParameter("search");
+
+        request.getSession().setAttribute("entry", userEntry);
+        // request.getSession().setAttribute("results", searchResults);
+
+        response.sendRedirect("/results");
 
     }
 }
