@@ -62,7 +62,7 @@ public class TestFramework {
     public UUID dishIDTwo = UUID.randomUUID();
     public String nameTwo = "Ramen";
     public String restaurantTwo = "Ramen Shop";
-    public int ratingTwo = 3;
+    public int ratingTwo = 2;
     public Map<String, Set<String>> tagsTwo;
     public Set<String> restrictionsTwo;
     public Set<String> cuisineTwo;
@@ -87,12 +87,13 @@ public class TestFramework {
     public String descTwo = "Desc for review 2";
     public int numStarsTwo = 2;
 
+    /*
     public Review reviewThree;
     public UUID reviewIDThree = UUID.randomUUID();
     public UUID authorThree = UUID.randomUUID();
     public String descThree = "Desc for review 3";
     public int numStarsThree = 4;
-
+     */
 
     // Tag Attributes
     public Tag cuisineTag;
@@ -157,7 +158,6 @@ public class TestFramework {
         reviewOne = new Review(reviewIDOne, authorOne, dishID, numStarsOne, descOne, tagsOne);
 
         reviewTwo = new Review(reviewIDTwo, authorTwo, dishIDTwo, numStarsTwo, descTwo, tagsTwo);
-        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, numStarsThree, descThree, tagsTwo);
 
         // Tag: Cuisine
         cuisineChineseDishes = new HashSet<>(Arrays.asList(dishID));
@@ -183,10 +183,7 @@ public class TestFramework {
         dishesByValueTwo.put(Constants.NUTFREE, restrictionNutFreeDishes);
         restrictionAllTags = new HashSet<>(Arrays.asList(Constants.VEGAN, Constants.VEGETARIAN, Constants.GLUTENFREE, Constants.NUTFREE));
         restrictionTag = new Tag(restrictionType, dishesByValueTwo, restrictionAllTags);
-    }
 
-    @Before
-    public void setupORM() {
         // Tag ORM
         Map<String, Tag> tagsByType = new HashMap<>();
         tagsByType.put(Constants.RESTRICTION, restrictionTag);
@@ -201,15 +198,13 @@ public class TestFramework {
         ratingMap.put(dishID, rating);
         ratingMap.put(dishIDTwo, ratingTwo);
         dishORM = new DishORM(dishMap, ratingMap);
-    }
 
-    @Before
-    public void setupStores() {
         // Review Store
         reviewStore = ReviewStore.getTestInstance(mockPersistentStorageAgent);
         Map<UUID, Set<Review>> reviewsByDish = new HashMap<>();
         reviewsByDish.put(dishID, new HashSet<>(Arrays.asList(review, reviewOne)));
-        reviewsByDish.put(dishIDTwo, new HashSet<>(Arrays.asList(reviewTwo, reviewThree)));
+        reviewsByDish.put(dishIDTwo, new HashSet<>(Arrays.asList(reviewTwo)));
+        reviewStore.setReviews(reviewsByDish);
 
         PowerMockito.mockStatic(ReviewStore.class);
         when(ReviewStore.getInstance()).thenReturn(reviewStore);
