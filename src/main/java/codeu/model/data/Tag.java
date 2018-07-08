@@ -99,19 +99,18 @@ public class Tag {
     }
 
     /**
-     * Associates a Dish with all its given user tags for this particular Tag Category
+     * Associates a Dish with all its given user tags for this particular Tag Category.
      * Used by TagORM to help with querying.
      *
      * Adds all the provided tagValues into {allTagValues} as well
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
-     * @method addDishToTag
+     * @method addDishToTagValues
      */
     public void addDishToTagValues(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {
-            Set<UUID> dishes = getDishesByValue(tagValue);
-            dishes.add(dishID);
+            this.dishesByValue.computeIfAbsent(tagValue, value -> new HashSet<>()).add(dishID);
             this.allTagValues.add(tagValue);
         }
     }
