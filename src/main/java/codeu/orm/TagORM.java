@@ -47,7 +47,7 @@ public class TagORM {
      * @method getTagForType
      */
     public Tag getTagForType(String type) {
-        return this.tagsByType.get(type);
+        return this.tagsByType.computeIfAbsent(type, Tag::new);
     }
 
     /**

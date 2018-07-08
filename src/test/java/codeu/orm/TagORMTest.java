@@ -16,19 +16,51 @@ package codeu.orm;
 
 import codeu.TestingFramework.TestFramework;
 import codeu.model.data.Constants;
+import codeu.model.data.Tag;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class TagORMTest extends TestFramework {
+    private HashMap<String, Set<String>> correctTags;
+    private HashMap<String, Set<String>> newTags;
+
+    @Before
+    public void setup() {
+        HashSet<String> correctRestrictions = new HashSet<>();
+        correctRestrictions.addAll(restrictions);
+        correctRestrictions.addAll(restrictionsOne);
+
+        HashSet<String> correctCuisine = new HashSet<>();
+        correctCuisine.addAll(cuisine);
+        correctCuisine.addAll(cuisineOne);
+
+        correctTags = new HashMap<>();
+        correctTags.put(Constants.RESTRICTION, correctRestrictions);
+        correctTags.put(Constants.CUISINE, correctCuisine);
+
+        newTags = new HashMap<>();
+        newTags.put(Constants.DISH, new HashSet<>(Arrays.asList(Constants.NOODLE, Constants.ENTREE)));
+        correctTags.putAll(newTags);
+    }
+
     @Test
     public void testGetTagForType() {
         Assert.assertEquals(cuisineTag, tagORM.getTagForType(Constants.CUISINE));
         Assert.assertEquals(restrictionTag, tagORM.getTagForType(Constants.RESTRICTION));
+
+//        Assert.assertTrue(tagORM.getTagForType(Constants.DISH).size() == 0);
     }
 
     @Test
     public void testUpdateTags() {
-
+        Set<Tag> updatedTags = tagORM.updateTags(dishID, newTags);
+        Set<Tag> correctUpdatedTags = new HashSet<>(Arrays.asList())
     }
 }
