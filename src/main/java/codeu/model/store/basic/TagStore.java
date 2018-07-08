@@ -76,8 +76,6 @@ public class TagStore {
      */
     private TagStore(PersistentStorageAgent persistentStorageAgent) {
         this.persistentStorageAgent = persistentStorageAgent;
-        // TODO: FIGURE THIS FOLLOWING CODE OUT
-        //    orm = new TagORM();
     }
 
     /**
