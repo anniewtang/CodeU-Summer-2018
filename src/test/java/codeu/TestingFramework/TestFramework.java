@@ -99,7 +99,7 @@ public class TestFramework {
     public Set<String> restrictionAllTags;
 
     @Before
-    public void setupBase() {
+    public void setupDataClasses() {
         // Dish 1
         tags = new HashMap<>();
         restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));
@@ -158,5 +158,10 @@ public class TestFramework {
         dishesByValueTwo.put(Constants.NUTFREE, restrictionNutFreeDishes);
         restrictionAllTags = new HashSet<>(Arrays.asList(Constants.VEGAN, Constants.VEGETARIAN, Constants.GLUTENFREE, Constants.NUTFREE));
         restrictionTag = new Tag(restrictionType, dishesByValueTwo, restrictionAllTags);
+    }
+
+    @Before
+    public void setupStores() {
+
     }
 }
