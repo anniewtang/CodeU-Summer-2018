@@ -21,10 +21,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class TagORMTest extends TestFramework {
@@ -63,7 +60,22 @@ public class TagORMTest extends TestFramework {
 
     @Test
     public void testUpdateTags() {
+        // run
         Set<Tag> updatedTags = tagORM.updateTags(dishID, newTags);
-        Set<Tag> correctUpdatedTags = new HashSet<>(Arrays.asList());
+
+        // verify
+        Set<Tag> correctUpdatedTags = new HashSet<>(Arrays.asList(tagORM.getTagForType(Constants.DISH)));
+        Assert.assertEquals(updatedTags, correctUpdatedTags);
+
+        // verify tag objects affected
+        Tag dishTag = tagORM.getTagForType(Constants.DISH);
+        Assert.assertEquals(new HashSet<>(Arrays.asList(Constants.NOODLE, Constants.ENTREE)), dishTag.getAllTagValues());
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dishID)), dishTag.getDishesByValue(Constants.NOODLE));
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dishID)), dishTag.getDishesByValue(Constants.ENTREE));
+
+        HashMap<String, Set<UUID>> correctDishesByValue = new HashMap<>();
+        correctDishesByValue.put(Constants.NOODLE, new HashSet<>(Arrays.asList(dishID)));
+        correctDishesByValue.put(Constants.ENTREE, new HashSet<>(Arrays.asList(dishID)));
+        Assert.assertEquals(correctDishesByValue, dishTag.getAllDishesByValue());
     }
 }
