@@ -30,53 +30,27 @@ import java.util.Set;
 import java.util.UUID;
 
 public class DishORMTest extends TestFramework {
-    private Map<UUID, Dish> dishMap;
-    private Map<UUID, Integer> avgRatingMap;
-    private DishORM orm;
-
-    private Set<Review> reviews;
-
-    private ReviewStore reviewStore;
-    @Mock private PersistentStorageAgent mockPersistentStorageAgent;
-
-
-
-    @Before
-    public void setup() {
-        dishMap = new HashMap<>();
-        dishMap.put(dishID, dish);
-        dishMap.put(dishIDTwo, dishTwo);
-
-        avgRatingMap = new HashMap<>();
-        avgRatingMap.put(dishID, dish.getRating());
-        avgRatingMap.put(dishIDTwo, dishTwo.getRating());
-        orm = new DishORM(dishMap, avgRatingMap);
-
-        reviewStore = ReviewStore.getTestInstance(mockPersistentStorageAgent);
-    }
-
     @Test
     public void testGetDish() {
         // run + verify
-        Dish d = orm.getDish(dishID);
+        Dish d = dishORM.getDish(dishID);
         Assert.assertEquals(d, dish);
 
-        Dish d2 = orm.getDish(dishIDTwo);
+        Dish d2 = dishORM.getDish(dishIDTwo);
         Assert.assertEquals(d2, dishTwo);
     }
 
     @Test
     public void testGetAverageRating() {
         // run + verify
-        Assert.assertEquals(4, orm.getAverageRating(dish.getDishID()));
-        Assert.assertEquals(3, orm.getAverageRating(dishTwo.getDishID()));
+        Assert.assertEquals(4, dishORM.getAverageRating(dish.getDishID()));
+        Assert.assertEquals(3, dishORM.getAverageRating(dishTwo.getDishID()));
     }
 
     @Test
     public void testGetNumReviews() {
-        // TODO: Mock ReviewStore
-        // Assert.assertEquals(2, orm.getNumReviews(dish.getDishID())); // ID: d76a3236-9fc3-452a-aef0-ad94ca7517d5
-        // Assert.assertEquals(1, orm.getNumReviews(dishTwo.getDishID())); // ID: 6b772f25-6b2b-4479-a0b5-31b2fcbf777e
+         Assert.assertEquals(2, dishORM.getNumReviews(dish.getDishID())); // ID: d76a3236-9fc3-452a-aef0-ad94ca7517d5
+         Assert.assertEquals(1, dishORM.getNumReviews(dishTwo.getDishID())); // ID: 6b772f25-6b2b-4479-a0b5-31b2fcbf777e
     }
 
     @Test
