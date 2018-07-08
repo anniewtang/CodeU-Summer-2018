@@ -18,19 +18,30 @@ import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.model.data.Tag;
+import codeu.model.store.basic.DishStore;
 import codeu.model.store.basic.ReviewStore;
 import codeu.model.store.basic.TagStore;
-import com.google.appengine.repackaged.com.google.api.client.util.store.DataStore;
-import org.junit.After;
+import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.orm.DishORM;
+import codeu.orm.TagORM;
 import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.*;
+
+import static org.powermock.api.mockito.PowerMockito.when;
 
 
 /**
  * Extendable testing class with Data object constants
  * that can be reused for other Testing classes.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ReviewStore.class, DishStore.class, TagStore.class})
 public class TestFramework {
     // Dish Attributes
     public Dish dish;
@@ -101,10 +112,16 @@ public class TestFramework {
     public Set<UUID> restrictionNutFreeDishes;
     public Set<String> restrictionAllTags;
 
+    // Data ORMs
+    public TagORM tagORM;
+    public DishORM dishORM;
+
     // Data Stores
-    ReviewStore reviewStore;
-    DataStore dataStore;
-    TagStore tagStore;
+    @Mock
+    public PersistentStorageAgent mockPersistentStorageAgent;
+    public ReviewStore reviewStore;
+    public DishStore dishStore;
+    public TagStore tagStore;
 
     @Before
     public void setupDataClasses() {
@@ -169,7 +186,46 @@ public class TestFramework {
     }
 
     @Before
-    public void setupStores() {
+    public void setupORM() {
+        // Tag ORM
+        Map<String, Tag> tagsByType = new HashMap<>();
+        tagsByType.put(Constants.RESTRICTION, restrictionTag);
+        tagsByType.put(Constants.CUISINE, cuisineTag);
+        tagORM = new TagORM(tagsByType);
 
+        // Dish Store
+        Map<UUID, Dish> dishMap = new HashMap<>();
+        dishMap.put(dishID, dish);
+        dishMap.put(dishIDTwo, dishTwo);
+        Map<UUID, Integer> ratingMap = new HashMap<>();
+        ratingMap.put(dishID, rating);
+        ratingMap.put(dishIDTwo, ratingTwo);
+        dishORM = new DishORM(dishMap, ratingMap);
+    }
+
+    @Before
+    public void setupStores() {
+        // Review Store
+        reviewStore = ReviewStore.getTestInstance(mockPersistentStorageAgent);
+        Map<UUID, Set<Review>> reviewsByDish = new HashMap<>();
+        reviewsByDish.put(dishID, new HashSet<>(Arrays.asList(review, reviewOne)));
+        reviewsByDish.put(dishIDTwo, new HashSet<>(Arrays.asList(reviewTwo, reviewThree)));
+
+        PowerMockito.mockStatic(ReviewStore.class);
+        when(ReviewStore.getInstance()).thenReturn(reviewStore);
+
+        // Dish Store
+        dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
+        dishStore.setDishes(dishORM);
+
+        PowerMockito.mockStatic(DishStore.class);
+        when(DishStore.getInstance()).thenReturn(dishStore);
+
+        // Tag Store
+        tagStore = TagStore.getTestInstance(mockPersistentStorageAgent);
+        tagStore.setTags(tagORM);
+
+        PowerMockito.mockStatic(TagStore.class);
+        when(TagStore.getInstance()).thenReturn(tagStore);
     }
 }
