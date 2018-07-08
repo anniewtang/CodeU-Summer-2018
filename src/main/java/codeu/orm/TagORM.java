@@ -66,7 +66,7 @@ public class TagORM {
             Set<String> tagValues = userTags.get(tagType);
 
             Tag tag = getTagForType(tagType);
-            tag.addDishToTagValue(tagValues, id);
+            tag.addDishToTagValues(tagValues, id);
 
             updatedTags.add(tag);
         }

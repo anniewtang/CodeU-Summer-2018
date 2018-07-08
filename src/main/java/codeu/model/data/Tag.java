@@ -108,7 +108,7 @@ public class Tag {
      * @param dishID    id of the dish we're associating
      * @method addDishToTag
      */
-    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
+    public void addDishToTagValues(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {
             Set<UUID> dishes = getDishesByValue(tagValue);
             dishes.add(dishID);
