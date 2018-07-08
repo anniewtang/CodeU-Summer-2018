@@ -15,7 +15,14 @@
 package codeu.model.store.basic;
 
 import codeu.TestingFramework.TestFramework;
+import org.junit.Test;
+
+import java.util.UUID;
 
 public class ReviewStoreTest extends TestFramework {
-    
+    @Test
+    public void testGetReviewsForDish(UUID dishID) {
+
+    }
+
 }
