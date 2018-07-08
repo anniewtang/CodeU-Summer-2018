@@ -79,8 +79,8 @@ public class DishORM {
      * @param id of the dish
      * @param dish object
      */
-    public void addDish(UUID id, Dish dish) {
-        this.dishMap.put(id, dish);
+    public void addDish(Dish dish) {
+        this.dishMap.put(dish.getDishID(), dish);
     }
 
     /**
@@ -99,7 +99,9 @@ public class DishORM {
         int oldRating = getAverageRating(id);
 
         int prevNumReviews = getNumReviews(id);
-        updatedDish.setRating((oldRating * prevNumReviews + rate) / (prevNumReviews + 1));
+        int newRating = (oldRating * prevNumReviews + rate) / (prevNumReviews + 1);
+        updatedDish.setRating(newRating);
+        avgRatingMap.put(id, newRating);
         return updatedDish;
     }
 
