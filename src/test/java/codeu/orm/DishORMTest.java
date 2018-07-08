@@ -24,17 +24,15 @@ import org.junit.Test;
 import java.util.*;
 
 public class DishORMTest extends TestFramework {
-    private HashSet<String> correctRestrictions;
-    private HashSet<String> correctCuisine;
     private HashMap<String, Set<String>> correctTags;
 
     @Before
     public void setup() {
-        correctRestrictions = new HashSet<>();
+        HashSet<String> correctRestrictions = new HashSet<>();
         correctRestrictions.addAll(restrictions);
         correctRestrictions.addAll(restrictionsOne);
 
-        correctCuisine = new HashSet<>();
+        HashSet<String> correctCuisine = new HashSet<>();
         correctCuisine.addAll(cuisine);
         correctCuisine.addAll(cuisineOne);
 
