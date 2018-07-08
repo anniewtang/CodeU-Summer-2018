@@ -14,6 +14,7 @@
 
 package codeu.orm;
 
+import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.TestingFramework.TestFramework;
@@ -24,10 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class DishORMTest extends TestFramework {
     @Test
@@ -44,7 +42,7 @@ public class DishORMTest extends TestFramework {
     public void testGetAverageRating() {
         // run + verify
         Assert.assertEquals(4, dishORM.getAverageRating(dish.getDishID()));
-        Assert.assertEquals(3, dishORM.getAverageRating(dishTwo.getDishID()));
+        Assert.assertEquals(2, dishORM.getAverageRating(dishTwo.getDishID()));
     }
 
     @Test
@@ -55,21 +53,33 @@ public class DishORMTest extends TestFramework {
 
     @Test
     public void testGetTagsForDish() {
+        HashSet<String> correctRestrictions = new HashSet<>();
+        correctRestrictions.addAll(restrictions);
+        correctRestrictions.addAll(restrictionsOne);
 
-    }
+        HashSet<String> correctCuisine = new HashSet<>();
+        correctCuisine.addAll(cuisine);
+        correctCuisine.addAll(cuisineOne);
 
-    @Test
-    public void testAddDish() {
+        HashMap<String, Set<String>> correctTags = new HashMap<>();
+        correctTags.put(Constants.RESTRICTION, correctRestrictions);
+        correctTags.put(Constants.CUISINE, correctCuisine);
+        Assert.assertEquals(correctTags, dishORM.getTagsForDish(dishID));
 
+        Assert.assertEquals(tagsTwo, dishORM.getTagsForDish(dishIDTwo));
     }
 
     @Test
     public void testUpdateRating() {
+        dishORM.updateRating(dishIDTwo, 7);
+        Assert.assertEquals(4, dishORM.getAverageRating(dishIDTwo));
 
+        dishORM.updateRating(dishID, 7);
+        Assert.assertEquals(5, dishORM.getAverageRating(dishID));
     }
 
     @Test
     public void testUpdateDishTags() {
-
+        
     }
 }

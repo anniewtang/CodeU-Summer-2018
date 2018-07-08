@@ -22,19 +22,16 @@ import org.junit.Test;
 import org.mockito.*;
 
 public class DishStoreTest extends TestFramework {
-    @Mock private PersistentStorageAgent mockPersistentStorageAgent;
     private DishStore dishStore;
 
     @Before
     public void setup() {
-        dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
+
     }
 
     @Test
     public void testAddDish() {
         dishStore.addDish(dish);
-        Mockito.verify(dishStore.orm).addDish(dishID, dish);
-        Mockito.verify(mockPersistentStorageAgent).writeThrough(dish);
 
         Assert.assertEquals(dish, dishStore.orm.getDish(dishID));
 
