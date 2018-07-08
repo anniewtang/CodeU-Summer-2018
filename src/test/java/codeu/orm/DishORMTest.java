@@ -28,6 +28,25 @@ import org.mockito.Mock;
 import java.util.*;
 
 public class DishORMTest extends TestFramework {
+    private HashSet<String> correctRestrictions;
+    private HashSet<String> correctCuisine;
+    private HashMap<String, Set<String>> correctTags;
+
+    @Before
+    public void setup() {
+        correctRestrictions = new HashSet<>();
+        correctRestrictions.addAll(restrictions);
+        correctRestrictions.addAll(restrictionsOne);
+
+        correctCuisine = new HashSet<>();
+        correctCuisine.addAll(cuisine);
+        correctCuisine.addAll(cuisineOne);
+
+        correctTags = new HashMap<>();
+        correctTags.put(Constants.RESTRICTION, correctRestrictions);
+        correctTags.put(Constants.CUISINE, correctCuisine);
+    }
+
     @Test
     public void testGetDish() {
         // run + verify
@@ -53,19 +72,7 @@ public class DishORMTest extends TestFramework {
 
     @Test
     public void testGetTagsForDish() {
-        HashSet<String> correctRestrictions = new HashSet<>();
-        correctRestrictions.addAll(restrictions);
-        correctRestrictions.addAll(restrictionsOne);
-
-        HashSet<String> correctCuisine = new HashSet<>();
-        correctCuisine.addAll(cuisine);
-        correctCuisine.addAll(cuisineOne);
-
-        HashMap<String, Set<String>> correctTags = new HashMap<>();
-        correctTags.put(Constants.RESTRICTION, correctRestrictions);
-        correctTags.put(Constants.CUISINE, correctCuisine);
         Assert.assertEquals(correctTags, dishORM.getTagsForDish(dishID));
-
         Assert.assertEquals(tagsTwo, dishORM.getTagsForDish(dishIDTwo));
     }
 
@@ -80,6 +87,13 @@ public class DishORMTest extends TestFramework {
 
     @Test
     public void testUpdateDishTags() {
-        
+        // setup
+        HashMap<String, Set<String>> newTags = new HashMap<>();
+        newTags.put(Constants.DISH, new HashSet<>(Arrays.asList(Constants.NOODLE, Constants.ENTREE)));
+        correctTags.putAll(newTags);
+
+        // run + verify
+        dishORM.updateDishTags(dishID, newTags);
+        Assert.assertEquals(correctTags, dishORM.getTagsForDish(dishID));
     }
 }
