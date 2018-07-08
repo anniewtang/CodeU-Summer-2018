@@ -79,6 +79,26 @@ public class DishStore {
         this.persistentStorageAgent = persistentStorageAgent;
     }
 
+    public Dish getDish(UUID id) {
+        return orm.getDish(id);
+    }
+
+    public int getAverageRating(UUID id) {
+        return orm.getAverageRating(id);
+    }
+
+    public int getNumReviews(UUID id) {
+        return orm.getNumReviews(id);
+    }
+
+
+    /**
+     * Returns {tagType : {tagValues}} for the given Dish
+     */
+    public Map<String, Set<String>> getTagsForDish(UUID dishID) {
+        return orm.getTagsForDish(dishID);
+    }
+
     /**
      * Add a new Dish to the current set of dishes known to the application.
      */
@@ -87,12 +107,6 @@ public class DishStore {
         persistentStorageAgent.writeThrough(dish);
     }
 
-    /**
-     * Returns {tagType : {tagValues}} for the given Dish
-     */
-    public Map<String, Set<String>> getTagsForDish(UUID dishID) {
-        return orm.getTagsForDish(dishID);
-    }
 
     /**
      * Updates the average rating of a dish, given a NEW rating from user.
