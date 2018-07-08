@@ -55,12 +55,15 @@ public class TagORMTest extends TestFramework {
         Assert.assertEquals(cuisineTag, tagORM.getTagForType(Constants.CUISINE));
         Assert.assertEquals(restrictionTag, tagORM.getTagForType(Constants.RESTRICTION));
 
-//        Assert.assertTrue(tagORM.getTagForType(Constants.DISH).size() == 0);
+        Tag newDishTag = tagORM.getTagForType(Constants.DISH);
+        Assert.assertEquals(Constants.DISH, newDishTag.getTagType());
+        Assert.assertEquals(0, newDishTag.getAllDishesByValue().size());
+        Assert.assertEquals(0, newDishTag.getAllTagValues().size());
     }
 
     @Test
     public void testUpdateTags() {
         Set<Tag> updatedTags = tagORM.updateTags(dishID, newTags);
-        Set<Tag> correctUpdatedTags = new HashSet<>(Arrays.asList())
+        Set<Tag> correctUpdatedTags = new HashSet<>(Arrays.asList());
     }
 }
