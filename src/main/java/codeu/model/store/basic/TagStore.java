@@ -93,6 +93,7 @@ public class TagStore {
         for (Tag tag : updatedTags) {
             persistentStorageAgent.writeThrough(tag);
         }
+        DishStore.getInstance().getDish(dishID).addUserTags(userTags);
     }
 
     /**
