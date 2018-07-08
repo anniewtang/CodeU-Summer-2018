@@ -24,7 +24,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class DishORMTest extends TestFramework {
-    private HashMap<String, Set<String>> correctTags;
+    HashMap<String, Set<String>> correctTags;
 
     @Before
     public void setup() {

@@ -106,7 +106,6 @@ public class DishStore {
         persistentStorageAgent.writeThrough(dish);
     }
 
-
     /**
      * Updates the average rating of a dish, given a NEW rating from user.
      * Also write this updated Dish into storage.
