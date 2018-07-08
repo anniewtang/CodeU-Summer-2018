@@ -69,7 +69,7 @@ public class DishStore {
     /**
      * The in-memory store of DishORM.
      */
-    DishORM orm;
+    private DishORM orm;
 
     /**
      * This class is a singleton, so its constructor is private. Call getInstance() instead.

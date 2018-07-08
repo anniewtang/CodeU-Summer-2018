@@ -34,7 +34,6 @@ public class DishStoreTest extends TestFramework {
         dishStore.addDish(dish);
 
         Assert.assertEquals(dish, dishStore.orm.getDish(dishID));
-
     }
 
     @Test
