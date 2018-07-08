@@ -123,6 +123,9 @@ public class TestFramework {
     public ReviewStore reviewStore;
     public DishStore dishStore;
     public TagStore tagStore;
+    public ReviewStore reviewStoreEmpty;
+    public DishStore dishStoreEmpty;
+    public TagStore tagStoreEmpty;
 
     @Before
     public void setupDataClasses() {
@@ -212,9 +215,12 @@ public class TestFramework {
         // Dish Store
         dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
         dishStore.setDishes(dishORM);
+        dishStoreEmpty = DishStore.getTestInstance(mockPersistentStorageAgent);
+        dishStoreEmpty.setDishes(new DishORM(new HashMap<UUID, Dish>(), new HashMap<UUID, Integer>()));
 
         PowerMockito.mockStatic(DishStore.class);
         when(DishStore.getInstance()).thenReturn(dishStore);
+        when(DishStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(dishStoreEmpty);
 
         // Tag Store
         tagStore = TagStore.getTestInstance(mockPersistentStorageAgent);

@@ -91,7 +91,6 @@ public class DishStore {
         return orm.getNumReviews(id);
     }
 
-
     /**
      * Returns {tagType : {tagValues}} for the given Dish
      */

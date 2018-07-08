@@ -22,8 +22,6 @@ import org.junit.Test;
 import org.mockito.*;
 
 public class DishStoreTest extends TestFramework {
-    private DishStore dishStore;
-
     @Before
     public void setup() {
 
@@ -31,9 +29,13 @@ public class DishStoreTest extends TestFramework {
 
     @Test
     public void testAddDish() {
-        dishStore.addDish(dish);
+        DishStore dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
 
-        Assert.assertEquals(dish, dishStore.orm.getDish(dishID));
+        dishStore.addDish(dish);
+        dishStore.addDish(dishTwo);
+
+        Assert.assertEquals(dish, dishStore.getDish(dishID));
+        Assert.assertEquals(dishTwo, dishStore.getDish(dishIDTwo));
     }
 
     @Test
