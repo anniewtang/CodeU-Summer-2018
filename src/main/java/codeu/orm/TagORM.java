@@ -15,6 +15,7 @@
 package codeu.orm;
 
 import codeu.model.data.Tag;
+import codeu.model.store.basic.DishStore;
 
 import java.util.Map.Entry;
 
@@ -62,10 +63,12 @@ public class TagORM {
         Set<Tag> updatedTags = new HashSet<>();
         for (Entry<String, Set<String>> tagEntry : userTags.entrySet()) {
             String tagType = tagEntry.getKey();
-            Tag tag = getTagForType(tagType);
-            updatedTags.add(tag);
             Set<String> tagValues = userTags.get(tagType);
-            tag.addDishToTagValue(userTags.get(tagType), id);
+
+            Tag tag = getTagForType(tagType);
+            tag.addDishToTagValue(tagValues, id);
+
+            updatedTags.add(tag);
         }
         return updatedTags;
     }
