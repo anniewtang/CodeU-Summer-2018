@@ -90,27 +90,23 @@ public class Tag {
      * @method getDishesByValue
      */
     public Set<UUID> getDishesByValue(String value) {
-        Set<UUID> dishes = this.dishesByValue.get(value);
-        if (dishes == null) {
-            dishes = new HashSet<>();
-            getAllDishesByValue().put(value, dishes);
-        }
-        return dishes;
+        return dishesByValue.computeIfAbsent(value, k -> new HashSet<>());
     }
 
     /**
-     * Associates a Dish with all its given user tags for this particular Tag Category.
+     * Associates a Dish with all its given user tags for this particular Tag Category
      * Used by TagORM to help with querying.
      *
      * Adds all the provided tagValues into {allTagValues} as well
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
-     * @method addDishToTagValues
+     * @method addDishToTagValue
      */
-    public void addDishToTagValues(Set<String> tagValues, UUID dishID) {
+    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {
-            this.dishesByValue.computeIfAbsent(tagValue, value -> new HashSet<>()).add(dishID);
+            Set<UUID> dishes = getDishesByValue(tagValue);
+            dishes.add(dishID);
             this.allTagValues.add(tagValue);
         }
     }
