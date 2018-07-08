@@ -83,7 +83,7 @@ public class DishStore {
      * Add a new Dish to the current set of dishes known to the application.
      */
     public void addDish(Dish dish) {
-        orm.addDish(dish.getDishID(), dish);
+        orm.addDish(dish);
         persistentStorageAgent.writeThrough(dish);
     }
 
