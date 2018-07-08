@@ -74,11 +74,6 @@ public class DishStoreTest extends TestFramework {
     }
 
     @Test
-    public void testUpdateDishTags() {
-
-    }
-
-    @Test
     public void testSetDishes() {
         // setup
         HashSet<String> correctRestrictions = new HashSet<>();
