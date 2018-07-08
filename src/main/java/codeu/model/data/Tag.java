@@ -101,9 +101,9 @@ public class Tag {
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
-     * @method addDishToTagValue
+     * @method addDishToTagValues
      */
-    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
+    public void addDishToTagValues(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {
             Set<UUID> dishes = getDishesByValue(tagValue);
             dishes.add(dishID);
