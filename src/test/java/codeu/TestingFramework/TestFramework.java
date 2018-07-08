@@ -18,6 +18,9 @@ import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.model.data.Tag;
+import codeu.model.store.basic.ReviewStore;
+import codeu.model.store.basic.TagStore;
+import com.google.appengine.repackaged.com.google.api.client.util.store.DataStore;
 import org.junit.After;
 import org.junit.Before;
 
@@ -97,6 +100,11 @@ public class TestFramework {
     public Set<UUID> restrictionGlutenFreeDishes;
     public Set<UUID> restrictionNutFreeDishes;
     public Set<String> restrictionAllTags;
+
+    // Data Stores
+    ReviewStore reviewStore;
+    DataStore dataStore;
+    TagStore tagStore;
 
     @Before
     public void setupDataClasses() {
