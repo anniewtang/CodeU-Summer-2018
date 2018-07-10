@@ -217,8 +217,6 @@ public class PersistentDataStore {
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
         dishEntity.setProperty("rating", dish.getRestaurant().toString());
-
-        // TODO: compress following data structures
         dishEntity.setProperty("tags", compressMap(dish.getTags()));
         dishEntity.setProperty("all_tag_values", compressSet(dish.getAllTagValues()));
 
@@ -231,8 +229,6 @@ public class PersistentDataStore {
     public void writeThrough(Tag tag) {
         Entity tagEntity = new Entity("tags", tag.getTagType());
         tagEntity.setProperty("tag_type", tag.getTagType());
-
-        // TODO: compress following two data structures
         tagEntity.setProperty("dishes_by_value", compressMap(tag.getAllDishesByValue()));
         tagEntity.setProperty("all_tag_values", compressSet(tag.getAllTagValues()));
 
@@ -249,8 +245,6 @@ public class PersistentDataStore {
         reviewEntity.setProperty("dish_id", review.getDishID());
         reviewEntity.setProperty("num_stars", review.getStarRating());
         reviewEntity.setProperty("desc", review.getDescription());
-
-        // TODO: compress tags
         reviewEntity.setProperty("tags", compressMap(review.getTags()));
 
         datastore.put(reviewEntity);
