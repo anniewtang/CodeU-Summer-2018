@@ -174,11 +174,13 @@ public class PersistentDataStore {
                 UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
                 Integer numStars = (Integer) entity.getProperty("num_stars");
                 String desc = (String) entity.getProperty("desc");
-                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
+                Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
 
                 Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
 
+
                 Set<Review> reviews = reviewsByDish.get(dishID);
+                reviews
                 if (reviews == null) {
                     reviews = new HashSet<>();
                     reviewsByDish.put(dishID, reviews);
@@ -254,7 +256,9 @@ public class PersistentDataStore {
      * Compresses/flattens Maps into a supported Property type,
      * so we can push them to Google App Engine.
      *
-     * @return an EmbeddedEntity (i.e. a "hashmap" basically)
+     * @return a nested EmbeddedEntity (i.e. a nested "hashmap" basically)
+     * {key : EmbeddedEntity} <=> {key : Set<V>}
+     *
      */
     private <V> EmbeddedEntity compressMap(Map<String, Set<V>> map) {
         EmbeddedEntity e = new EmbeddedEntity();
@@ -272,5 +276,22 @@ public class PersistentDataStore {
         EmbeddedEntity e = new EmbeddedEntity();
         for (V value : set) e.setProperty("Value: ", value);
         return e;
+    }
+
+    private <V> Map<String, Set<V>> decompressMap(EmbeddedEntity e) {
+        Map<String, Set<V>> map = new HashMap<>();
+        Map<String, Object> entityMap = e.getProperties();
+        for (String k : entityMap.keySet()) {
+            EmbeddedEntity setEntity = (EmbeddedEntity) entityMap.get(k);
+            map.put(k, decompressSet(setEntity));
+        }
+        return map;
+    }
+
+    private <V> Set<V> decompressSet(EmbeddedEntity e) {
+        Set<V> set = new HashSet<>();
+        Map<String, Object> entityMap = e.getProperties();
+        set.addAll((Collection<V>) entityMap.values());
+        return set;
     }
 }
