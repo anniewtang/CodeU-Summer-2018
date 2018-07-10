@@ -1,8 +1,13 @@
 package codeu.model.store.persistence;
 
+import codeu.model.data.Dish;
+import codeu.model.data.Review;
+import codeu.model.data.Tag;
 import codeu.model.data.User;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -61,5 +66,29 @@ public class PersistentStorageAgentTest {
                         "My name is my name");
         persistentStorageAgent.writeThrough(user);
         Mockito.verify(mockPersistentDataStore).writeThrough(user);
+    }
+
+    @Test
+    public void testWriteThroughTag() {
+        Tag tag = new Tag("Test tag");
+        persistentStorageAgent.writeThrough(tag);
+        Mockito.verify(mockPersistentDataStore).writeThrough(tag);
+    }
+
+    @Test
+    public void testWriteThroughDish() {
+        Dish dish =
+                new Dish(UUID.randomUUID(), " ", " ", 0,
+                        new HashMap<>(), new HashSet<>());
+        persistentStorageAgent.writeThrough(dish);
+        Mockito.verify(mockPersistentDataStore).writeThrough(dish);
+    }
+
+    @Test
+    public void testWriteThroughReview() {
+        Review review = new Review(UUID.randomUUID(), UUID.randomUUID(),
+                UUID.randomUUID(), 0, " ", new HashMap<>());
+        persistentStorageAgent.writeThrough(review);
+        Mockito.verify(mockPersistentDataStore).writeThrough(review);
     }
 }
