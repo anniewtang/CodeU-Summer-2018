@@ -88,7 +88,11 @@ public class TagORM {
     @Override
     public boolean equals(Object o) {
         TagORM orm = (TagORM) o;
-        boolean result = orm.getTagsByTypeMap().equals(this.tagsByType);
-        return result;
+        return orm.getTagsByTypeMap().equals(this.tagsByType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagsByType);
     }
 }

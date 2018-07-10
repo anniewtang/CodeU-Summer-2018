@@ -118,4 +118,9 @@ public class Tag {
                 && tag.getAllDishesByValue().equals(this.dishesByValue)
                 && tag.getAllTagValues().equals(this.allTagValues);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagType, dishesByValue, allTagValues);
+    }
 }

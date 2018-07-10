@@ -17,6 +17,7 @@ import codeu.model.data.Dish;
 import codeu.model.store.basic.ReviewStore;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -146,5 +147,10 @@ public class DishORM {
         DishORM orm = (DishORM) o;
         return orm.getDishMap().equals(this.dishMap)
                 && orm.getAvgRatingMap().equals(this.avgRatingMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dishMap, avgRatingMap);
     }
 }
