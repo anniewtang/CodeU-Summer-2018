@@ -101,8 +101,8 @@ public class PersistentDataStore {
                 String dishName = (String) entity.getProperty("dish_name");
                 String restaurant = (String) entity.getProperty("restaurant");
                 int rating = Integer.parseInt((String) entity.getProperty("rating"));
-                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
-                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+                Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
+                Set<String> allTagValues = decompressSet((EmbeddedEntity) entity.getProperty("all_tag_values"));
 
                 Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
