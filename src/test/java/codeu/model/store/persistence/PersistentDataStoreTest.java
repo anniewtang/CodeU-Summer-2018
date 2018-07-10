@@ -115,6 +115,8 @@ public class PersistentDataStoreTest extends TestFramework {
         // load
         Map<UUID, Set<Review>> loadedReviews = persistentDataStore.loadReviews();
 
+        Set<Review> loaded = loadedReviews.get(dishID);
+        Set<Review> og = reviewStore.getReviewsForDish(dishID);
         // verify
         Assert.assertEquals(loadedReviews.get(dishID), reviewStore.getReviewsForDish(dishID));
         Assert.assertEquals(loadedReviews.get(dishIDTwo), reviewStore.getReviewsForDish(dishIDTwo));

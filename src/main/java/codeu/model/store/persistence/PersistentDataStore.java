@@ -136,7 +136,7 @@ public class PersistentDataStore {
         for (Entity entity : results.asIterable()) {
             try {
                 String tagType = (String) entity.getProperty("tag_type");
-                Map<String, Set<UUID>> dishesByValue = decompressMap((EmbeddedEntity) entity.getProperty("dishes_by_value"));
+                Map<String, Set<UUID>> dishesByValue = decompressMap((EmbeddedEntity) entity.getProperty("dishes_by_value"), "UUID");
                 Set<String> allTagValues = decompressSet((EmbeddedEntity) entity.getProperty("all_tag_values"));
 
                 Tag tag = new Tag(tagType, dishesByValue, allTagValues);
@@ -171,7 +171,7 @@ public class PersistentDataStore {
                 UUID reviewID = UUID.fromString((String) entity.getProperty("review_id"));
                 UUID author = UUID.fromString((String) entity.getProperty("author"));
                 UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
-                Integer numStars = (Integer) entity.getProperty("num_stars");
+                Integer numStars = Integer.parseInt((String) entity.getProperty("num_stars"));;
                 String desc = (String) entity.getProperty("desc");
                 Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
 
@@ -209,7 +209,7 @@ public class PersistentDataStore {
         dishEntity.setProperty("dish_id", dish.getDishID().toString());
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
-        dishEntity.setProperty("rating", dish.getRestaurant().toString());
+        dishEntity.setProperty("rating", Integer.toString(dish.getRating()));
         dishEntity.setProperty("tags", compressMap(dish.getTags()));
         dishEntity.setProperty("all_tag_values", compressSet(dish.getAllTagValues()));
 
@@ -234,9 +234,9 @@ public class PersistentDataStore {
     public void writeThrough(Review review) {
         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
         reviewEntity.setProperty("review_id", review.getReviewID().toString());
-        reviewEntity.setProperty("author", review.getAuthor());
-        reviewEntity.setProperty("dish_id", review.getDishID());
-        reviewEntity.setProperty("num_stars", review.getStarRating());
+        reviewEntity.setProperty("author", review.getAuthor().toString());
+        reviewEntity.setProperty("dish_id", review.getDishID().toString());
+        reviewEntity.setProperty("num_stars", Integer.toString(review.getStarRating()));
         reviewEntity.setProperty("desc", review.getDescription());
         reviewEntity.setProperty("tags", compressMap(review.getTags()));
 
@@ -265,24 +265,39 @@ public class PersistentDataStore {
      */
     private <V> EmbeddedEntity compressSet(Set<V> set) {
         EmbeddedEntity e = new EmbeddedEntity();
-        for (V value : set) e.setProperty("Value: ", value);
+        for (V value : set) e.setProperty(value.toString(), value.toString());
         return e;
     }
 
     private <V> Map<String, Set<V>> decompressMap(EmbeddedEntity e) {
+        return decompressMap(e, "String");
+    }
+
+    private <V> Set<V> decompressSet(EmbeddedEntity e) {
+        return decompressSet(e, "String");
+    }
+
+
+    private <V> Map<String, Set<V>> decompressMap(EmbeddedEntity e, String type) {
         Map<String, Set<V>> map = new HashMap<>();
         Map<String, Object> entityMap = e.getProperties();
         for (String k : entityMap.keySet()) {
             EmbeddedEntity setEntity = (EmbeddedEntity) entityMap.get(k);
-            map.put(k, decompressSet(setEntity));
+            map.put(k, decompressSet(setEntity, type));
         }
         return map;
     }
 
-    private <V> Set<V> decompressSet(EmbeddedEntity e) {
+    private <V> Set<V> decompressSet(EmbeddedEntity e, String type) {
         Set<V> set = new HashSet<>();
         Map<String, Object> entityMap = e.getProperties();
-        set.addAll((Collection<V>) entityMap.values());
+        if (type.equals("UUID")) {
+            for (Object value : entityMap.values()) {
+                set.add((V) UUID.fromString((String) value));
+            }
+        } else {
+            set.addAll((Collection<V>) entityMap.values());
+        }
         return set;
     }
 }
