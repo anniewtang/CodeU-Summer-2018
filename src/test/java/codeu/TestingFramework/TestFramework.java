@@ -209,14 +209,19 @@ public class TestFramework {
         reviewsByDish.put(dishIDTwo, new HashSet<>(Arrays.asList(reviewTwo)));
         reviewStore.setReviews(reviewsByDish);
 
+        reviewStoreEmpty = ReviewStore.getTestInstance(mockPersistentStorageAgent);
+        reviewStoreEmpty.setReviews(new HashMap<>());
+
         PowerMockito.mockStatic(ReviewStore.class);
         when(ReviewStore.getInstance()).thenReturn(reviewStore);
+        when(ReviewStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(reviewStoreEmpty);
 
         // Dish Store
         dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
         dishStore.setDishes(dishORM);
+
         dishStoreEmpty = DishStore.getTestInstance(mockPersistentStorageAgent);
-        dishStoreEmpty.setDishes(new DishORM(new HashMap<UUID, Dish>(), new HashMap<UUID, Integer>()));
+        dishStoreEmpty.setDishes(new DishORM(new HashMap<>(), new HashMap<>()));
 
         PowerMockito.mockStatic(DishStore.class);
         when(DishStore.getInstance()).thenReturn(dishStore);
