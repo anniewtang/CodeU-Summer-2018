@@ -21,7 +21,12 @@ import java.util.UUID;
 
 public class ReviewStoreTest extends TestFramework {
     @Test
-    public void testGetReviewsForDish(UUID dishID) {
+    public void testGetReviewsForDish() {
+
+    }
+
+    @Test
+    public void testAddReview() {
 
     }
 
