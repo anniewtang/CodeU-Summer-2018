@@ -51,6 +51,15 @@ public class TagORM {
     }
 
     /**
+     * Primarily used for testing purposes.
+     * Can also be used when querying, if useful.
+     * @return private map of {Tag Category/Type : Tag object}
+     */
+    public Map<String, Tag> getTagsByTypeMap() {
+        return this.tagsByType;
+    }
+
+    /**
      * After User provides user-tags for a particular Dish,
      * we add Dish into all the appropriate Tag categories it belongs to.
      *
@@ -71,5 +80,16 @@ public class TagORM {
             updatedTags.add(tag);
         }
         return updatedTags;
+    }
+
+    /**
+     * Used in Testing files to have custom equality checks.
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        TagORM orm = (TagORM) o;
+        return orm.getTagsByTypeMap().equals(this.tagsByType);
     }
 }
