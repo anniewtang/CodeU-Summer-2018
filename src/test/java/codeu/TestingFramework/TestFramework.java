@@ -231,7 +231,11 @@ public class TestFramework {
         tagStore = TagStore.getTestInstance(mockPersistentStorageAgent);
         tagStore.setTags(tagORM);
 
+        tagStoreEmpty = TagStore.getTestInstance(mockPersistentStorageAgent);
+        tagStoreEmpty.setTags(new TagORM(new HashMap<>()));
+
         PowerMockito.mockStatic(TagStore.class);
         when(TagStore.getInstance()).thenReturn(tagStore);
+        when(TagStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(tagStoreEmpty);
     }
 }
