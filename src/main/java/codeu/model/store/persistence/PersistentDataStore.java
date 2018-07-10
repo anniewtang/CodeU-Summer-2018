@@ -136,11 +136,10 @@ public class PersistentDataStore {
         for (Entity entity : results.asIterable()) {
             try {
                 String tagType = (String) entity.getProperty("tag_type");
-                Map<String, Set<UUID>> dishesByValue = (Map<String, Set<UUID>>) entity.getProperty("dishes_by_value");
-                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+                Map<String, Set<UUID>> dishesByValue = decompressMap((EmbeddedEntity) entity.getProperty("dishes_by_value"));
+                Set<String> allTagValues = decompressSet((EmbeddedEntity) entity.getProperty("all_tag_values"));
 
                 Tag tag = new Tag(tagType, dishesByValue, allTagValues);
-
                 tagsByType.put(tagType, tag);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
