@@ -219,7 +219,6 @@ public class PersistentDataStore {
         dishEntity.setProperty("rating", dish.getRestaurant().toString());
         dishEntity.setProperty("tags", dish.getTags());
         dishEntity.setProperty("all_tag_values", dish.getAllTagValues());
-//        dishEntity.setProperty("creation_time", dish.getCreationTime().toString());
         datastore.put(dishEntity);
     }
 
