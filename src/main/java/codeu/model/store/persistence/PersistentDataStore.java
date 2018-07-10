@@ -177,15 +177,7 @@ public class PersistentDataStore {
                 Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
 
                 Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
-
-
-                Set<Review> reviews = reviewsByDish.get(dishID);
-                reviews
-                if (reviews == null) {
-                    reviews = new HashSet<>();
-                    reviewsByDish.put(dishID, reviews);
-                }
-                reviews.add(review);
+                reviewsByDish.computeIfAbsent(dishID, id -> new HashSet<>()).add(review);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
                 // occur include network errors, Datastore service errors, authorization errors,
