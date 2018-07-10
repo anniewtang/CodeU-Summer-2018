@@ -113,7 +113,8 @@ public class ReviewStoreTest extends TestFramework {
      */
     @Test
     public void testAddReviewForNewDish() {
-        reviewThree = new Review(UUID.randomUUID(), authorThree, dishIDTwo, numStarsThree, descThree, tagsThree);
+        // run + verify
         reviewStoreEmpty.addReview(review);
+        Assert.assertEquals(new HashSet<>(Arrays.asList(review)), reviewStoreEmpty.getReviewsForDish(dishID));
     }
 }
