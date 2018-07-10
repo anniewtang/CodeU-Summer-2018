@@ -99,6 +99,14 @@ public class DishStore {
     }
 
     /**
+     * Good for displaying all the tag values for a dish.
+     * @return the set {tagValues} for the given dish.
+     */
+    public Set<String> getAllTagsForDish(UUID dishID) {
+        return orm.getAllTagsForDish(dishID);
+    }
+
+    /**
      * Add a new Dish to the current set of dishes known to the application.
      */
     public void addDish(Dish dish) {

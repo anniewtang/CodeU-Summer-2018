@@ -73,6 +73,10 @@ public class DishORM {
         return dish.getTags();
     }
 
+    public Set<String> getAllTagsForDish(UUID dishID) {
+        return getDish(dishID).getAllTagValues();
+    }
+
     /**
      * Use when adding in a NEW DISH for the first time into our DishORM memory.
      * Puts it in the dishMap {dishID : Dish object}
