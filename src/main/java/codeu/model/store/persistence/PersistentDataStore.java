@@ -217,8 +217,11 @@ public class PersistentDataStore {
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
         dishEntity.setProperty("rating", dish.getRestaurant().toString());
-        dishEntity.setProperty("tags", dish.getTags());
-        dishEntity.setProperty("all_tag_values", dish.getAllTagValues());
+
+        // TODO: compress following data structures
+        dishEntity.setProperty("tags", compressMap(dish.getTags()));
+        dishEntity.setProperty("all_tag_values", compressSet(dish.getAllTagValues()));
+
         datastore.put(dishEntity);
     }
 
@@ -228,8 +231,11 @@ public class PersistentDataStore {
     public void writeThrough(Tag tag) {
         Entity tagEntity = new Entity("tags", tag.getTagType());
         tagEntity.setProperty("tag_type", tag.getTagType());
-        tagEntity.setProperty("dishes_by_value", tag.getAllDishesByValue());
-        tagEntity.setProperty("all_tag_values", tag.getAllTagValues());
+
+        // TODO: compress following two data structures
+        tagEntity.setProperty("dishes_by_value", compressMap(tag.getAllDishesByValue()));
+        tagEntity.setProperty("all_tag_values", compressSet(tag.getAllTagValues()));
+
         datastore.put(tagEntity);
     }
 
@@ -243,7 +249,34 @@ public class PersistentDataStore {
         reviewEntity.setProperty("dish_id", review.getDishID());
         reviewEntity.setProperty("num_stars", review.getStarRating());
         reviewEntity.setProperty("desc", review.getDescription());
-        reviewEntity.setProperty("tags", review.getTags());
+
+        // TODO: compress tags
+        reviewEntity.setProperty("tags", compressMap(review.getTags()));
+
         datastore.put(reviewEntity);
+    }
+
+    /**
+     * Compresses/flattens Maps into a supported Property type,
+     * so we can push them to Google App Engine.
+     *
+     * @return an EmbeddedEntity (i.e. a "hashmap" basically)
+     */
+    private <V> EmbeddedEntity compressMap(Map<String, Set<V>> map) {
+        EmbeddedEntity e = new EmbeddedEntity();
+        for (String k : map.keySet()) e.setProperty(k, compressSet(map.get(k)));
+        return e;
+    }
+
+    /**
+     * Compresses/flattens Sets into a supported Property type,
+     * so we can push them to Google App Engine.
+     *
+     * @return an EmbeddedEntity with a placeholder "key".
+     */
+    private <V> EmbeddedEntity compressSet(Set<V> set) {
+        EmbeddedEntity e = new EmbeddedEntity();
+        for (V value : set) e.setProperty("Value: ", value);
+        return e;
     }
 }
