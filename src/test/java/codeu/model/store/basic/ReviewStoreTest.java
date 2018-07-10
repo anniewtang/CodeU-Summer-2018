@@ -16,7 +16,6 @@ package codeu.model.store.basic;
 
 import codeu.TestingFramework.TestFramework;
 import codeu.model.data.Constants;
-import codeu.model.data.Review;
 import codeu.model.data.Tag;
 import org.junit.Assert;
 import org.junit.Test;
