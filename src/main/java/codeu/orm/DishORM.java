@@ -78,6 +78,20 @@ public class DishORM {
     }
 
     /**
+     * Used for Testing purposes.
+     */
+    public Map<UUID, Dish> getDishMap() {
+        return this.dishMap;
+    }
+
+    /**
+     * Used for Testing purposes.
+     */
+    public Map<UUID, Integer> getAvgRatingMap() {
+        return this.avgRatingMap;
+    }
+
+    /**
      * Use when adding in a NEW DISH for the first time into our DishORM memory.
      * Puts it in the dishMap {dishID : Dish object}
      * @param id of the dish
@@ -122,5 +136,15 @@ public class DishORM {
         Dish dish = getDish(id);
         dish.addUserTags(userTags);
         return dish;
+    }
+
+    /**
+     * Used in Testing files to have custom equality checks.
+     */
+    @Override
+    public boolean equals(Object o) {
+        DishORM orm = (DishORM) o;
+        return orm.getDishMap().equals(this.dishMap)
+                && orm.getAvgRatingMap().equals(this.avgRatingMap;
     }
 }
