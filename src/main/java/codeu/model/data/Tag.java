@@ -110,4 +110,12 @@ public class Tag {
             this.allTagValues.add(tagValue);
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Tag tag = (Tag) o;
+        return tag.getTagType().equals(this.tagType)
+                && tag.getAllDishesByValue().equals(this.dishesByValue)
+                && tag.getAllTagValues().equals(this.allTagValues);
+    }
 }
