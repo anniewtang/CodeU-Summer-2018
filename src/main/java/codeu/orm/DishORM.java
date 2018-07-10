@@ -145,6 +145,6 @@ public class DishORM {
     public boolean equals(Object o) {
         DishORM orm = (DishORM) o;
         return orm.getDishMap().equals(this.dishMap)
-                && orm.getAvgRatingMap().equals(this.avgRatingMap;
+                && orm.getAvgRatingMap().equals(this.avgRatingMap);
     }
 }
