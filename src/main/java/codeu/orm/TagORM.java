@@ -84,8 +84,6 @@ public class TagORM {
 
     /**
      * Used in Testing files to have custom equality checks.
-     * @param o
-     * @return
      */
     @Override
     public boolean equals(Object o) {
