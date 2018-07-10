@@ -49,11 +49,12 @@ public class TestFramework {
     public String name = "Sesame Noodles";
     public String restaurant = "Asian Fusion";
     public int rating = 4;
+    public Set<String> allTagValues;
+    // tags for review
     public Map<String, Set<String>> tags;
     public Set<String> restrictions;
     public Set<String> cuisine;
-    public Set<String> allTagValues;
-
+    // tags for reviewOne
     public Map<String, Set<String>> tagsOne;
     public Set<String> restrictionsOne;
     public Set<String> cuisineOne;
@@ -63,10 +64,16 @@ public class TestFramework {
     public String nameTwo = "Ramen";
     public String restaurantTwo = "Ramen Shop";
     public int ratingTwo = 2;
+    public Set<String> allTagValuesTwo;
+    // tags for reviewTwo
     public Map<String, Set<String>> tagsTwo;
     public Set<String> restrictionsTwo;
     public Set<String> cuisineTwo;
-    public Set<String> allTagValuesTwo;
+    // tags for reviewThree; used for addReview testing
+    public Map<String, Set<String>> tagsThree;
+    public Set<String> restrictionsThree;
+    public Set<String> dishThree;
+
 
     // Review Attributes
     public Review review;
@@ -87,13 +94,13 @@ public class TestFramework {
     public String descTwo = "Desc for review 2";
     public int numStarsTwo = 2;
 
-    /*
+
     public Review reviewThree;
     public UUID reviewIDThree = UUID.randomUUID();
     public UUID authorThree = UUID.randomUUID();
     public String descThree = "Desc for review 3";
-    public int numStarsThree = 4;
-     */
+    public int numStarsThree = 4; // avgrating for dishtwo is 3
+
 
     // Tag Attributes
     public Tag cuisineTag;
@@ -156,11 +163,18 @@ public class TestFramework {
         allTagValuesTwo = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.JAPANESE, Constants.ASIAN));
         dishTwo = new Dish(dishIDTwo, nameTwo, restaurantTwo, ratingTwo, tagsTwo, allTagValuesTwo);
 
+        tagsThree = new HashMap<>();
+        restrictionsThree = new HashSet<>(Arrays.asList(Constants.DAIRYFREE));
+        dishThree = new HashSet<>(Arrays.asList(Constants.ENTREE));
+        tagsThree.put(Constants.RESTRICTION, restrictionsThree);
+        tagsThree.put(Constants.DISH, dishThree);
+
         // Reviews
         review = new Review(reviewID, author, dishID, numStars, desc, tags);
         reviewOne = new Review(reviewIDOne, authorOne, dishID, numStarsOne, descOne, tagsOne);
 
         reviewTwo = new Review(reviewIDTwo, authorTwo, dishIDTwo, numStarsTwo, descTwo, tagsTwo);
+        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, numStarsThree, descThree, tagsThree);
 
         // Tag: Cuisine
         cuisineChineseDishes = new HashSet<>(Arrays.asList(dishID));
