@@ -95,11 +95,12 @@ public class DishORM {
     /**
      * Use when adding in a NEW DISH for the first time into our DishORM memory.
      * Puts it in the dishMap {dishID : Dish object}
-     * @param id of the dish
+     * Also adds the only rating into avgRatingMap {dishID : "average" rating}
      * @param dish object
      */
     public void addDish(Dish dish) {
         this.dishMap.put(dish.getDishID(), dish);
+        this.avgRatingMap.put(dish.getDishID(), dish.getRating());
     }
 
     /**
