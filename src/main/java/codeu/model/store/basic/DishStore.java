@@ -77,16 +77,18 @@ public class DishStore {
      */
     private DishStore(PersistentStorageAgent persistentStorageAgent) {
         this.persistentStorageAgent = persistentStorageAgent;
-        // TODO: figure out if this is necessary or not
-        //    orm = new DishORM();
     }
 
-    /**
-     * Add a new Dish to the current set of dishes known to the application.
-     */
-    public void addDish(Dish dish) {
-        orm.addDish(dish.getDishID(), dish);
-        persistentStorageAgent.writeThrough(dish);
+    public Dish getDish(UUID id) {
+        return orm.getDish(id);
+    }
+
+    public int getAverageRating(UUID id) {
+        return orm.getAverageRating(id);
+    }
+
+    public int getNumReviews(UUID id) {
+        return orm.getNumReviews(id);
     }
 
     /**
@@ -94,6 +96,22 @@ public class DishStore {
      */
     public Map<String, Set<String>> getTagsForDish(UUID dishID) {
         return orm.getTagsForDish(dishID);
+    }
+
+    /**
+     * Good for displaying all the tag values for a dish.
+     * @return the set {tagValues} for the given dish.
+     */
+    public Set<String> getAllTagsForDish(UUID dishID) {
+        return orm.getAllTagsForDish(dishID);
+    }
+
+    /**
+     * Add a new Dish to the current set of dishes known to the application.
+     */
+    public void addDish(Dish dish) {
+        orm.addDish(dish);
+        persistentStorageAgent.writeThrough(dish);
     }
 
     /**

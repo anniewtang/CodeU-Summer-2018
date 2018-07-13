@@ -18,16 +18,30 @@ import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.model.data.Tag;
-import org.junit.After;
+import codeu.model.store.basic.DishStore;
+import codeu.model.store.basic.ReviewStore;
+import codeu.model.store.basic.TagStore;
+import codeu.model.store.persistence.PersistentStorageAgent;
+import codeu.orm.DishORM;
+import codeu.orm.TagORM;
 import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.*;
+
+import static org.powermock.api.mockito.PowerMockito.when;
 
 
 /**
  * Extendable testing class with Data object constants
  * that can be reused for other Testing classes.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ReviewStore.class, DishStore.class, TagStore.class})
 public class TestFramework {
     // Dish Attributes
     public Dish dish;
@@ -35,11 +49,12 @@ public class TestFramework {
     public String name = "Sesame Noodles";
     public String restaurant = "Asian Fusion";
     public int rating = 4;
+    public Set<String> allTagValues;
+    // tags for review
     public Map<String, Set<String>> tags;
     public Set<String> restrictions;
     public Set<String> cuisine;
-    public Set<String> allTagValues;
-
+    // tags for reviewOne
     public Map<String, Set<String>> tagsOne;
     public Set<String> restrictionsOne;
     public Set<String> cuisineOne;
@@ -48,11 +63,17 @@ public class TestFramework {
     public UUID dishIDTwo = UUID.randomUUID();
     public String nameTwo = "Ramen";
     public String restaurantTwo = "Ramen Shop";
-    public int ratingTwo = 3;
+    public int ratingTwo = 2;
+    public Set<String> allTagValuesTwo;
+    // tags for reviewTwo
     public Map<String, Set<String>> tagsTwo;
     public Set<String> restrictionsTwo;
     public Set<String> cuisineTwo;
-    public Set<String> allTagValuesTwo;
+    // tags for reviewThree; used for addReview testing
+    public Map<String, Set<String>> tagsThree;
+    public Set<String> restrictionsThree;
+    public Set<String> dishThree;
+
 
     // Review Attributes
     public Review review;
@@ -73,11 +94,12 @@ public class TestFramework {
     public String descTwo = "Desc for review 2";
     public int numStarsTwo = 2;
 
+
     public Review reviewThree;
     public UUID reviewIDThree = UUID.randomUUID();
     public UUID authorThree = UUID.randomUUID();
     public String descThree = "Desc for review 3";
-    public int numStarsThree = 4;
+    public int numStarsThree = 4; // avgrating for dishtwo is 3
 
 
     // Tag Attributes
@@ -98,8 +120,22 @@ public class TestFramework {
     public Set<UUID> restrictionNutFreeDishes;
     public Set<String> restrictionAllTags;
 
+    // Data ORMs
+    public TagORM tagORM;
+    public DishORM dishORM;
+
+    // Data Stores
+    @Mock
+    public PersistentStorageAgent mockPersistentStorageAgent;
+    public ReviewStore reviewStore;
+    public DishStore dishStore;
+    public TagStore tagStore;
+    public ReviewStore reviewStoreEmpty;
+    public DishStore dishStoreEmpty;
+    public TagStore tagStoreEmpty;
+
     @Before
-    public void setupBase() {
+    public void setupDataClasses() {
         // Dish 1
         tags = new HashMap<>();
         restrictions = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN));
@@ -127,12 +163,18 @@ public class TestFramework {
         allTagValuesTwo = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.JAPANESE, Constants.ASIAN));
         dishTwo = new Dish(dishIDTwo, nameTwo, restaurantTwo, ratingTwo, tagsTwo, allTagValuesTwo);
 
+        tagsThree = new HashMap<>();
+        restrictionsThree = new HashSet<>(Arrays.asList(Constants.DAIRYFREE));
+        dishThree = new HashSet<>(Arrays.asList(Constants.ENTREE));
+        tagsThree.put(Constants.RESTRICTION, restrictionsThree);
+        tagsThree.put(Constants.DISH, dishThree);
+
         // Reviews
         review = new Review(reviewID, author, dishID, numStars, desc, tags);
         reviewOne = new Review(reviewIDOne, authorOne, dishID, numStarsOne, descOne, tagsOne);
 
         reviewTwo = new Review(reviewIDTwo, authorTwo, dishIDTwo, numStarsTwo, descTwo, tagsTwo);
-        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, numStarsThree, descThree, tagsTwo);
+        reviewThree = new Review(reviewIDThree, authorThree, dishIDTwo, numStarsThree, descThree, tagsThree);
 
         // Tag: Cuisine
         cuisineChineseDishes = new HashSet<>(Arrays.asList(dishID));
@@ -158,5 +200,56 @@ public class TestFramework {
         dishesByValueTwo.put(Constants.NUTFREE, restrictionNutFreeDishes);
         restrictionAllTags = new HashSet<>(Arrays.asList(Constants.VEGAN, Constants.VEGETARIAN, Constants.GLUTENFREE, Constants.NUTFREE));
         restrictionTag = new Tag(restrictionType, dishesByValueTwo, restrictionAllTags);
+
+        // Tag ORM
+        Map<String, Tag> tagsByType = new HashMap<>();
+        tagsByType.put(Constants.RESTRICTION, restrictionTag);
+        tagsByType.put(Constants.CUISINE, cuisineTag);
+        tagORM = new TagORM(tagsByType);
+
+        // Dish Store
+        Map<UUID, Dish> dishMap = new HashMap<>();
+        dishMap.put(dishID, dish);
+        dishMap.put(dishIDTwo, dishTwo);
+        Map<UUID, Integer> ratingMap = new HashMap<>();
+        ratingMap.put(dishID, rating);
+        ratingMap.put(dishIDTwo, ratingTwo);
+        dishORM = new DishORM(dishMap, ratingMap);
+
+        // Review Store
+        reviewStore = ReviewStore.getTestInstance(mockPersistentStorageAgent);
+        Map<UUID, Set<Review>> reviewsByDish = new HashMap<>();
+        reviewsByDish.put(dishID, new HashSet<>(Arrays.asList(review, reviewOne)));
+        reviewsByDish.put(dishIDTwo, new HashSet<>(Arrays.asList(reviewTwo)));
+        reviewStore.setReviews(reviewsByDish);
+
+        reviewStoreEmpty = ReviewStore.getTestInstance(mockPersistentStorageAgent);
+        reviewStoreEmpty.setReviews(new HashMap<>());
+
+        PowerMockito.mockStatic(ReviewStore.class);
+        when(ReviewStore.getInstance()).thenReturn(reviewStore);
+        when(ReviewStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(reviewStoreEmpty);
+
+        // Dish Store
+        dishStore = DishStore.getTestInstance(mockPersistentStorageAgent);
+        dishStore.setDishes(dishORM);
+
+        dishStoreEmpty = DishStore.getTestInstance(mockPersistentStorageAgent);
+        dishStoreEmpty.setDishes(new DishORM(new HashMap<>(), new HashMap<>()));
+
+        PowerMockito.mockStatic(DishStore.class);
+        when(DishStore.getInstance()).thenReturn(dishStore);
+        when(DishStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(dishStoreEmpty);
+
+        // Tag Store
+        tagStore = TagStore.getTestInstance(mockPersistentStorageAgent);
+        tagStore.setTags(tagORM);
+
+        tagStoreEmpty = TagStore.getTestInstance(mockPersistentStorageAgent);
+        tagStoreEmpty.setTags(new TagORM(new HashMap<>()));
+
+        PowerMockito.mockStatic(TagStore.class);
+        when(TagStore.getInstance()).thenReturn(tagStore);
+        when(TagStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(tagStoreEmpty);
     }
 }

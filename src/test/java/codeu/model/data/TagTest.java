@@ -58,7 +58,7 @@ public class TagTest extends TestFramework {
         cuisineAllTags.addAll(tagValues);
 
         // run
-        cuisineTag.addDishToTagValue(tagValues, dishIDThree);
+        cuisineTag.addDishToTagValues(tagValues, dishIDThree);
 
         // verify
         Set<UUID> asian = cuisineTag.getDishesByValue(Constants.ASIAN);

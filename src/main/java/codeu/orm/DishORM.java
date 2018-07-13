@@ -17,6 +17,7 @@ import codeu.model.data.Dish;
 import codeu.model.store.basic.ReviewStore;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -73,14 +74,33 @@ public class DishORM {
         return dish.getTags();
     }
 
+    public Set<String> getAllTagsForDish(UUID dishID) {
+        return getDish(dishID).getAllTagValues();
+    }
+
+    /**
+     * Used for Testing purposes.
+     */
+    public Map<UUID, Dish> getDishMap() {
+        return this.dishMap;
+    }
+
+    /**
+     * Used for Testing purposes.
+     */
+    public Map<UUID, Integer> getAvgRatingMap() {
+        return this.avgRatingMap;
+    }
+
     /**
      * Use when adding in a NEW DISH for the first time into our DishORM memory.
      * Puts it in the dishMap {dishID : Dish object}
-     * @param id of the dish
+     * Also adds the only rating into avgRatingMap {dishID : "average" rating}
      * @param dish object
      */
-    public void addDish(UUID id, Dish dish) {
-        this.dishMap.put(id, dish);
+    public void addDish(Dish dish) {
+        this.dishMap.put(dish.getDishID(), dish);
+        this.avgRatingMap.put(dish.getDishID(), dish.getRating());
     }
 
     /**
@@ -99,7 +119,9 @@ public class DishORM {
         int oldRating = getAverageRating(id);
 
         int prevNumReviews = getNumReviews(id);
-        updatedDish.setRating((oldRating * prevNumReviews + rate) / (prevNumReviews + 1));
+        int newRating = (oldRating * prevNumReviews + rate) / (prevNumReviews + 1);
+        updatedDish.setRating(newRating);
+        avgRatingMap.put(id, newRating);
         return updatedDish;
     }
 
@@ -116,5 +138,20 @@ public class DishORM {
         Dish dish = getDish(id);
         dish.addUserTags(userTags);
         return dish;
+    }
+
+    /**
+     * Used in Testing files to have custom equality checks.
+     */
+    @Override
+    public boolean equals(Object o) {
+        DishORM orm = (DishORM) o;
+        return orm.getDishMap().equals(this.dishMap)
+                && orm.getAvgRatingMap().equals(this.avgRatingMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dishMap, avgRatingMap);
     }
 }

@@ -101,8 +101,8 @@ public class PersistentDataStore {
                 String dishName = (String) entity.getProperty("dish_name");
                 String restaurant = (String) entity.getProperty("restaurant");
                 int rating = Integer.parseInt((String) entity.getProperty("rating"));
-                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
-                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+                Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
+                Set<String> allTagValues = decompressSet((EmbeddedEntity) entity.getProperty("all_tag_values"));
 
                 Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
@@ -136,11 +136,10 @@ public class PersistentDataStore {
         for (Entity entity : results.asIterable()) {
             try {
                 String tagType = (String) entity.getProperty("tag_type");
-                Map<String, Set<UUID>> dishesByValue = (Map<String, Set<UUID>>) entity.getProperty("dishes_by_value");
-                Set<String> allTagValues = (Set<String>) entity.getProperty("all_tag_values");
+                Map<String, Set<UUID>> dishesByValue = decompressMap((EmbeddedEntity) entity.getProperty("dishes_by_value"), "UUID");
+                Set<String> allTagValues = decompressSet((EmbeddedEntity) entity.getProperty("all_tag_values"));
 
                 Tag tag = new Tag(tagType, dishesByValue, allTagValues);
-
                 tagsByType.put(tagType, tag);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
@@ -172,18 +171,12 @@ public class PersistentDataStore {
                 UUID reviewID = UUID.fromString((String) entity.getProperty("review_id"));
                 UUID author = UUID.fromString((String) entity.getProperty("author"));
                 UUID dishID = UUID.fromString((String) entity.getProperty("dish_id"));
-                Integer numStars = (Integer) entity.getProperty("num_stars");
+                Integer numStars = Integer.parseInt((String) entity.getProperty("num_stars"));;
                 String desc = (String) entity.getProperty("desc");
-                Map<String, Set<String>> tags = (Map<String, Set<String>>) entity.getProperty("tags");
+                Map<String, Set<String>> tags = decompressMap((EmbeddedEntity) entity.getProperty("tags"));
 
                 Review review = new Review(reviewID, author, dishID, numStars, desc, tags);
-
-                Set<Review> reviews = reviewsByDish.get(dishID);
-                if (reviews == null) {
-                    reviews = new HashSet<>();
-                    reviewsByDish.put(dishID, reviews);
-                }
-                reviews.add(review);
+                reviewsByDish.computeIfAbsent(dishID, id -> new HashSet<>()).add(review);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
                 // occur include network errors, Datastore service errors, authorization errors,
@@ -216,10 +209,10 @@ public class PersistentDataStore {
         dishEntity.setProperty("dish_id", dish.getDishID().toString());
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
-        dishEntity.setProperty("rating", dish.getRestaurant().toString());
-        dishEntity.setProperty("tags", dish.getTags());
-        dishEntity.setProperty("all_tag_values", dish.getAllTagValues());
-//        dishEntity.setProperty("creation_time", dish.getCreationTime().toString());
+        dishEntity.setProperty("rating", Integer.toString(dish.getRating()));
+        dishEntity.setProperty("tags", compressMap(dish.getTags()));
+        dishEntity.setProperty("all_tag_values", compressSet(dish.getAllTagValues()));
+
         datastore.put(dishEntity);
     }
 
@@ -229,8 +222,9 @@ public class PersistentDataStore {
     public void writeThrough(Tag tag) {
         Entity tagEntity = new Entity("tags", tag.getTagType());
         tagEntity.setProperty("tag_type", tag.getTagType());
-        tagEntity.setProperty("dishes_by_value", tag.getAllDishesByValue());
-        tagEntity.setProperty("all_tag_values", tag.getAllTagValues());
+        tagEntity.setProperty("dishes_by_value", compressMap(tag.getAllDishesByValue()));
+        tagEntity.setProperty("all_tag_values", compressSet(tag.getAllTagValues()));
+
         datastore.put(tagEntity);
     }
 
@@ -240,11 +234,70 @@ public class PersistentDataStore {
     public void writeThrough(Review review) {
         Entity reviewEntity = new Entity("reviews", review.getReviewID().toString());
         reviewEntity.setProperty("review_id", review.getReviewID().toString());
-        reviewEntity.setProperty("author", review.getAuthor());
-        reviewEntity.setProperty("dish_id", review.getDishID());
-        reviewEntity.setProperty("num_stars", review.getStarRating());
+        reviewEntity.setProperty("author", review.getAuthor().toString());
+        reviewEntity.setProperty("dish_id", review.getDishID().toString());
+        reviewEntity.setProperty("num_stars", Integer.toString(review.getStarRating()));
         reviewEntity.setProperty("desc", review.getDescription());
-        reviewEntity.setProperty("tags", review.getTags());
+        reviewEntity.setProperty("tags", compressMap(review.getTags()));
+
         datastore.put(reviewEntity);
+    }
+
+    /**
+     * Compresses/flattens Maps into a supported Property type,
+     * so we can push them to Google App Engine.
+     *
+     * @return a nested EmbeddedEntity (i.e. a nested "hashmap" basically)
+     * {key : EmbeddedEntity} <=> {key : Set<V>}
+     *
+     */
+    private <V> EmbeddedEntity compressMap(Map<String, Set<V>> map) {
+        EmbeddedEntity e = new EmbeddedEntity();
+        for (String k : map.keySet()) e.setProperty(k, compressSet(map.get(k)));
+        return e;
+    }
+
+    /**
+     * Compresses/flattens Sets into a supported Property type,
+     * so we can push them to Google App Engine.
+     *
+     * @return an EmbeddedEntity with a placeholder "key".
+     */
+    private <V> EmbeddedEntity compressSet(Set<V> set) {
+        EmbeddedEntity e = new EmbeddedEntity();
+        for (V value : set) e.setProperty(value.toString(), value.toString());
+        return e;
+    }
+
+    private <V> Map<String, Set<V>> decompressMap(EmbeddedEntity e) {
+        return decompressMap(e, "String");
+    }
+
+    private <V> Set<V> decompressSet(EmbeddedEntity e) {
+        return decompressSet(e, "String");
+    }
+
+
+    private <V> Map<String, Set<V>> decompressMap(EmbeddedEntity e, String type) {
+        Map<String, Set<V>> map = new HashMap<>();
+        Map<String, Object> entityMap = e.getProperties();
+        for (String k : entityMap.keySet()) {
+            EmbeddedEntity setEntity = (EmbeddedEntity) entityMap.get(k);
+            map.put(k, decompressSet(setEntity, type));
+        }
+        return map;
+    }
+
+    private <V> Set<V> decompressSet(EmbeddedEntity e, String type) {
+        Set<V> set = new HashSet<>();
+        Map<String, Object> entityMap = e.getProperties();
+        if (type.equals("UUID")) {
+            for (Object value : entityMap.values()) {
+                set.add((V) UUID.fromString((String) value));
+            }
+        } else {
+            set.addAll((Collection<V>) entityMap.values());
+        }
+        return set;
     }
 }
