@@ -15,6 +15,7 @@
 package codeu.model.data;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.Map;
@@ -84,10 +85,30 @@ public class Review {
     }
 
     /**
-     * Returns the text description of the Review
+     * Returns the user tags associated with this Review.
      */
     public Map<String, Set<String>> getTags() {
         return this.tags;
+    }
+
+    /**
+     * Equals method for Testing
+     */
+    @Override
+    public boolean equals(Object o) {
+        Review r = (Review) o;
+        boolean result = r.getReviewID().equals(this.reviewID)
+                && r.getAuthor().equals(this.author)
+                && r.getDishID().equals(this.dishID)
+                && r.getStarRating() == (this.numStars)
+                && r.getDescription().equals(this.desc)
+                && r.getTags().equals(r.tags);
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reviewID, author, dishID, numStars, desc, tags);
     }
 }
 

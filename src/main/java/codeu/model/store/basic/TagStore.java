@@ -76,8 +76,6 @@ public class TagStore {
      */
     private TagStore(PersistentStorageAgent persistentStorageAgent) {
         this.persistentStorageAgent = persistentStorageAgent;
-        // TODO: FIGURE THIS FOLLOWING CODE OUT
-        //    orm = new TagORM();
     }
 
     /**
@@ -95,6 +93,7 @@ public class TagStore {
         for (Tag tag : updatedTags) {
             persistentStorageAgent.writeThrough(tag);
         }
+        DishStore.getInstance().getDish(dishID).addUserTags(userTags);
     }
 
     /**

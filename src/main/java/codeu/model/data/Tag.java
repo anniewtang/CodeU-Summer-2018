@@ -90,12 +90,7 @@ public class Tag {
      * @method getDishesByValue
      */
     public Set<UUID> getDishesByValue(String value) {
-        Set<UUID> dishes = this.dishesByValue.get(value);
-        if (dishes == null) {
-            dishes = new HashSet<>();
-            getAllDishesByValue().put(value, dishes);
-        }
-        return dishes;
+        return dishesByValue.computeIfAbsent(value, k -> new HashSet<>());
     }
 
     /**
@@ -106,13 +101,26 @@ public class Tag {
      *
      * @param tagValues the set of user tags, for this tag category
      * @param dishID    id of the dish we're associating
-     * @method addDishToTag
+     * @method addDishToTagValues
      */
-    public void addDishToTagValue(Set<String> tagValues, UUID dishID) {
+    public void addDishToTagValues(Set<String> tagValues, UUID dishID) {
         for (String tagValue : tagValues) {
             Set<UUID> dishes = getDishesByValue(tagValue);
             dishes.add(dishID);
             this.allTagValues.add(tagValue);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Tag tag = (Tag) o;
+        return tag.getTagType().equals(this.tagType)
+                && tag.getAllDishesByValue().equals(this.dishesByValue)
+                && tag.getAllTagValues().equals(this.allTagValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagType, dishesByValue, allTagValues);
     }
 }

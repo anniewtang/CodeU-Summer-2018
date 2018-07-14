@@ -79,16 +79,19 @@ public class ReviewStore {
     }
 
     /**
-     * Returns the set of Reviews associated with a Dish.
+     * Can be used for the first time we're adding a Dish (i.e. by "addReview"),
+     * or for when the dish has already been added (therefore associated w/at least 1 review).
      * @param dishID
-     * @return
+     * @return the set of Reviews associated with a Dish.
      */
     public Set<Review> getReviewsForDish(UUID dishID) {
-        return this.reviewsByDish.get(dishID);
+        return reviewsByDish.computeIfAbsent(dishID, id -> new HashSet<>());
     }
 
     /**
-     * Returns the total number of reviews associated with Dish.
+     * Should always be at least one.
+     * @param dishID
+     * @return total number of reviews associated with Dish.
      */
     public int getNumReviews(UUID dishID) {
         return getReviewsForDish(dishID).size();
@@ -107,7 +110,7 @@ public class ReviewStore {
     public void addReview(Review review) {
         updateTags(review);
         updateRating(review);
-        reviewsByDish.computeIfAbsent(review.getDishID(), id -> new HashSet<>()).add(review);
+        getReviewsForDish(review.getDishID()).add(review);
         persistentStorageAgent.writeThrough(review);
     }
 
