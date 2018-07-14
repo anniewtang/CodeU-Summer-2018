@@ -131,19 +131,9 @@ public class Dish {
         }
     }
 
-    private void updateTagsForType(String type, Set<String> tags) {
-        Set<String> values = getValuesOfType(type);
-        values.addAll(tags);
-    }
-
-    // TODO: TAKE ANOTHER LOOK AT THIS
-    private Set<String> getValuesOfType(String type) {
-        Set<String> values = tags.get(type);
-        if (values == null) {
-            values = new HashSet<>();
-            tags.put(type, values);
-        }
-        return values;
+    private void updateTagsForType(String type, Set<String> userTagsForTagType) {
+        Set<String> values = tags.computeIfAbsent(type, k -> new HashSet<>());
+        values.addAll(userTagsForTagType);
     }
 
     /**
