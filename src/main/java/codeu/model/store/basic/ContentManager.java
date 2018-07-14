@@ -30,13 +30,13 @@ public class ContentManager {
 
 
     /**
-     * Singleton instance of DishStore.
+     * Singleton instance of ContentManager.
      */
     private static ContentManager instance;
 
     /**
-     * Returns the singleton instance of DishStore that should be shared between all servlet
-     * classes. Do not call this function from a test; use getTestInstance() instead.
+     * Returns the singleton instance of ContentManager
+     * that should be shared between all servlet classes.
      */
     public static ContentManager getInstance() {
         if (instance == null) {
@@ -77,5 +77,5 @@ public class ContentManager {
     /* =============================================================
     Methods for @helarabawy to use when querying for search results.
     ============================================================== */
-    
+
 }
