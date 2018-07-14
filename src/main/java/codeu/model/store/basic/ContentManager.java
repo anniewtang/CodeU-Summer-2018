@@ -51,6 +51,9 @@ public class ContentManager {
         this.tagStore = TagStore.getInstance();
     }
 
+    /* =========================================================
+    Methods for @cohanale to use when users want to Rate Dishes.
+    ========================================================= */
     /**
      * Used when user adds a NEW Review for a NEW Dish.
      * Creates both a new Dish object and a Review object within our appstore.
@@ -58,7 +61,8 @@ public class ContentManager {
      * @param review first review for this Dish
      */
     public void addNewDishAndFirstReview(Dish dish, Review review) {
-        return;
+        DishStore.getInstance().addDish(dish);
+        addReviewForExistingDish(review);
     }
 
     /**
@@ -67,8 +71,11 @@ public class ContentManager {
      * @param review user-written review
      */
     public void addReviewForExistingDish(Review review) {
-        return;
+        ReviewStore.getInstance().addReview(review);
     }
 
-
+    /* =============================================================
+    Methods for @helarabawy to use when querying for search results.
+    ============================================================== */
+    
 }

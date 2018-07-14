@@ -105,8 +105,6 @@ public class ReviewStore {
      *
      * @param review
      */
-    // TODO || Dependency: make sure addReview is called AFTER DishORM.addDish
-    // TODO || it relies on the DishORM already having the Dish.
     public void addReview(Review review) {
         updateTags(review);
         updateRating(review);
