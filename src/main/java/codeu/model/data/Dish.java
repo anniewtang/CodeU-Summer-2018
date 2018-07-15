@@ -14,10 +14,7 @@
 
 package codeu.model.data;
 
-import java.util.UUID;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
@@ -162,6 +159,25 @@ public class Dish {
             allTagValues.addAll(pair.getValue());
         }
         return allTagValues;
+    }
+
+    /**
+     * An equals method for Testing.
+     */
+    @Override
+    public boolean equals(Object o) {
+        Dish d = (Dish) o;
+        return d.getDishID().equals(this.dishID)
+                && d.getDishName().equals(this.dishName)
+                && d.getRestaurant().equals(this.restaurant)
+                && d.getRating() == (this.rating)
+                && d.getTags().equals(this.tags)
+                && d.getAllTagValues().equals(this.allTagValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dishID, dishName, restaurant, rating, tags, allTagValues);
     }
 
 }

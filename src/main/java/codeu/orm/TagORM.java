@@ -15,6 +15,7 @@
 package codeu.orm;
 
 import codeu.model.data.Tag;
+import codeu.model.store.basic.DishStore;
 
 import java.util.Map.Entry;
 
@@ -46,7 +47,16 @@ public class TagORM {
      * @method getTagForType
      */
     public Tag getTagForType(String type) {
-        return this.tagsByType.get(type);
+        return tagsByType.computeIfAbsent(type, Tag::new);
+    }
+
+    /**
+     * Primarily used for testing purposes.
+     * Can also be used when querying, if useful.
+     * @return private map of {Tag Category/Type : Tag object}
+     */
+    public Map<String, Tag> getTagsByTypeMap() {
+        return this.tagsByType;
     }
 
     /**
@@ -62,11 +72,27 @@ public class TagORM {
         Set<Tag> updatedTags = new HashSet<>();
         for (Entry<String, Set<String>> tagEntry : userTags.entrySet()) {
             String tagType = tagEntry.getKey();
-            Tag tag = getTagForType(tagType);
-            updatedTags.add(tag);
             Set<String> tagValues = userTags.get(tagType);
-            tag.addDishToTagValue(userTags.get(tagType), id);
+
+            Tag tag = getTagForType(tagType);
+            tag.addDishToTagValues(tagValues, id);
+
+            updatedTags.add(tag);
         }
         return updatedTags;
+    }
+
+    /**
+     * Used in Testing files to have custom equality checks.
+     */
+    @Override
+    public boolean equals(Object o) {
+        TagORM orm = (TagORM) o;
+        return orm.getTagsByTypeMap().equals(this.tagsByType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagsByType);
     }
 }

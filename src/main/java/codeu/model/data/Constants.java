@@ -14,7 +14,15 @@ package codeu.model.data;
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+
 public class Constants {
+    public static Set<String> cuisineConstants = new TreeSet<>();
+    public static Set<String> dishConstants = new TreeSet<>();
+    public static Set<String> restrictionConstants = new TreeSet<>();
+
     /* Cuisine Types Constants*/
         public static final String CUISINE = "Cuisine";
 
@@ -90,4 +98,25 @@ public class Constants {
         public static final String GLUTENFREE = "Gluten-Free";
         public static final String DAIRYFREE = "Dairy-Free";
         public static final String NUTFREE = "Nut-Free";
+
+    static {
+        cuisineConstants.addAll(Arrays.asList(ASIAN, AMERICAN, MEXICAN, EUROPEAN, CHINESE, ITALIAN, JAPANESE, GREEK,
+                FRENCH, THAI, SPANISH, INDIAN, MEDITERRAENEAN, CAJUN, SOUL, GERMAN, KOREAN, VIETNAMESE, TURKISH, CARIBBEAN));
+        dishConstants.addAll(Arrays.asList(APPETIZER, ENTREE, DESSERT, BREAKFAST, LUNCH, DINNER,
+                SWEET, SAVORY, SALTY, SOUR, SOUP, BREAD, PORRIDGE, EGGS, WAFFLES, PANCAKES, COFFEE,
+                OATMEAL, YOGURT, BAGEL, NOODLE, PASTA, RICE, BURGER, FASTFOOD, SALAD, SANDWICH, FRUIT, ICECREAM, CAKE));
+        restrictionConstants.addAll(Arrays.asList(PESCETARIAN, VEGETARIAN, VEGAN, GLUTENFREE, DAIRYFREE, NUTFREE));
+    }
+
+    public static Set<String> getCuisineConstants() {
+        return cuisineConstants;
+    }
+
+    public static Set<String> getDishConstants() {
+        return dishConstants;
+    }
+
+    public static Set<String> getRestrictionConstants() {
+        return restrictionConstants;
+    }
 }
