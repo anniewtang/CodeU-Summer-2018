@@ -17,6 +17,9 @@ package codeu.model.store.basic;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -77,5 +80,59 @@ public class ContentManager {
     /* =============================================================
     Methods for @helarabawy to use when querying for search results.
     ============================================================== */
+
+    /**
+     * QUERY BASED ON TAGS ONLY.
+     * ========================
+     * Allows users to search for a set of Dishes that satisfy their requirements.
+     * Requirements are based on ONLY given user tag preferences:
+     * 1.) Cuisine Type
+     * 2.) Dish Type
+     * 3.) Dietary Restrictions
+     * @param queryTags map of user requirements for Dish tags {tagType : {tagValues}}
+     * @return Set of Dishes that satisfy requirements
+     */
+    public Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
+        return null;
+    }
+
+    /**
+     * QUERY BASED ON RATING ONLY.
+     * ==========================
+     * Allows users to search for a set of Dishes of certain RATINGs only.
+     * @param queryRatings set of dish rating values user wants for Dish results.
+     * @return Set of Dishes that satisfy the rating requirements.
+     */
+    public Set<Dish> queryByRatings(Set<Integer> queryRatings) {
+        return null;
+    }
+
+    /**
+     * SORT ALL DISHES BY RATING ONLY.
+     * ==============================
+     * @param highestToLow boolean value telling us which way users want the sort
+     * @return sorted List of ALL Dishes for the user
+     */
+    public List<Dish> sortAllByRating(boolean highestToLow) {
+        // use DishStore.getInstance().getAllDishes()
+        // should return a set of all Dish objects
+        // use a TreeSet or PriorityQueue to automatically sort dishes, based on the rating attribute
+        return null;
+    }
+
+    public Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
+        // select dishes from Tag restrictions first; somehow get overlapping sets
+        // filter based on the rating of the dish?
+        // return a TreeSet so queryAndSort can use it lel
+        return null;
+    }
+
+    public Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
+        // call the previous method
+        // take the returned dish set as a TreeSet with custom comparator
+        return null;
+    }
+
+
 
 }
