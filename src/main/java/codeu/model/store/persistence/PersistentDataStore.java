@@ -87,7 +87,7 @@ public class PersistentDataStore {
     public DishORM loadDishes() throws PersistentDataStoreException {
         // Setting up Data Structures to load information into
         Map<UUID, Dish> dishMap = new HashMap<>();
-        Map<UUID, Integer> ratingMap = new HashMap<>();
+        Map<Integer, Set<UUID>> ratingMap = new HashMap<>();
 
         // Retrieve all Dishes from DataStore
         Query query = new Query("dishes");
@@ -105,7 +105,7 @@ public class PersistentDataStore {
                 Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
                 dishMap.put(dishID, dish);
-                ratingMap.put(dishID, rating);
+                ratingMap.computeIfAbsent(rating, r -> new HashSet<>()).add(dishID);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
                 // occur include network errors, Datastore service errors, authorization errors,
