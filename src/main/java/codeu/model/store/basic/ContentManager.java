@@ -58,7 +58,6 @@ public class ContentManager {
     /* =============================================================
     Methods for @helarabawy to use when querying for search results.
     ============================================================== */
-
     /**
      * QUERY BASED ON TAGS ONLY.
      * ========================
@@ -96,7 +95,12 @@ public class ContentManager {
      * @return Set of Dishes that satisfy the rating requirements.
      */
     public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
-        return null;
+        Set<Dish> results = new HashSet<>();
+        for (int rating : queryRatings) {
+            Set<UUID> dishes = dishStore.getDishesOfRating(rating);
+            results.addAll(dishes.stream().map(dishStore::getDish).collect(toSet()));
+        }
+        return results;
     }
 
     /**
