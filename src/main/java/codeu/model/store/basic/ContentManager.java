@@ -115,7 +115,7 @@ public class ContentManager {
      */
     public List<Dish> sortAllByRating(boolean highestToLow) {
         // use DishStore.getInstance().getAllDishes()
-        // should return a set of all Dish objects
+        // should return a Collection of all Dish objects
         // use a TreeSet or PriorityQueue to automatically sort dishes, based on the rating attribute
         return null;
     }

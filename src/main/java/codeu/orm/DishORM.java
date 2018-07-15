@@ -49,6 +49,10 @@ public class DishORM {
         return this.avgRatingMap.get(rating);
     }
 
+    public Collection<Dish> getAllDishes() {
+        return this.dishMap.values();
+    }
+
     /**
      * Used to calculate the average rating for each dish.
      * Also can be used as a display/UI detail (i.e. # of reviews per dish).
