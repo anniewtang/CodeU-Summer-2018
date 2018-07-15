@@ -86,6 +86,7 @@ public class ContentManager {
 //            }
 //        }
 //        return results;
+        return null;
     }
 
     /**
