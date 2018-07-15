@@ -103,6 +103,7 @@ public class ContentManager {
     /**
      * SORT ALL DISHES BY RATING ONLY.
      * ==============================
+     * Provides ALL the dishes in the Dish Store sorted by rating, based on user's preference.
      * @param highestToLow boolean value telling us which way users want the sort
      * @return sorted List of ALL Dishes for the user
      */
@@ -116,6 +117,7 @@ public class ContentManager {
     /**
      * QUERY BY BOTH TAGS AND RATINGS.
      * ===============================
+     * Allows user to query Dishes based on their preferences (tags + rating values)
      * @param queryTags map of user requirements for Dish tags {tagType : {tagValues}}
      * @param ratings set of ratings user wants to see Dishes for
      * @return set of Dish objects that match all these requirements
@@ -130,10 +132,12 @@ public class ContentManager {
     /**
      * QUERY BY BOTH TAGS AND RATINGS && SORT RESULTS AS WELL.
      * =======================================================
+     * Allows user to query based on preferences (tags + rating values)
+     * AND have everything be returned in sorted order
      * @param queryTags (same as above)
      * @param ratings (same as above)
      * @param highestToLow boolean to indicate users' preference for high to low rating
-     * @return
+     * @return sorted set of Dish objects that match all the requirements
      */
     public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
         // call the previous method
