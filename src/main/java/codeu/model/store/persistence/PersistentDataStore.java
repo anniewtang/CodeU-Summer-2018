@@ -250,7 +250,7 @@ public class PersistentDataStore {
      */
     private <V> EmbeddedEntity compressMap(Map<String, Set<V>> map) {
         EmbeddedEntity e = new EmbeddedEntity();
-        for (String k : map.keySet()) e.setProperty(k, compressSet(map.get(k)));
+        for (String property : map.keySet()) e.setProperty(property, compressSet(map.get(property)));
         return e;
     }
 
