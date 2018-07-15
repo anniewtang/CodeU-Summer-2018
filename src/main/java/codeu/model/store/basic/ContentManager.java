@@ -137,7 +137,7 @@ public class ContentManager {
      * @param queryTags (same as above)
      * @param ratings (same as above)
      * @param highestToLow boolean to indicate users' preference for high to low rating
-     * @return sorted set of Dish objects that match all the requirements
+     * @return sorted set of Dish objects that match all the requirementsg
      */
     public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
         // call the previous method
