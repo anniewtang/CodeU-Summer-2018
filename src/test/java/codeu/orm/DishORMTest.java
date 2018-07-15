@@ -54,8 +54,8 @@ public class DishORMTest extends TestFramework {
     @Test
     public void testGetAverageRating() {
         // run + verify
-        Assert.assertEquals(4, dishORM.getAverageRating(dish.getDishID()));
-        Assert.assertEquals(2, dishORM.getAverageRating(dishTwo.getDishID()));
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dish.getDishID())), dishORM.getDishesOfRating(4));
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dishTwo.getDishID())), dishORM.getDishesOfRating(2));
     }
 
     @Test
@@ -74,9 +74,12 @@ public class DishORMTest extends TestFramework {
     public void testUpdateRating() {
         dishORM.updateRating(dishIDTwo, 7);
         Assert.assertEquals(4, dishORM.getAverageRating(dishIDTwo));
+        Assert.assertTrue(dishORM.getDishesOfRating(4).contains(dishIDTwo));
+        Assert.assertTrue(!dishORM.getDishesOfRating(2).contains(dishIDTwo));
 
         dishORM.updateRating(dishID, 7);
-        Assert.assertEquals(5, dishORM.getAverageRating(dishID));
+        Assert.assertTrue(dishORM.getDishesOfRating(5).contains(dishID));
+        Assert.assertTrue(!dishORM.getDishesOfRating(4).contains(dishID));
     }
 
     @Test
