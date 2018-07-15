@@ -73,7 +73,6 @@ public class DishORMTest extends TestFramework {
     @Test
     public void testUpdateRating() {
         dishORM.updateRating(dishIDTwo, 7);
-        Assert.assertEquals(4, dishORM.getAverageRating(dishIDTwo));
         Assert.assertTrue(dishORM.getDishesOfRating(4).contains(dishIDTwo));
         Assert.assertTrue(!dishORM.getDishesOfRating(2).contains(dishIDTwo));
 
