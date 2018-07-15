@@ -28,7 +28,8 @@ import java.util.UUID;
  */
 public class DishORM {
     private Map<UUID, Dish> dishMap; // maps dishIDs to Dish objects
-    private Map<UUID, Integer> avgRatingMap; // maps dishIDs to average star ratings
+//    private Map<UUID, Integer> avgRatingMap; // maps dishIDs to average star ratings
+    private Map<Integer, Set<UUID>> avgRatingMap; // maps average star ratings to Dish objects
 
     public DishORM(Map<UUID, Dish> dishMap, Map<UUID, Integer> avgRatingMap) {
         this.dishMap = dishMap;
