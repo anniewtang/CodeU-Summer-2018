@@ -79,8 +79,8 @@ public class DishStore {
         return orm.getDish(id);
     }
 
-    public int getAverageRating(UUID id) {
-        return orm.getAverageRating(id);
+    public Set<UUID> getDishesOfRating(int rating) {
+        return orm.getDishesOfRating(rating);
     }
 
     public int getNumReviews(UUID id) {
