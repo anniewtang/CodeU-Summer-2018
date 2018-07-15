@@ -100,7 +100,8 @@ public class ReviewStoreTest extends TestFramework {
         Assert.assertEquals(3, dishStore.getDish(dishIDTwo).getRating());
 
         // check DishStore's avg rating map
-        Assert.assertEquals(3, dishStore.getAverageRating(dishIDTwo));
+        Assert.assertTrue(dishStore.getDishesOfRating(3).contains(dishIDTwo));
+        Assert.assertTrue(!dishStore.getDishesOfRating(2).contains(dishIDTwo));
 
         // check reviewsForDish map
         Assert.assertEquals(new HashSet<>(Arrays.asList(reviewThree, reviewTwo)), reviewStore.getReviewsForDish(dishIDTwo));

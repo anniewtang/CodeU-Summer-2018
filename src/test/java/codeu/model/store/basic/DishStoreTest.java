@@ -30,8 +30,8 @@ public class DishStoreTest extends TestFramework {
     @Test
     public void testGetterMethods() {
         Assert.assertEquals(dish, dishStore.getDish(dishID));
-        Assert.assertEquals(4, dishStore.getAverageRating(dishID));
-        Assert.assertEquals(2, dishStore.getNumReviews(dishID));
+        Assert.assertTrue(dishStore.getDishesOfRating(4).contains(dishID));
+        Assert.assertTrue(dishStore.getDishesOfRating(2).contains(dishIDTwo));
     }
 
 
@@ -67,10 +67,12 @@ public class DishStoreTest extends TestFramework {
     @Test
     public void testUpdateRating() {
         dishStore.updateRating(dishIDTwo, 7);
-        Assert.assertEquals(4, dishStore.getAverageRating(dishIDTwo));
+        Assert.assertTrue(dishStore.getDishesOfRating(4).contains(dishIDTwo));
+        Assert.assertTrue(!dishStore.getDishesOfRating(2).contains(dishIDTwo));
 
         dishStore.updateRating(dishID, 7);
-        Assert.assertEquals(5, dishStore.getAverageRating(dishID));
+        Assert.assertTrue(dishStore.getDishesOfRating(5).contains(dishID));
+        Assert.assertTrue(!dishStore.getDishesOfRating(4).contains(dishID));
     }
 
     @Test
