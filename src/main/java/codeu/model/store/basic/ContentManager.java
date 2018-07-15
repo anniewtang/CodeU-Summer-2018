@@ -21,6 +21,8 @@ import codeu.model.data.Tag;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toSet;
+
 /**
  * Wrapper class with public methods meant to make adding and accessing
  * the backend data (i.e. app content: Dishes, Reviews, Tags) easier.
@@ -69,24 +71,21 @@ public class ContentManager {
      * @return Set of Dishes that satisfy requirements
      */
     public static Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
-//        Set<Dish> results;
-//
-//        Set<UUID> cuisineIDs      = new HashSet<>();
-//        Set<UUID> restrictionIDs  = new HashSet<>();
-//        Set<UUID> dishIDs         = new HashSet<>();
-//
-//        Map<String, Set<UUID>> queriedDishes = new HashMap<>();
-//
-//        for (Map.Entry<String, Set<String>> pair : queryTags.entrySet()) {
-//            String tagType = pair.getKey();
-//            Tag tag = tagStore.getTagForType(tagType);
-//            Set<UUID> s = queriedDishes.computeIfAbsent(tagType, t -> new HashSet<>());
-//            for (String tagValue : pair.getValue()) {
-//                s.addAll(tagStore.getDishesByValue(tag, tagValue));
-//            }
-//        }
-//        return results;
-        return null;
+        Set<UUID> queriedDishes = new HashSet<>();
+
+        for (Map.Entry<String, Set<String>> pair : queryTags.entrySet()) {
+            String tagType = pair.getKey();
+            Tag tag = tagStore.getTagForType(tagType);
+            for (String tagValue : pair.getValue()) {
+                if (queriedDishes.size() == 0) {
+                    queriedDishes = new HashSet<>(tagStore.getDishesByValue(tag, tagValue));
+                } else {
+                    queriedDishes.retainAll(tagStore.getDishesByValue(tag, tagValue));
+                }
+            }
+        }
+
+        return queriedDishes.stream().map(dishStore::getDish).collect(toSet());
     }
 
     /**
