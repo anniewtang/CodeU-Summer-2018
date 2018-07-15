@@ -113,6 +113,13 @@ public class ContentManager {
         return null;
     }
 
+    /**
+     * QUERY BY BOTH TAGS AND RATINGS.
+     * ===============================
+     * @param queryTags map of user requirements for Dish tags {tagType : {tagValues}}
+     * @param ratings set of ratings user wants to see Dishes for
+     * @return set of Dish objects that match all these requirements
+     */
     public static Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
         // select dishes from Tag restrictions first; somehow get overlapping sets
         // filter based on the rating of the dish?
@@ -120,6 +127,14 @@ public class ContentManager {
         return null;
     }
 
+    /**
+     * QUERY BY BOTH TAGS AND RATINGS && SORT RESULTS AS WELL.
+     * =======================================================
+     * @param queryTags (same as above)
+     * @param ratings (same as above)
+     * @param highestToLow boolean to indicate users' preference for high to low rating
+     * @return
+     */
     public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
         // call the previous method
         // take the returned dish set as a TreeSet with custom comparator
