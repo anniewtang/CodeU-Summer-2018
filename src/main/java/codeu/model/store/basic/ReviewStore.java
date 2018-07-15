@@ -130,8 +130,7 @@ public class ReviewStore {
      * Update the DishStore's avg rating for this dish, given the new review
      */
     private void updateRating(Review review) {
-        DishStore store = DishStore.getInstance();
-        store.updateRating(review.getDishID(), review.getStarRating());
+        DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
     }
 
     /**
