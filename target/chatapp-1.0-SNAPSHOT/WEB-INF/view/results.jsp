@@ -45,20 +45,16 @@
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
       Dish currDish = searchResults.getResult(i);
   %>
-      <!-- format each result -->
-      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()%> ||| Rating: <%=currDish.getRating()%></h3>
+      <!-- format each result TODO: make nicer -->
+      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()/*link this to the dish's page*/%></h3>
+      <% for (int j = 0; j < currDish.getRating(); j++) {%>
+        <img src="star.png" width="20" height="20"/>
+      <%}%>
       <!-- TODO: preview highest rated review here-->
       <hr>
   <%
     }
   %>
-
-  <!--
-    Pull Results object and display by looping:
-      - Sort by highest ratings to lowest ratings
-      - loop through dishes using getter/setters and display
-  -->
-
 
 </body>
 </html>

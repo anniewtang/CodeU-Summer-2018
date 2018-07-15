@@ -26,6 +26,7 @@ import codeu.orm.DishORM;
 import codeu.orm.TagORM;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -251,5 +252,10 @@ public class TestFramework {
         PowerMockito.mockStatic(TagStore.class);
         when(TagStore.getInstance()).thenReturn(tagStore);
         when(TagStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(tagStoreEmpty);
+    }
+
+    @Test
+    public void setup() {
+        // to be overridden by subclasses
     }
 }

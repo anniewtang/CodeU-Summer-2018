@@ -14,14 +14,7 @@
 
 package codeu.model.data;
 
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.*;
 
 
 /** Class representing search results. */
@@ -46,6 +39,7 @@ public class Results {
     myResults.add(new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, null, null)); // TODO: ask about making ratings doubles not ints
     myResults.add(new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, null, null));
 
+    // TODO: IMPLEMENT WITH LUCENE
 
     // here we will generate all possible matches thru TagStore and DishStore and call addDishToResults
     // TODO: higher priority is matching dish name then tags
