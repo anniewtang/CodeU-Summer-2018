@@ -14,45 +14,21 @@
 
 package codeu.model.store.basic;
 
+import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
+import codeu.model.data.Tag;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Wrapper class with public methods meant to make adding and accessing
  * the backend data (i.e. app content: Dishes, Reviews, Tags) easier.
  */
 public class ContentManager {
-    private DishStore dishStore;
-    private ReviewStore reviewStore;
-    private TagStore tagStore;
-
-
-    /**
-     * Singleton instance of ContentManager.
-     */
-    private static ContentManager instance;
-
-    /**
-     * Returns the singleton instance of ContentManager
-     * that should be shared between all servlet classes.
-     */
-    public static ContentManager getInstance() {
-        if (instance == null) {
-            instance = new ContentManager();
-        }
-        return instance;
-    }
-
-    private ContentManager() {
-        this.dishStore = DishStore.getInstance();
-        this.reviewStore = ReviewStore.getInstance();
-        this.tagStore = TagStore.getInstance();
-    }
+    private static DishStore dishStore      = DishStore.getInstance();
+    private static ReviewStore reviewStore  = ReviewStore.getInstance();
+    private static TagStore tagStore        = TagStore.getInstance();
 
     /* =========================================================
     Methods for @cohanale to use when users want to Rate Dishes.
@@ -63,7 +39,7 @@ public class ContentManager {
      * @param dish first instance that this Dish appears
      * @param review first review for this Dish
      */
-    public void addNewDishAndFirstReview(Dish dish, Review review) {
+    public static void addNewDishAndFirstReview(Dish dish, Review review) {
         DishStore.getInstance().addDish(dish);
         addReviewForExistingDish(review);
     }
@@ -73,7 +49,7 @@ public class ContentManager {
      * Creates a new Review object to be associated with an existing Dish object.
      * @param review user-written review
      */
-    public void addReviewForExistingDish(Review review) {
+    public static void addReviewForExistingDish(Review review) {
         ReviewStore.getInstance().addReview(review);
     }
 
@@ -92,8 +68,24 @@ public class ContentManager {
      * @param queryTags map of user requirements for Dish tags {tagType : {tagValues}}
      * @return Set of Dishes that satisfy requirements
      */
-    public Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
-        return null;
+    public static Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
+//        Set<Dish> results;
+//
+//        Set<UUID> cuisineIDs      = new HashSet<>();
+//        Set<UUID> restrictionIDs  = new HashSet<>();
+//        Set<UUID> dishIDs         = new HashSet<>();
+//
+//        Map<String, Set<UUID>> queriedDishes = new HashMap<>();
+//
+//        for (Map.Entry<String, Set<String>> pair : queryTags.entrySet()) {
+//            String tagType = pair.getKey();
+//            Tag tag = tagStore.getTagForType(tagType);
+//            Set<UUID> s = queriedDishes.computeIfAbsent(tagType, t -> new HashSet<>());
+//            for (String tagValue : pair.getValue()) {
+//                s.addAll(tagStore.getDishesByValue(tag, tagValue));
+//            }
+//        }
+//        return results;
     }
 
     /**
@@ -103,7 +95,7 @@ public class ContentManager {
      * @param queryRatings set of dish rating values user wants for Dish results.
      * @return Set of Dishes that satisfy the rating requirements.
      */
-    public Set<Dish> queryByRatings(Set<Integer> queryRatings) {
+    public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
         return null;
     }
 
@@ -113,21 +105,21 @@ public class ContentManager {
      * @param highestToLow boolean value telling us which way users want the sort
      * @return sorted List of ALL Dishes for the user
      */
-    public List<Dish> sortAllByRating(boolean highestToLow) {
-        // use DishStore.getInstance().getAllDishes()
+    public static List<Dish> sortAllByRating(boolean highestToLow) {
+        Collection allDishes = DishStore.getInstance().getAllDishes()
         // should return a Collection of all Dish objects
         // use a TreeSet or PriorityQueue to automatically sort dishes, based on the rating attribute
         return null;
     }
 
-    public Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
+    public static Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
         // select dishes from Tag restrictions first; somehow get overlapping sets
         // filter based on the rating of the dish?
         // return a TreeSet so queryAndSort can use it lel
         return null;
     }
 
-    public Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
+    public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
         // call the previous method
         // take the returned dish set as a TreeSet with custom comparator
         return null;
