@@ -85,6 +85,10 @@ public class TagStore {
         return orm.getTagForType(tagType);
     }
 
+    public Set<UUID> getDishesByValue(Tag tag, String value) {
+        return orm.getDishesByValue(tag, value);
+    }
+
     /**
      * Updates existing Tag objects with new user tags
      */
