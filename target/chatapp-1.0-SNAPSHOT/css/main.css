@@ -45,6 +45,10 @@ nav a {
     width: 800px;
 }
 
+#searchResults {
+    margin-left: 50px;
+}
+
 h1 {
     color: #757575;
 }

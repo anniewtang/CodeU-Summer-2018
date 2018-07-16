@@ -36,6 +36,7 @@
     <a href="/about.jsp">About</a>
 </nav>
 
+<div id="searchResults">
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
   %>
@@ -68,6 +69,7 @@
   <%
     }
   %>
+</div>
 
 </body>
 </html>
