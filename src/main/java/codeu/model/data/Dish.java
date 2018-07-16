@@ -30,21 +30,18 @@ public class Dish implements Comparable<Dish> {
     private Set<String> allTagValues;
 
     /**
-     * Constructs a new Dish object.
      * Used when the user FIRST rates a new Dish
      * i.e. first time ever this Dish enters our system.
      *
      * @param id         the ID of this dish
      * @param name       the name of the dish
      * @param restaurant the name of the restaurant where this dish came from
-     * @param tags       the tag values for this dish, organized by tag TYPE
      */
-    public Dish(UUID id, String name, String restaurant, int rating, Map<String, Set<String>> tags) {
-        this(id, name, restaurant, rating, tags, aggregateAllTagValues(tags));
+    public Dish(UUID id, String name, String restaurant) {
+        this(id, name, restaurant, 0, new HashMap<>(), new HashSet<>());
     }
 
     /**
-     * Overloaded Dish constructor.
      * Used while loading Dish for PDS.
      *
      * @param id           the ID of this dish
