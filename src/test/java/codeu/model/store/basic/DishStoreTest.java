@@ -65,17 +65,6 @@ public class DishStoreTest extends TestFramework {
     }
 
     @Test
-    public void testUpdateRating() {
-        dishStore.updateRating(dishIDTwo, 7);
-        Assert.assertTrue(dishStore.getDishesOfRating(4).contains(dishIDTwo));
-        Assert.assertTrue(!dishStore.getDishesOfRating(2).contains(dishIDTwo));
-
-        dishStore.updateRating(dishID, 7);
-        Assert.assertTrue(dishStore.getDishesOfRating(5).contains(dishID));
-        Assert.assertTrue(!dishStore.getDishesOfRating(4).contains(dishID));
-    }
-
-    @Test
     public void testSetDishes() {
         // setup
         HashSet<String> correctRestrictions = new HashSet<>();
