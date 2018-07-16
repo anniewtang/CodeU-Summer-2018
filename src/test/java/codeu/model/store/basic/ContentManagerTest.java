@@ -5,11 +5,51 @@ import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
 
 public class ContentManagerTest extends TestFramework {
+    private Map<String, Set<String>> queryTags;
+    private Map<String, Set<String>> queryTagsTwo;
+
+    private Dish d1;
+    private Dish d2;
+    private Dish d3;
+
+    private Set<Integer> queryRatings;
+
+    @Before
+    public void setup() {
+        queryTags = new HashMap<>();
+        queryTags.put(Constants.RESTRICTION,
+                new HashSet<>(Arrays.asList(Constants.VEGETARIAN)));
+        queryTags.put(Constants.CUISINE,
+                new HashSet<>(Arrays.asList(Constants.ASIAN)));
+
+        queryTagsTwo = new HashMap<>();
+        queryTagsTwo.put(Constants.RESTRICTION,
+                new HashSet<>(Arrays.asList(Constants.VEGETARIAN)));
+        queryTagsTwo.put(Constants.CUISINE,
+                new HashSet<>(Arrays.asList(Constants.CHINESE)));
+
+        d1 = new Dish(UUID.randomUUID(), "d1", "");
+        Review r1 = new Review(UUID.randomUUID(), UUID.randomUUID(), d1.getDishID(), 10, "", new HashMap<>());
+
+        d2 = new Dish(UUID.randomUUID(), "d2", "");
+        Review r2 = new Review(UUID.randomUUID(), UUID.randomUUID(), d2.getDishID(), 6, "", new HashMap<>());
+
+        d3 = new Dish(UUID.randomUUID(), "d3", "");
+        Review r3 = new Review(UUID.randomUUID(), UUID.randomUUID(), d3.getDishID(), 1, "", new HashMap<>());
+
+        ContentManager.addNewDishAndFirstReview(d1, r1);
+        ContentManager.addNewDishAndFirstReview(d2, r2);
+        ContentManager.addNewDishAndFirstReview(d3, r3);
+
+        queryRatings = new HashSet<>();
+        queryRatings.addAll(Arrays.asList(1, 6, 4));
+    }
 
     @Test
     public void testAddNewDishAndFirstReview() {
@@ -27,20 +67,7 @@ public class ContentManagerTest extends TestFramework {
     }
 
     @Test
-    public void testQueryByRatings() {
-        // set up
-        Map<String, Set<String>> queryTags = new HashMap<>();
-        queryTags.put(Constants.RESTRICTION,
-                new HashSet<>(Arrays.asList(Constants.VEGETARIAN)));
-        queryTags.put(Constants.CUISINE,
-                new HashSet<>(Arrays.asList(Constants.ASIAN)));
-
-        Map<String, Set<String>> queryTagsTwo = new HashMap<>();
-        queryTagsTwo.put(Constants.RESTRICTION,
-                new HashSet<>(Arrays.asList(Constants.VEGETARIAN)));
-        queryTagsTwo.put(Constants.CUISINE,
-                new HashSet<>(Arrays.asList(Constants.CHINESE)));
-
+    public void testQueryByTags() {
         // run
         Set<Dish> results = ContentManager.queryByTags(queryTags);
         Set<Dish> resultsTwo = ContentManager.queryByTags(queryTagsTwo);
@@ -51,21 +78,16 @@ public class ContentManagerTest extends TestFramework {
     }
 
     @Test
+    public void testQueryByRating() {
+        // run
+        Set<Dish> results = ContentManager.queryByRatings(queryRatings);
+
+        // verify
+        Assert.assertEquals(new HashSet<>(Arrays.asList(d3, d2, dish)), results);
+    }
+
+    @Test
     public void testSortAllByRating() {
-        // set up
-        Dish d1 = new Dish(UUID.randomUUID(), "d1", "", 10, new HashMap<>(), new HashSet<>());
-        Review r1 = new Review(UUID.randomUUID(), UUID.randomUUID(), d1.getDishID(), 10, "", new HashMap<>());
-
-        Dish d2 = new Dish(UUID.randomUUID(), "d2", "", 6, new HashMap<>(), new HashSet<>());
-        Review r2 = new Review(UUID.randomUUID(), UUID.randomUUID(), d2.getDishID(), 6, "", new HashMap<>());
-
-        Dish d3 = new Dish(UUID.randomUUID(), "d3", "", 1, new HashMap<>(), new HashSet<>());
-        Review r3 = new Review(UUID.randomUUID(), UUID.randomUUID(), d3.getDishID(), 1, "", new HashMap<>());
-
-        ContentManager.addNewDishAndFirstReview(d1, r1);
-        ContentManager.addNewDishAndFirstReview(d2, r2);
-        ContentManager.addNewDishAndFirstReview(d3, r3);
-
         // run
         Set<Dish> highToLow = ContentManager.sortAllByRating(true);
         Set<Dish> lowToHigh = ContentManager.sortAllByRating(false);
@@ -77,6 +99,7 @@ public class ContentManagerTest extends TestFramework {
 
     @Test
     public void testQueryByTagsAndRatings() {
+        // run
 
     }
 

@@ -122,8 +122,8 @@ public class DishORM {
         int newRating = (oldRating * prevNumReviews + rate) / (prevNumReviews + 1);
 
         updatedDish.setRating(newRating);
-        this.avgRatingMap.computeIfAbsent(newRating, r -> new HashSet<>()).add(id);
         this.avgRatingMap.get(oldRating).remove(id);
+        this.avgRatingMap.computeIfAbsent(newRating, r -> new HashSet<>()).add(id);
 
         return updatedDish;
     }
