@@ -128,9 +128,7 @@ public class ContentManager {
         // filter based on the rating of the dish?
         // return a TreeSet so queryAndSort can use it lel
         Set<Dish> results = queryByTags(queryTags);
-        for (int rating : ratings) {
-            results.retainAll(dishStore.getDishesOfRating(rating));
-        }
+        results.retainAll(queryByRatings(ratings));
         return results;
     }
 

@@ -100,7 +100,10 @@ public class ContentManagerTest extends TestFramework {
     @Test
     public void testQueryByTagsAndRatings() {
         // run
+        Set<Dish> results = ContentManager.queryByTagsAndRatings(queryTags, queryRatings);
 
+        // verify
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dish)), results);
     }
 
     @Test
