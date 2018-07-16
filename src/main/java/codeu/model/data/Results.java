@@ -24,21 +24,28 @@ import codeu.model.data.Dish;
 public class Results {
 
   private ArrayList<Dish> myResults;
-  private String entry;
+  private String[] entry;
 
   /**
    * Constructs a new Feed.
    * @param userEntry what the user put in search bar
    */
   public Results(String userEntry) {
-    entry = userEntry;
     myResults = new ArrayList<Dish>();
+    processEntry(userEntry);
     fillResults();
+  }
+
+  /** Break down user input into useful key words */
+  public void processEntry(String userEntry) {
+    userEntry.toLowerCase();
+    entry = userEntry.split(" ");
   }
 
   /** Find and include all matching results. */
   public void fillResults() {
     resultTest();
+    // TODO: Use querying methods to generate results here instead
   }
 
   /** TODO: remove this test routine **/
