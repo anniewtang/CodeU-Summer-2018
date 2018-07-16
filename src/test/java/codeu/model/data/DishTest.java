@@ -31,7 +31,7 @@ public class DishTest extends TestFramework {
         Assert.assertEquals(dishID, basicDish.getDishID());
         Assert.assertEquals(name, basicDish.getDishName());
         Assert.assertEquals(restaurant, basicDish.getRestaurant());
-        Assert.assertEquals(rating, 0);
+        Assert.assertEquals(0, basicDish.getRating());
         Assert.assertEquals(new HashMap<>(), basicDish.getTags());
         Assert.assertEquals(new HashSet<>(), basicDish.getAllTagValues());
     }
