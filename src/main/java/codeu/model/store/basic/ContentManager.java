@@ -108,13 +108,16 @@ public class ContentManager {
      * ==============================
      * Provides ALL the dishes in the Dish Store sorted by rating, based on user's preference.
      * @param highestToLow boolean value telling us which way users want the sort
-     * @return sorted List of ALL Dishes for the user
+     * @return sorted set of ALL Dishes for the user
      */
-    public static List<Dish> sortAllByRating(boolean highestToLow) {
-        Collection allDishes = DishStore.getInstance().getAllDishes();
-        // should return a Collection of all Dish objects
-        // use a TreeSet or PriorityQueue to automatically sort dishes, based on the rating attribute
-        return null;
+    public static Set<Dish> sortAllByRating(boolean highestToLow) {
+        Collection<Dish> allDishes = DishStore.getInstance().getAllDishes();
+        TreeSet<Dish> sorted = new TreeSet<>();
+        if (highestToLow) {
+            sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
+        }
+        sorted.addAll(allDishes);
+        return sorted;
     }
 
     /**

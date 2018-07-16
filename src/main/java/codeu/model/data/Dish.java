@@ -21,7 +21,7 @@ import java.util.Map.Entry;
  * Data class representing a Dish.
  * Dish objects will be dynamically updated, as user adds more tags and reviews.
  */
-public class Dish {
+public class Dish implements Comparable<Dish> {
     private final UUID dishID;
     private final String dishName;
     private final String restaurant;
@@ -168,6 +168,17 @@ public class Dish {
     @Override
     public int hashCode() {
         return Objects.hash(dishID, dishName, restaurant, rating, tags, allTagValues);
+    }
+
+    /**
+     * Returns:
+     * a negative integer if this < d
+     * zero if this == d
+     * positive integer if this > d
+     */
+    @Override
+    public int compareTo(Dish d) {
+        return Integer.compare(this.getRating(), d.getRating());
     }
 
 }
