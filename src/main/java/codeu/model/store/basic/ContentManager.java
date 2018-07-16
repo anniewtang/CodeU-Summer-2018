@@ -112,12 +112,7 @@ public class ContentManager {
      */
     public static Set<Dish> sortAllByRating(boolean highestToLow) {
         Collection<Dish> allDishes = DishStore.getInstance().getAllDishes();
-        TreeSet<Dish> sorted = new TreeSet<>();
-        if (highestToLow) {
-            sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
-        }
-        sorted.addAll(allDishes);
-        return sorted;
+        return sortDishes(allDishes, highestToLow);
     }
 
     /**
@@ -132,7 +127,11 @@ public class ContentManager {
         // select dishes from Tag restrictions first; somehow get overlapping sets
         // filter based on the rating of the dish?
         // return a TreeSet so queryAndSort can use it lel
-        return null;
+        Set<Dish> results = queryByTags(queryTags);
+        for (int rating : ratings) {
+            results.retainAll(dishStore.getDishesOfRating(rating));
+        }
+        return results;
     }
 
     /**
@@ -148,7 +147,27 @@ public class ContentManager {
     public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
         // call the previous method
         // take the returned dish set as a TreeSet with custom comparator
-        return null;
+        Collection<Dish> results = queryByTagsAndRatings(queryTags, ratings);
+        return sortDishes(results, highestToLow);
+    }
+
+
+    /**
+     * Private helper method meant to help sort dishes by rating,
+     * based on user preference (highest to low, or lowest to high).
+     * Uses implemented Dish.compareTo() method for lowest to high,
+     * OR custom Comparator for highest to low.
+     * @param dishes set of dishes we want to sort
+     * @param highestToLow user preference for sort order
+     * @return TreeSet of sorted Dish objects
+     */
+    private static Set<Dish> sortDishes(Collection<Dish> dishes, boolean highestToLow) {
+        TreeSet<Dish> sorted = new TreeSet<>();
+        if (highestToLow) {
+            sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
+        }
+        sorted.addAll(dishes);
+        return sorted;
     }
 
 
