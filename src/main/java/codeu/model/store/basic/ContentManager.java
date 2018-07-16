@@ -42,7 +42,7 @@ public class ContentManager {
      * @param review first review for this Dish
      */
     public static void addNewDishAndFirstReview(Dish dish, Review review) {
-        DishStore.getInstance().addDish(dish);
+        dishStore.addDish(dish);
         addReviewForExistingDish(review);
     }
 
@@ -52,7 +52,7 @@ public class ContentManager {
      * @param review user-written review
      */
     public static void addReviewForExistingDish(Review review) {
-        ReviewStore.getInstance().addReview(review);
+        reviewStore.addReview(review);
     }
 
     /* =============================================================
@@ -111,7 +111,7 @@ public class ContentManager {
      * @return sorted set of ALL Dishes for the user
      */
     public static Set<Dish> sortAllByRating(boolean highestToLow) {
-        Collection<Dish> allDishes = DishStore.getInstance().getAllDishes();
+        Collection<Dish> allDishes = dishStore.getAllDishes();
         return sortDishes(allDishes, highestToLow);
     }
 
