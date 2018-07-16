@@ -105,9 +105,4 @@ public class ContentManagerTest extends TestFramework {
         // verify
         Assert.assertEquals(new HashSet<>(Arrays.asList(dish)), results);
     }
-
-    @Test
-    public void testQueryAndSort() {
-
-    }
 }
