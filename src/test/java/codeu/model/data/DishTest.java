@@ -24,19 +24,16 @@ import java.util.*;
 public class DishTest extends TestFramework {
     @Test
     public void testCreateDish() {
-        // setup
-        Set<String> basicAllTags = new HashSet<>(Arrays.asList(Constants.GLUTENFREE, Constants.VEGETARIAN, Constants.VEGAN, Constants.CHINESE, Constants.ASIAN));
-
         // run
-        Dish basicDish = new Dish(dishID, name, restaurant, rating, tags);
+        Dish basicDish = new Dish(dishID, name, restaurant);
 
         // verify
         Assert.assertEquals(dishID, basicDish.getDishID());
         Assert.assertEquals(name, basicDish.getDishName());
         Assert.assertEquals(restaurant, basicDish.getRestaurant());
-        Assert.assertEquals(rating, basicDish.getRating());
-        Assert.assertEquals(tags, basicDish.getTags());
-        Assert.assertEquals(basicAllTags, basicDish.getAllTagValues());
+        Assert.assertEquals(rating, 0);
+        Assert.assertEquals(new HashMap<>(), basicDish.getTags());
+        Assert.assertEquals(new HashSet<>(), basicDish.getAllTagValues());
     }
 
     @Test
