@@ -151,7 +151,6 @@ public class ContentManager {
         return sortDishes(results, highestToLow);
     }
 
-
     /**
      * Private helper method meant to help sort dishes by rating,
      * based on user preference (highest to low, or lowest to high).
@@ -170,6 +169,36 @@ public class ContentManager {
         return sorted;
     }
 
+    /* ==============================================================
+    Methods for to use when pulling data for the Dish's preview page.
+    =============================================================== */
 
+    /**
+     * Can be used to display all the reviews associated with a given Dish.
+     * @param id of the dish
+     * @return set of Review objects for Dish.
+     */
+    public static Set<Review> getReviewsForDish(UUID id) {
+        return reviewStore.getReviewsForDish(id);
+    }
 
+    /**
+     * Can be used to display all the user tags associated with a given Dish,
+     * returned in an organized map by each tag category.
+     * @param id of the dish
+     * @return map of {tagType : {tagValues}}
+     */
+    public static Map<String, Set<String>> getTagMapForDish(UUID id) {
+        return dishStore.getTagsForDish(id);
+    }
+
+    /**
+     * Can be used to display all the user tags associated with a given Dish,
+     * returned in no particular order (just a random collection).
+     * @param id of the dish
+     * @return unordered set of {tagValues}
+     */
+    public static Set<String> getAllTagsForDish(UUID id) {
+        return dishStore.getAllTagsForDish(id);
+    }
 }
