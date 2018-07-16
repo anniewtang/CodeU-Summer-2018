@@ -10,6 +10,22 @@ import org.junit.Test;
 import java.util.*;
 
 public class ContentManagerTest extends TestFramework {
+
+    @Test
+    public void testAddNewDishAndFirstReview() {
+        // setup
+        Dish d = new Dish(UUID.randomUUID(), "d", "rest");
+        Review r = new Review(UUID.randomUUID(), UUID.randomUUID(), d.getDishID(), 5, "", new HashMap<>());
+
+        // run
+        ContentManager.addNewDishAndFirstReview(d, r);
+
+        // verify
+        Assert.assertEquals(new HashSet<>(Collections.singletonList(d.getDishID())),
+                dishStore.getDishesOfRating(5));
+        Assert.assertEquals(5, d.getRating());
+    }
+
     @Test
     public void testQueryByRatings() {
         // set up
