@@ -16,6 +16,9 @@ package codeu.model.data;
 
 import java.util.*;
 
+import codeu.model.store.basic.ReviewStore;
+import codeu.model.data.Review;
+import codeu.model.data.Dish;
 
 /** Class representing search results. */
 public class Results {
@@ -36,13 +39,19 @@ public class Results {
   /** Find and include all matching results. */
   public void fillResults() {
     // TODO: adding some default dishes to test display
-    myResults.add(new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, null, null)); // TODO: ask about making ratings doubles not ints
-    myResults.add(new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, null, null));
+    ReviewStore reviewStore =  ReviewStore.getInstance();
 
-    // TODO: IMPLEMENT WITH LUCENE
+    Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, null, null);
+    Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, null, null);
 
-    // here we will generate all possible matches thru TagStore and DishStore and call addDishToResults
-    // TODO: higher priority is matching dish name then tags
+    myResults.add(dish1); // TODO: ask about making ratings doubles not ints
+    myResults.add(dish2);
+
+    // Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", null);
+    // Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", null);
+    //
+    // reviewStore.addReview(review1);
+    // reviewStore.addReview(review2);
   }
 
   /** Add dish to results. */

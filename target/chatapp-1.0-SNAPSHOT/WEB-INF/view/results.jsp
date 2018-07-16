@@ -16,6 +16,8 @@
 <!DOCTYPE html>
 <%@ page import="codeu.model.data.Results" %>
 <%@ page import="codeu.model.data.Dish" %>
+<%@ page import="codeu.model.store.basic.ReviewStore" %>
+<%@ page import="codeu.model.data.Review" %>
 
 <html>
 <head>
@@ -45,13 +47,24 @@
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
       Dish currDish = searchResults.getResult(i);
   %>
-      <!-- format each result TODO: make nicer -->
       <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()/*link this to the dish's page*/%></h3>
-      <% for (int j = 0; j < currDish.getRating(); j++) {%>
+
+  <%
+      ReviewStore reviewStore =  ReviewStore.getInstance();
+
+      for (int j = 0; j < currDish.getRating(); j++) { %>
         <img src="star.png" width="20" height="20"/>
-      <%}%>
-      <!-- TODO: preview highest rated review here-->
+  <%  }
+
+      Review bestReview = reviewStore.getBestReviewForDish(currDish.getDishID());
+
+      if (bestReview == null) { %>
+        <p>No written descriptions.</p>
+  <%  } else { %>
+        <p><%=bestReview.getDescription()%></p>
+  <%  } %>
       <hr>
+
   <%
     }
   %>

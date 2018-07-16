@@ -20,6 +20,8 @@ import codeu.model.data.Dish;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import codeu.model.store.basic.TagStore;
 import codeu.model.store.basic.DishStore;
+import codeu.model.store.basic.ReviewStore;
+
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.Iterator;
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -86,6 +89,29 @@ public class ReviewStore {
      */
     public Set<Review> getReviewsForDish(UUID dishID) {
         return reviewsByDish.computeIfAbsent(dishID, id -> new HashSet<>());
+    }
+
+    /**
+     * Can be used for the first time we're adding a Dish (i.e. by "addReview"),
+     * or for when the dish has already been added (therefore associated w/at least 1 review).
+     * @param dishID
+     * @return the set of Reviews associated with a Dish.
+     */
+    public Review getBestReviewForDish(UUID dishID) {
+        Set<Review> reviewList = getReviewsForDish(dishID);
+        Review bestReview = null;
+        Review currReview = null;
+        int currMax = 0;
+
+        for (Iterator<Review> it = reviewList.iterator(); it.hasNext();) {
+          currReview = it.next();
+
+          if (currReview.getStarRating() > currMax) {
+            currMax = currReview.getStarRating();
+            bestReview = currReview;
+          }
+        }
+        return bestReview;
     }
 
     /**
