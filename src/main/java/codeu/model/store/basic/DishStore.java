@@ -124,7 +124,9 @@ public class DishStore {
      */
     public void updateRating(UUID id, int rate) {
         Dish updatedDish = orm.updateRating(id, rate);
-        persistentStorageAgent.writeThrough(updatedDish);
+        if (updatedDish != null) {
+          persistentStorageAgent.writeThrough(updatedDish);
+        }
     }
 
     /**
@@ -136,8 +138,13 @@ public class DishStore {
      * @method updateDishTags
      */
     public void updateDishTags(UUID id, Map<String, Set<String>> userTags) {
+        if (userTags == null) {
+          return;
+        }
         Dish updatedDish = orm.updateDishTags(id, userTags);
-        persistentStorageAgent.writeThrough(updatedDish);
+        if (updatedDish != null) {
+          persistentStorageAgent.writeThrough(updatedDish);
+        }
     }
 
     /**

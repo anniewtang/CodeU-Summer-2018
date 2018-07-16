@@ -49,7 +49,11 @@ public class DishORM {
      * @return INTEGER average rating associated with the given dish.
      */
     public int getAverageRating(UUID id) {
-        return this.avgRatingMap.get(id);
+        if (dishMap.get(id) == null) {
+          return 0;
+        } else {
+          return this.avgRatingMap.get(id);
+        }
     }
 
     /**
@@ -59,7 +63,11 @@ public class DishORM {
      * @return INTEGER number of reviews per dish.
      */
     public int getNumReviews(UUID id) {
-        return ReviewStore.getInstance().getNumReviews(id);
+        if (dishMap.get(id) == null) {
+          return 0;
+        } else {
+          return ReviewStore.getInstance().getNumReviews(id);
+        }
     }
 
     /**
@@ -120,9 +128,14 @@ public class DishORM {
 
         int prevNumReviews = getNumReviews(id);
         int newRating = (oldRating * prevNumReviews + rate) / (prevNumReviews + 1);
-        updatedDish.setRating(newRating);
-        avgRatingMap.put(id, newRating);
-        return updatedDish;
+
+        if (updatedDish != null) {
+          updatedDish.setRating(newRating);
+          avgRatingMap.put(id, newRating);
+          return updatedDish;
+        } else {
+          return null;
+        }
     }
 
     /**
@@ -136,7 +149,9 @@ public class DishORM {
      */
     public Dish updateDishTags(UUID id, Map<String, Set<String>> userTags) {
         Dish dish = getDish(id);
-        dish.addUserTags(userTags);
+        if (dish != null) {
+          dish.addUserTags(userTags);
+        }
         return dish;
     }
 

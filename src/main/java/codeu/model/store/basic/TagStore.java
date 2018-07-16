@@ -15,6 +15,7 @@
 package codeu.model.store.basic;
 
 import codeu.model.data.Tag;
+import codeu.model.data.Dish;
 import codeu.orm.TagORM;
 
 import codeu.model.store.persistence.PersistentStorageAgent;
@@ -93,7 +94,11 @@ public class TagStore {
         for (Tag tag : updatedTags) {
             persistentStorageAgent.writeThrough(tag);
         }
-        DishStore.getInstance().getDish(dishID).addUserTags(userTags);
+
+        Dish currDish = DishStore.getInstance().getDish(dishID);
+        if (currDish != null) {
+          currDish.addUserTags(userTags);
+        }
     }
 
     /**

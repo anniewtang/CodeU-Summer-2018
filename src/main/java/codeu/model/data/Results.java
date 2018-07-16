@@ -44,14 +44,18 @@ public class Results {
     Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, null, null);
     Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, null, null);
 
+    Map<String, Set<String>> tags = new HashMap<>();
+    tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
+    tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
+
     myResults.add(dish1); // TODO: ask about making ratings doubles not ints
     myResults.add(dish2);
 
-    // Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", null);
-    // Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", null);
-    //
-    // reviewStore.addReview(review1);
-    // reviewStore.addReview(review2);
+    Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
+    Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", tags);
+
+    reviewStore.addReview(review1);
+    reviewStore.addReview(review2);
   }
 
   /** Add dish to results. */

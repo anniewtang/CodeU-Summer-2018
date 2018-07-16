@@ -61,7 +61,7 @@
       if (bestReview == null) { %>
         <p>No written descriptions.</p>
   <%  } else { %>
-        <p><%=bestReview.getDescription()%></p>
+        <p>"<%=bestReview.getDescription()%>"</p>
   <%  } %>
       <hr>
 
