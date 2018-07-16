@@ -38,6 +38,11 @@ public class Results {
 
   /** Find and include all matching results. */
   public void fillResults() {
+    resultTest();
+  }
+
+  /** TODO: remove this test routine **/
+  public void resultTest() {
     // TODO: adding some default dishes to test display
     ReviewStore reviewStore =  ReviewStore.getInstance();
 
@@ -48,20 +53,16 @@ public class Results {
     tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
     tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
 
-    myResults.add(dish1); // TODO: ask about making ratings doubles not ints
-    myResults.add(dish2);
-
     Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
     Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", tags);
 
     reviewStore.addReview(review1);
     reviewStore.addReview(review2);
+
+    myResults.add(dish1);
+    myResults.add(dish2);
   }
 
-  /** Add dish to results. */
-  public void addDishToResults(/** Not sure how to structure this yet **/) {
-    // TODO: might be useful to capture order nuances - prob eliminating this function
-  }
 
   /** Return result by index. */
   public Dish getResult(int index) {
