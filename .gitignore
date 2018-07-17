@@ -1,6 +1,8 @@
 .idea/
 chatapp.iml
 
+target/*
+
 # Compiled source #
 ###################
 *.com
@@ -9,6 +11,8 @@ chatapp.iml
 *.exe
 *.o
 *.so
+*.xml
+*.txt
 
 # Packages #
 ############

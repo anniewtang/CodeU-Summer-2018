@@ -105,8 +105,6 @@ public class ReviewStore {
      *
      * @param review
      */
-    // TODO || Dependency: make sure addReview is called AFTER DishORM.addDish
-    // TODO || it relies on the DishORM already having the Dish.
     public void addReview(Review review) {
         updateTags(review);
         updateRating(review);
@@ -132,8 +130,7 @@ public class ReviewStore {
      * Update the DishStore's avg rating for this dish, given the new review
      */
     private void updateRating(Review review) {
-        DishStore store = DishStore.getInstance();
-        store.updateRating(review.getDishID(), review.getStarRating());
+        DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
     }
 
     /**

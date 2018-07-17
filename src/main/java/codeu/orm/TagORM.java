@@ -59,6 +59,11 @@ public class TagORM {
         return this.tagsByType;
     }
 
+    public Set<UUID> getDishesByValue(Tag tag, String value) {
+        return tag.getDishesByValue(value);
+    }
+
+
     /**
      * After User provides user-tags for a particular Dish,
      * we add Dish into all the appropriate Tag categories it belongs to.

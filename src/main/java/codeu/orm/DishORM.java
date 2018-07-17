@@ -16,10 +16,7 @@ package codeu.orm;
 import codeu.model.data.Dish;
 import codeu.model.store.basic.ReviewStore;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Wrapper class that loads information from Data Store,
@@ -28,9 +25,10 @@ import java.util.UUID;
  */
 public class DishORM {
     private Map<UUID, Dish> dishMap; // maps dishIDs to Dish objects
-    private Map<UUID, Integer> avgRatingMap; // maps dishIDs to average star ratings
+//    private Map<UUID, Integer> avgRatingMap; // maps dishIDs to average star ratings
+    private Map<Integer, Set<UUID>> avgRatingMap; // maps average star ratings to Dish objects
 
-    public DishORM(Map<UUID, Dish> dishMap, Map<UUID, Integer> avgRatingMap) {
+    public DishORM(Map<UUID, Dish> dishMap, Map<Integer, Set<UUID>> avgRatingMap) {
         this.dishMap = dishMap;
         this.avgRatingMap = avgRatingMap;
     }
@@ -43,13 +41,16 @@ public class DishORM {
     }
 
     /**
-     * Should only be called in the context that the Dish exists,
-     * since we're querying with some known dishID.
-     * @param id of the dish we want avg rating of
-     * @return INTEGER average rating associated with the given dish.
+     * Used to help query dishes of a certain rating.
+     * @param rating that we want all the Dishes associated with
+     * @return Set of dishIDs with rating
      */
-    public int getAverageRating(UUID id) {
-        return this.avgRatingMap.get(id);
+    public Set<UUID> getDishesOfRating(int rating) {
+        return this.avgRatingMap.get(rating);
+    }
+
+    public Collection<Dish> getAllDishes() {
+        return this.dishMap.values();
     }
 
     /**
@@ -88,19 +89,19 @@ public class DishORM {
     /**
      * Used for Testing purposes.
      */
-    public Map<UUID, Integer> getAvgRatingMap() {
+    public Map<Integer, Set<UUID>> getAvgRatingMap() {
         return this.avgRatingMap;
     }
 
     /**
      * Use when adding in a NEW DISH for the first time into our DishORM memory.
      * Puts it in the dishMap {dishID : Dish object}
-     * Also adds the only rating into avgRatingMap {dishID : "average" rating}
+     * Also adds the only rating into avgRatingMap {"average" rating : {dishID}}
      * @param dish object
      */
     public void addDish(Dish dish) {
         this.dishMap.put(dish.getDishID(), dish);
-        this.avgRatingMap.put(dish.getDishID(), dish.getRating());
+        this.avgRatingMap.computeIfAbsent(dish.getRating(), r -> new HashSet<>()).add(dish.getDishID());
     }
 
     /**
@@ -108,7 +109,6 @@ public class DishORM {
      * Also use during LOADING from PDS to update avgRatingMap.
      * Should always be called when the Dish already exists in our HashMap.
      * Should also be called BEFORE the new review is added into ReviewStore.
-     * TODO: should we handle the mistake of calling this function with an irrelevant dishID?
      *
      * @param id of the dish
      * @param rate incoming rating we factor into the avg
@@ -116,12 +116,15 @@ public class DishORM {
      */
     public Dish updateRating(UUID id, int rate) {
         Dish updatedDish = getDish(id);
-        int oldRating = getAverageRating(id);
+        int oldRating = getDish(id).getRating();
 
         int prevNumReviews = getNumReviews(id);
         int newRating = (oldRating * prevNumReviews + rate) / (prevNumReviews + 1);
+
         updatedDish.setRating(newRating);
-        avgRatingMap.put(id, newRating);
+        this.avgRatingMap.get(oldRating).remove(id);
+        this.avgRatingMap.computeIfAbsent(newRating, r -> new HashSet<>()).add(id);
+
         return updatedDish;
     }
 
