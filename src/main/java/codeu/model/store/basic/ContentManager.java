@@ -33,7 +33,7 @@ public class ContentManager {
     private static TagStore tagStore        = TagStore.getInstance();
 
     /* =========================================================
-    Methods for @cohanale to use when users want to Rate Dishes.
+    Methods for @cohanele to use when users want to Rate Dishes.
     ========================================================= */
     /**
      * Used when user adds a NEW Review for a NEW Dish.
