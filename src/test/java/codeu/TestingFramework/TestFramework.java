@@ -25,6 +25,7 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import codeu.orm.DishORM;
 import codeu.orm.TagORM;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
@@ -211,9 +212,9 @@ public class TestFramework {
         Map<UUID, Dish> dishMap = new HashMap<>();
         dishMap.put(dishID, dish);
         dishMap.put(dishIDTwo, dishTwo);
-        Map<UUID, Integer> ratingMap = new HashMap<>();
-        ratingMap.put(dishID, rating);
-        ratingMap.put(dishIDTwo, ratingTwo);
+        Map<Integer, Set<UUID>> ratingMap = new HashMap<>();
+        ratingMap.computeIfAbsent(rating, r -> new HashSet<>()).add(dishID);
+        ratingMap.computeIfAbsent(ratingTwo, r -> new HashSet<>()).add(dishIDTwo);
         dishORM = new DishORM(dishMap, ratingMap);
 
         // Review Store
@@ -251,5 +252,10 @@ public class TestFramework {
         PowerMockito.mockStatic(TagStore.class);
         when(TagStore.getInstance()).thenReturn(tagStore);
         when(TagStore.getTestInstance(mockPersistentStorageAgent)).thenReturn(tagStoreEmpty);
+    }
+
+    @Test
+    public void setup() {
+        // to be overridden by subclasses
     }
 }
