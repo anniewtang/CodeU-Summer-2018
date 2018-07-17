@@ -255,7 +255,7 @@ public class TestFramework {
     }
 
     @Test
-    public void setup() {
+    public void emptyTest() {
         // to be overridden by subclasses
     }
 }
