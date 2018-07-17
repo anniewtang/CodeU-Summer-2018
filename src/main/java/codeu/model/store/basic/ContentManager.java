@@ -14,7 +14,6 @@
 
 package codeu.model.store.basic;
 
-import codeu.model.data.Constants;
 import codeu.model.data.Dish;
 import codeu.model.data.Review;
 import codeu.model.data.Tag;
@@ -28,10 +27,6 @@ import static java.util.stream.Collectors.toSet;
  * the backend data (i.e. app content: Dishes, Reviews, Tags) easier.
  */
 public class ContentManager {
-    private static DishStore dishStore      = DishStore.getInstance();
-    private static ReviewStore reviewStore  = ReviewStore.getInstance();
-    private static TagStore tagStore        = TagStore.getInstance();
-
     /* =========================================================
     Methods for @cohanale to use when users want to Rate Dishes.
     ========================================================= */
@@ -42,7 +37,7 @@ public class ContentManager {
      * @param review first review for this Dish
      */
     public static void addNewDishAndFirstReview(Dish dish, Review review) {
-        dishStore.addDish(dish);
+        DishStore.getInstance().addDish(dish);
         addReviewForExistingDish(review);
     }
 
@@ -52,7 +47,7 @@ public class ContentManager {
      * @param review user-written review
      */
     public static void addReviewForExistingDish(Review review) {
-        reviewStore.addReview(review);
+        ReviewStore.getInstance().addReview(review);
     }
 
     /* =============================================================
@@ -74,17 +69,17 @@ public class ContentManager {
 
         for (Map.Entry<String, Set<String>> pair : queryTags.entrySet()) {
             String tagType = pair.getKey();
-            Tag tag = tagStore.getTagForType(tagType);
+            Tag tag = TagStore.getInstance().getTagForType(tagType);
             for (String tagValue : pair.getValue()) {
                 if (queriedDishes.size() == 0) {
-                    queriedDishes = new HashSet<>(tagStore.getDishesByValue(tag, tagValue));
+                    queriedDishes = new HashSet<>(TagStore.getInstance().getDishesByValue(tag, tagValue));
                 } else {
-                    queriedDishes.retainAll(tagStore.getDishesByValue(tag, tagValue));
+                    queriedDishes.retainAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
                 }
             }
         }
 
-        return queriedDishes.stream().map(dishStore::getDish).collect(toSet());
+        return queriedDishes.stream().map(DishStore.getInstance()::getDish).collect(toSet());
     }
 
     /**
@@ -97,8 +92,8 @@ public class ContentManager {
     public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
         Set<Dish> results = new HashSet<>();
         for (int rating : queryRatings) {
-            Set<UUID> dishes = dishStore.getDishesOfRating(rating);
-            results.addAll(dishes.stream().map(dishStore::getDish).collect(toSet()));
+            Set<UUID> dishes = DishStore.getInstance().getDishesOfRating(rating);
+            results.addAll(dishes.stream().map(DishStore.getInstance()::getDish).collect(toSet()));
         }
         return results;
     }
@@ -111,7 +106,7 @@ public class ContentManager {
      * @return sorted set of ALL Dishes for the user
      */
     public static Set<Dish> sortAllByRating(boolean highestToLow) {
-        Collection<Dish> allDishes = dishStore.getAllDishes();
+        Collection<Dish> allDishes = DishStore.getInstance().getAllDishes();
         return sortDishes(allDishes, highestToLow);
     }
 
@@ -177,7 +172,7 @@ public class ContentManager {
      * @return set of Review objects for Dish.
      */
     public static Set<Review> getReviewsForDish(UUID id) {
-        return reviewStore.getReviewsForDish(id);
+        return ReviewStore.getInstance().getReviewsForDish(id);
     }
 
     /**
@@ -187,7 +182,7 @@ public class ContentManager {
      * @return map of {tagType : {tagValues}}
      */
     public static Map<String, Set<String>> getTagMapForDish(UUID id) {
-        return dishStore.getTagsForDish(id);
+        return DishStore.getInstance().getTagsForDish(id);
     }
 
     /**
@@ -197,6 +192,6 @@ public class ContentManager {
      * @return unordered set of {tagValues}
      */
     public static Set<String> getAllTagsForDish(UUID id) {
-        return dishStore.getAllTagsForDish(id);
+        return DishStore.getInstance().getAllTagsForDish(id);
     }
 }
