@@ -21,7 +21,7 @@ import java.util.Map.Entry;
  * Data class representing a Dish.
  * Dish objects will be dynamically updated, as user adds more tags and reviews.
  */
-public class Dish {
+public class Dish implements Comparable<Dish> {
     private final UUID dishID;
     private final String dishName;
     private final String restaurant;
@@ -30,21 +30,18 @@ public class Dish {
     private Set<String> allTagValues;
 
     /**
-     * Constructs a new Dish object.
      * Used when the user FIRST rates a new Dish
      * i.e. first time ever this Dish enters our system.
      *
      * @param id         the ID of this dish
      * @param name       the name of the dish
      * @param restaurant the name of the restaurant where this dish came from
-     * @param tags       the tag values for this dish, organized by tag TYPE
      */
-    public Dish(UUID id, String name, String restaurant, int rating, Map<String, Set<String>> tags) {
-        this(id, name, restaurant, rating, tags, aggregateAllTagValues(tags));
+    public Dish(UUID id, String name, String restaurant) {
+        this(id, name, restaurant, 0, new HashMap<>(), new HashSet<>());
     }
 
     /**
-     * Overloaded Dish constructor.
      * Used while loading Dish for PDS.
      *
      * @param id           the ID of this dish
@@ -131,19 +128,9 @@ public class Dish {
         }
     }
 
-    private void updateTagsForType(String type, Set<String> tags) {
-        Set<String> values = getValuesOfType(type);
-        values.addAll(tags);
-    }
-
-    // TODO: TAKE ANOTHER LOOK AT THIS
-    private Set<String> getValuesOfType(String type) {
-        Set<String> values = tags.get(type);
-        if (values == null) {
-            values = new HashSet<>();
-            tags.put(type, values);
-        }
-        return values;
+    private void updateTagsForType(String type, Set<String> userTagsForTagType) {
+        Set<String> values = tags.computeIfAbsent(type, k -> new HashSet<>());
+        values.addAll(userTagsForTagType);
     }
 
     /**
@@ -178,6 +165,17 @@ public class Dish {
     @Override
     public int hashCode() {
         return Objects.hash(dishID, dishName, restaurant, rating, tags, allTagValues);
+    }
+
+    /**
+     * Returns:
+     * a negative integer if this < d
+     * zero if this == d
+     * positive integer if this > d
+     */
+    @Override
+    public int compareTo(Dish d) {
+        return Integer.compare(this.getRating(), d.getRating());
     }
 
 }

@@ -86,6 +86,10 @@ public class TagStore {
         return orm.getTagForType(tagType);
     }
 
+    public Set<UUID> getDishesByValue(Tag tag, String value) {
+        return orm.getDishesByValue(tag, value);
+    }
+
     /**
      * Updates existing Tag objects with new user tags
      */
@@ -96,9 +100,7 @@ public class TagStore {
         }
 
         Dish currDish = DishStore.getInstance().getDish(dishID);
-        if (currDish != null) {
-          currDish.addUserTags(userTags);
-        }
+        currDish.addUserTags(userTags);
     }
 
     /**

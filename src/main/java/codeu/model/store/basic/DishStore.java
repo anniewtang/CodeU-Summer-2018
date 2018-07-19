@@ -19,12 +19,9 @@ import codeu.orm.DishORM;
 
 import codeu.model.store.persistence.PersistentStorageAgent;
 
-
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map;
-import java.util.HashSet;
 import java.util.UUID;
 
 
@@ -83,8 +80,12 @@ public class DishStore {
         return orm.getDish(id);
     }
 
-    public int getAverageRating(UUID id) {
-        return orm.getAverageRating(id);
+    public Set<UUID> getDishesOfRating(int rating) {
+        return orm.getDishesOfRating(rating);
+    }
+
+    public Collection<Dish> getAllDishes() {
+        return orm.getAllDishes();
     }
 
     public int getNumReviews(UUID id) {
