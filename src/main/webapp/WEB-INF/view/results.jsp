@@ -39,6 +39,7 @@
 <div id="searchResults">
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
+    userEntry = userEntry.substring(0, userEntry.length() - 2);
   %>
     <h1>Results for: <%=userEntry%></h1>
   <%

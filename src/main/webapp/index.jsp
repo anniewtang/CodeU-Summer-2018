@@ -73,7 +73,7 @@
                   <input type="checkbox" name="<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
             <%  } %>
               </div>
-              <input id="user-entry" display="none" value="">
+              <input name="user-entry" id="user-entry" display="none" value="">
               <input id="go" type="submit" class="button" value="Go">
           </form>
         </div>
@@ -103,7 +103,7 @@
 
         function saveTag(element) {
            if (element.checked) {
-              document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ",";
+              document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ", ";
            }
         }
         </script>

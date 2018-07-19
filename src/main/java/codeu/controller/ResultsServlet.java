@@ -34,9 +34,8 @@ public class ResultsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String userEntry = request.getParameter("search");
+        String userEntry = request.getParameter("user-entry");
         request.getSession().setAttribute("entry", userEntry);
         response.sendRedirect("/results");
-
     }
 }
