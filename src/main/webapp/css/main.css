@@ -65,17 +65,54 @@ nav a {
     font-size: 17px;
 }
 
-.active, #collapsible:hover {
+#go {
+    padding: 0 18px;
+    display: none;
+    background-color: #008080;
+    width: 10%;
+    margin-right: 25%;
+    position: absolute;
+    top: 550px;
+    right: 0;
+    height: 35px;
+    color: white;
+}
+
+#craving:hover {
     background-color: #00b3b3;
+}
+
+#go:hover {
+    background-color: #00b3b3;
+}
+
+#add-review {
+    padding: 0 18px;
+    background-color: #E4F1F2;
+    width: 10%;
+    margin-left: 45%;
+    position: absolute;
+    top: 350;
+    height: 35px;
+    color: black;
 }
 
 #checklist {
     padding: 0 18px;
     display: none;
-    overflow: hidden;
+    height: 200px;
+    overflow: auto;
     background-color: #f1f1f1;
     margin-left: 25%;
     margin-right: 25%;
+}
+
+.column {
+    float: left;
+    width: 33%;
+    padding: 0;
+    height: 250px;
+    text-align: left;
 }
 
 #searchResults {
@@ -97,4 +134,8 @@ button {
 h3{
     padding: 0px;
     margin: 0px;
+}
+
+p {
+    margin-bottom: 0;
 }

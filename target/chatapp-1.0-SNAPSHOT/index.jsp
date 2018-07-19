@@ -14,6 +14,9 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
+<%@ page import="codeu.model.data.Constants"%>
+<%@ page import="java.util.Set"%>
+
 <html>
 <head>
     <title>CodeU Chat App</title>
@@ -35,39 +38,71 @@
 <div id="container">
 
       <img src="title.png" id="appTitle"/>
-
-      <!-- ADD SEARCH BAR -->
-      <form action="/results" method="POST">
-          <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
-          <input id="go" type="submit" name="go" class="button" value="Go">
-      </form>
-
-
       <br>
-
         <button id="craving">What are you craving?</button>
         <div id="checklist">
-          <p>PUT CHECKLIST HERE</p>
+          <form action="/results" method="POST">
+            <%
+              Constants options = new Constants();
+              Set<String> cuisines = options.getCuisineConstants();
+              Set<String> dishes = options.getDishConstants();
+              Set<String> restrictions = options.getRestrictionConstants();
+            %>
+
+              <div id="cuisines" class="column">
+                <p align="center"><b>Cuisines</b></p><hr>
+            <%
+                for (String cuisine : cuisines) { %>
+                  <input type="checkbox" name="<%=cuisine%>" ><%=cuisine%><br>
+            <%  } %>
+
+              </div>
+
+              <div id="dishes" class="column">
+                <p align="center"><b>Dish Types</b></p><hr>
+            <%
+                for (String dish : dishes) { %>
+                  <input type="checkbox" name="<%=dish%>" ><%=dish%><br>
+            <%  } %>
+              </div>
+
+              <div id="restrictions" class="column">
+                <p align="center"><b>Restrictions</b></p><hr>
+            <%
+                for (String restriction : restrictions) { %>
+                  <input type="checkbox" name="<%=restriction%>" ><%=restriction%><br>
+            <%  } %>
+              </div>
+
+              <input id="go" type="submit" name="go" class="button" value="Go">
+          </form>
         </div>
+
+
+        <!-- ADD REVIEW BUTTON -->
+        <form action="/review" method="get">
+            <input id="add-review" type="submit" class="button" value="Add Review">
+        </form>
 
         <script>
         var craving = document.getElementById("craving");
         craving.addEventListener("click", function() {
             var content = document.getElementById("checklist");
+            var go = document.getElementById("go");
+            var review = document.getElementById("add-review")
             if (content.style.display === "block") {
                 content.style.display = "none";
+                go.style.display = "none";
+                review.style.top = "350px";
             } else {
                 content.style.display = "block";
+                go.style.display = "block";
+                review.style.top = "550px";
             }
         });
 
         </script>
 
-
-      <!-- ADD REVIEW BUTTON -->
-      <form action="/review" method="get">
-          <input id="add-review" type="submit" class="button" value="Add Review">
-      </form>
 
       <!-- IF user is signed in... use recommendations based on history & current location -->
       <!-- IF user is not signed in... use recommendations based on current location -->
