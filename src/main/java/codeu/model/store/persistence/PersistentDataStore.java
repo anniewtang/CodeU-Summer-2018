@@ -85,11 +85,9 @@ public class PersistentDataStore {
      *                                      Datastore service
      */
     public DishORM loadDishes() throws PersistentDataStoreException {
-        // TODO: change this up so we initialize the DishORM first and then use its provided methods to add in dishes/ratings?
-
         // Setting up Data Structures to load information into
         Map<UUID, Dish> dishMap = new HashMap<>();
-        Map<UUID, Integer> ratingMap = new HashMap<>();
+        Map<Integer, Set<UUID>> ratingMap = new HashMap<>();
 
         // Retrieve all Dishes from DataStore
         Query query = new Query("dishes");
@@ -107,7 +105,7 @@ public class PersistentDataStore {
                 Dish dish = new Dish(dishID, dishName, restaurant, rating, tags, allTagValues);
 
                 dishMap.put(dishID, dish);
-                ratingMap.put(dishID, rating);
+                ratingMap.computeIfAbsent(rating, r -> new HashSet<>()).add(dishID);
             } catch (Exception e) {
                 // In a production environment, errors should be very rare. Errors which may
                 // occur include network errors, Datastore service errors, authorization errors,
@@ -205,7 +203,6 @@ public class PersistentDataStore {
      */
     public void writeThrough(Dish dish) {
         Entity dishEntity = new Entity("dishes", dish.getDishID().toString());
-        // TODO: ask why convert everything to string?
         dishEntity.setProperty("dish_id", dish.getDishID().toString());
         dishEntity.setProperty("dish_name", dish.getDishName());
         dishEntity.setProperty("restaurant", dish.getRestaurant());
@@ -253,7 +250,7 @@ public class PersistentDataStore {
      */
     private <V> EmbeddedEntity compressMap(Map<String, Set<V>> map) {
         EmbeddedEntity e = new EmbeddedEntity();
-        for (String k : map.keySet()) e.setProperty(k, compressSet(map.get(k)));
+        for (String property : map.keySet()) e.setProperty(property, compressSet(map.get(property)));
         return e;
     }
 

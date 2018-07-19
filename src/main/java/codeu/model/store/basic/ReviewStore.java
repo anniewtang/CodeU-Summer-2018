@@ -100,12 +100,9 @@ public class ReviewStore {
     public Review getBestReviewForDish(UUID dishID) {
         Set<Review> reviewList = getReviewsForDish(dishID);
         Review bestReview = null;
-        Review currReview = null;
         int currMax = 0;
 
-        for (Iterator<Review> it = reviewList.iterator(); it.hasNext();) {
-          currReview = it.next();
-
+        for (Review currReview : reviewList) {
           if (currReview.getStarRating() > currMax) {
             currMax = currReview.getStarRating();
             bestReview = currReview;
@@ -131,8 +128,6 @@ public class ReviewStore {
      *
      * @param review
      */
-    // TODO || Dependency: make sure addReview is called AFTER DishORM.addDish
-    // TODO || it relies on the DishORM already having the Dish.
     public void addReview(Review review) {
         updateTags(review);
         updateRating(review);
@@ -158,8 +153,7 @@ public class ReviewStore {
      * Update the DishStore's avg rating for this dish, given the new review
      */
     private void updateRating(Review review) {
-        DishStore store = DishStore.getInstance();
-        store.updateRating(review.getDishID(), review.getStarRating());
+        DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
     }
 
     /**

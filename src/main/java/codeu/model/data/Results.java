@@ -16,13 +16,14 @@ package codeu.model.data;
 
 import java.util.*;
 
-import codeu.model.store.basic.ReviewStore;
+import codeu.model.store.basic.ContentManager;
 import codeu.model.data.Review;
 import codeu.model.data.Dish;
 
 /** Class representing search results. */
 public class Results {
 
+  private ContentManager cm;
   private ArrayList<Dish> myResults;
   private String[] entry;
 
@@ -31,6 +32,8 @@ public class Results {
    * @param userEntry what the user put in search bar
    */
   public Results(String userEntry) {
+    cm = new ContentManager();
+    entry = userEntry;
     myResults = new ArrayList<Dish>();
     processEntry(userEntry);
     fillResults();
@@ -50,21 +53,22 @@ public class Results {
 
   /** TODO: remove this test routine **/
   public void resultTest() {
+
     // TODO: adding some default dishes to test display
-    ReviewStore reviewStore =  ReviewStore.getInstance();
-
-    Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, null, null);
-    Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, null, null);
-
     Map<String, Set<String>> tags = new HashMap<>();
     tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
     tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
 
+    Set<String> allTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.GLUTENFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN, Constants.DAIRYFREE));
+
+    Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, tags, allTags);
+    Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, tags, allTags);
+
     Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
     Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", tags);
 
-    reviewStore.addReview(review1);
-    reviewStore.addReview(review2);
+    cm.addNewDishAndFirstReview(dish1, review1);
+    cm.addNewDishAndFirstReview(dish2, review2);
 
     myResults.add(dish1);
     myResults.add(dish2);
@@ -79,11 +83,6 @@ public class Results {
   /** Access event type. */
   public int getResultsCount() {
     return myResults.size();
-  }
-
-  /** Sort results by ratings **/
-  public void sortByRatings() {
-    // TODO: implement
   }
 
 }
