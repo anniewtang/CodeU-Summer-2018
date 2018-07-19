@@ -43,7 +43,10 @@
 
     Results searchResults = new Results(userEntry);
 
-    // TODO: process user picks to be more readable 
+    userEntry = userEntry.replace("C:", "");
+    userEntry = userEntry.replace("D:", "");
+    userEntry = userEntry.replace("R:", "");
+
   %>
     <h1>Results for: <%=userEntry%></h1>
   <%
