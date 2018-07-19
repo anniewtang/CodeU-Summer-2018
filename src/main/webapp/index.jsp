@@ -53,7 +53,7 @@
                 <p align="center"><b>Cuisines</b></p><hr>
             <%
                 for (String cuisine : cuisines) { %>
-                  <input type="checkbox" name="<%=cuisine%>" onchange="saveTag(this)"><%=cuisine%><br>
+                  <input type="checkbox" name="C:<%=cuisine%>" onchange="saveTag(this)"><%=cuisine%><br>
             <%  } %>
 
               </div>
@@ -62,7 +62,7 @@
                 <p align="center"><b>Dish Types</b></p><hr>
             <%
                 for (String dish : dishes) { %>
-                  <input type="checkbox" name="<%=dish%>" onchange="saveTag(this)"><%=dish%><br>
+                  <input type="checkbox" name="D:<%=dish%>" onchange="saveTag(this)"><%=dish%><br>
             <%  } %>
               </div>
 
@@ -70,7 +70,7 @@
                 <p align="center"><b>Restrictions</b></p><hr>
             <%
                 for (String restriction : restrictions) { %>
-                  <input type="checkbox" name="<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
+                  <input type="checkbox" name="R:<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
             <%  } %>
               </div>
               <input name="user-entry" id="user-entry" display="none" value="">

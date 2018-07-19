@@ -40,10 +40,12 @@
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
     userEntry = userEntry.substring(0, userEntry.length() - 2);
+
+    Results searchResults = new Results(userEntry);
+
   %>
     <h1>Results for: <%=userEntry%></h1>
   <%
-    Results searchResults = new Results(userEntry);
 
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
       Dish currDish = searchResults.getResult(i);
