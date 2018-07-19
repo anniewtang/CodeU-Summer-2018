@@ -48,7 +48,7 @@
   <%
 
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
-      Dish currDish = searchResults.getResult(i);
+      Dish currDish = searchResults.getNextResult();
   %>
       <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()/*link this to the dish's page*/%></h3>
 
