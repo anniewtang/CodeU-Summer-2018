@@ -56,7 +56,7 @@
   %>
     <form id="dish-form" action="/dish" method="POST">
         <h3><%=currDish.getRestaurant()%>'s <a class="links" onclick="document.getElementById('dish-form').submit();"><u><%=currDish.getDishName()%></u></a></h3>
-        <input name="dish-title" id="dish-title" type="hidden" value="<%=currDish.getDishName()%>">
+        <input name="dish-id" id="dish-id" type="hidden" value="<%=currDish.getDishID().toString()%>">
     </form>
 
   <%

@@ -14,6 +14,11 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
+<%@ page import="java.util.UUID" %>
+<%@ page import="codeu.model.store.basic.ContentManager" %>
+<%@ page import="codeu.model.data.Review" %>
+<%@ page import="codeu.model.data.Dish" %>
+
 <html>
 <head>
     <title>Register</title>
@@ -35,9 +40,9 @@
 <div id="container">
 
   <%
-    String dish = (String) request.getSession().getAttribute("dish");
+    UUID dish_id = UUID.fromString((String) request.getSession().getAttribute("dish-id"));
   %>
-  <h1><%=dish%></h1>
+  <h1><%=dish_id.toString()%></h1>
 </div>
 </body>
 </html>
