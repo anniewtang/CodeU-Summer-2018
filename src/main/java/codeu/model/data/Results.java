@@ -25,6 +25,7 @@ public class Results {
 
   private ContentManager cm;
   private Set<Dish> myResults;
+  private Iterator<Dish> itr;
   private Map<String, Set<String>> queryTags;
 
   /**
@@ -41,6 +42,7 @@ public class Results {
 
   /** Break down user input into useful key words */
   public void processEntry(String entries) {
+    // TODO: make sure no duplicates
     String[] partitionedEntries = entries.split(", ");
     for (String entry : partitionedEntries) {
         switch (entry.charAt(0)) {
@@ -70,23 +72,44 @@ public class Results {
 
   /** Find and include all matching results. */
   public void fillResults() {
+      createFakeDishes();
       Set<Integer> ratings = new HashSet<Integer>();
       ratings.add(3);
       ratings.add(4);
       ratings.add(5);
-      myResults = cm.queryAndSort(queryTags, ratings, true);
+      myResults = cm.queryByTags(queryTags);
+      itr = myResults.iterator();
   }
 
+/* TODO: REMOVE */
+public void createFakeDishes() {
+    Map<String, Set<String>> tags = new HashMap<>();
+    tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
+    tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
 
+    Set<String> allTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.GLUTENFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN, Constants.DAIRYFREE));
+
+    Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, tags, allTags);
+    Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, tags, allTags);
+
+    Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
+    Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", tags);
+
+    cm.addNewDishAndFirstReview(dish1, review1);
+    cm.addNewDishAndFirstReview(dish2, review2);
+
+    myResults.add(dish1);
+    myResults.add(dish2);
+}
 
   /** Return result by index. */
-  public Dish getResult(int index) {
-    return null;
+  public Dish getNextResult() {
+    return itr.next();
   }
 
   /** Access event type. */
   public int getResultsCount() {
-    return 0;
+    return myResults.size();
   }
 
 }

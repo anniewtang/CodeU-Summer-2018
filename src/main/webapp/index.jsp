@@ -102,8 +102,11 @@
         });
 
         function saveTag(element) {
+           document.getElementById("user-entry").style.display = "none";
            if (element.checked) {
               document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ", ";
+           } else if (element.unchecked) { // TODO: remove entry if unchecked
+             // REMOVE but double for now
            }
         }
         </script>
