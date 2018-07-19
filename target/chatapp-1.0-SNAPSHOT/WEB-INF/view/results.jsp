@@ -43,6 +43,7 @@
 
     Results searchResults = new Results(userEntry);
 
+    // TODO: process user picks to be more readable 
   %>
     <h1>Results for: <%=userEntry%></h1>
   <%

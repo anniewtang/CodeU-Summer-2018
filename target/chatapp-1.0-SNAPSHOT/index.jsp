@@ -102,12 +102,11 @@
         });
 
         function saveTag(element) {
-           document.getElementById("user-entry").style.display = "none";
+           //document.getElementById("user-entry").style.display = "none";
            if (element.checked) {
               document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ", ";
-           } else if (element.unchecked) {
-             document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ", ";
-             // REMOVE but double for now
+           } else {
+              document.getElementById("user-entry").value = (document.getElementById("user-entry").value).replace(element.name + ", ", "");
            }
         }
         </script>
