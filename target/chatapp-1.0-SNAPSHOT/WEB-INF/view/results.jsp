@@ -54,7 +54,10 @@
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
       Dish currDish = searchResults.getNextResult();
   %>
-      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()/*link this to the dish's page*/%></h3>
+    <form id="dish-form" action="/dish" method="POST">
+        <h3><%=currDish.getRestaurant()%>'s <a class="links" onclick="document.getElementById('dish-form').submit();"><u><%=currDish.getDishName()%></u></a></h3>
+        <input name="dish-title" id="dish-title" type="hidden" value="<%=currDish.getDishName()%>">
+    </form>
 
   <%
       ReviewStore reviewStore =  ReviewStore.getInstance();

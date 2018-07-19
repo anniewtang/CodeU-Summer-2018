@@ -119,6 +119,11 @@ nav a {
     margin-left: 30px;
 }
 
+.links{
+  color: blue;
+  text-decoration: underline;
+}
+
 h1 {
     color: #757575;
 }

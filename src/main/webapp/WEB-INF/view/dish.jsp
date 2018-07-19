@@ -33,8 +33,11 @@
 </nav>
 
 <div id="container">
-    <h1>Dish</h1>
 
+  <%
+    String dish = (String) request.getSession().getAttribute("dish");
+  %>
+  <h1><%=dish%></h1>
 </div>
 </body>
 </html>

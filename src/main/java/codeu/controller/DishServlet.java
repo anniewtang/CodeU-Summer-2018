@@ -34,8 +34,8 @@ public class DishServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        // String userEntry = request.getParameter("user-entry");
-        // request.getSession().setAttribute("entry", userEntry);
-        response.sendRedirect("/results");
+        String dish = request.getParameter("dish-title");
+        request.getSession().setAttribute("dish", dish);
+        response.sendRedirect("/dish");
     }
 }
