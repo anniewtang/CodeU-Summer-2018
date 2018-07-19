@@ -45,6 +45,10 @@ nav a {
     width: 800px;
 }
 
+#searchResults {
+    margin-left: 50px;
+}
+
 h1 {
     color: #757575;
 }
@@ -55,4 +59,9 @@ input {
 
 button {
     font-size: 18px;
+}
+
+h3{
+    padding: 0px;
+    margin: 0px;
 }
