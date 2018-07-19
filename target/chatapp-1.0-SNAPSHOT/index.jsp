@@ -33,28 +33,45 @@
 </nav>
 
 <div id="container">
-    <div style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-        <h1>Dishcussion</h1>
+      <img src="title.png" id="appTitle"/>
 
-        <!-- ADD SEARCH BAR -->
-        <form action="/results" method="POST">
-            <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
-            <input id="go" type="submit" name="go" class="button" value="Go">
-        </form>
+      <!-- ADD SEARCH BAR -->
+      <form action="/results" method="POST">
+          <input id="user-entry" type="text" name="search" size="50" placeholder="What are you craving?">
+          <input id="go" type="submit" name="go" class="button" value="Go">
+      </form>
 
 
-        <br>
+      <br>
 
-        <!-- ADD REVIEW BUTTON -->
-        <form action="/review" method="get">
-            <input id="add-review" type="submit" class="button" value="Add Review">
-        </form>
+        <button id="craving">What are you craving</button>
+        <div id="checklist">
+          <p>PUT CHECKLIST HERE</p>
+        </div>
 
-        <!-- IF user is signed in... use recommendations based on history & current location -->
-        <!-- IF user is not signed in... use recommendations based on current location -->
+        <script>
+        var craving = document.getElementById("craving");
+        craving.addEventListener("click", function() {
+            var content = document.getElementById("checklist");
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
 
-    </div>
+        </script>
+
+
+      <!-- ADD REVIEW BUTTON -->
+      <form action="/review" method="get">
+          <input id="add-review" type="submit" class="button" value="Add Review">
+      </form>
+
+      <!-- IF user is signed in... use recommendations based on history & current location -->
+      <!-- IF user is not signed in... use recommendations based on current location -->
+
 </div>
 </body>
 </html>
