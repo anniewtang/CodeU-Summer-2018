@@ -124,6 +124,16 @@ nav a {
   text-decoration: underline;
 }
 
+#tags {
+  margin-left: 3%;
+  margin-bottom: 10px
+}
+
+#reviews {
+  margin-left: 3%;
+  margin-bottom: 10px
+}
+
 h1 {
     color: #757575;
 }

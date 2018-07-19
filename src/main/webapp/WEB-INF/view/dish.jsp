@@ -15,6 +15,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page import="java.util.UUID" %>
+<%@ page import="java.util.Set" %>
 <%@ page import="codeu.model.store.basic.ContentManager" %>
 <%@ page import="codeu.model.data.Review" %>
 <%@ page import="codeu.model.data.Dish" %>
@@ -41,8 +42,34 @@
 
   <%
     UUID dish_id = UUID.fromString((String) request.getSession().getAttribute("dish-id"));
+    ContentManager cm = new ContentManager();
+    Set<Review> reviews = cm.getReviewsForDish(dish_id);
+    Set<String> tags = cm.getAllTagsForDish(dish_id);
   %>
-  <h1><%=dish_id.toString()%></h1>
+  <h1><%=cm.getDishName(dish_id)%></h1>
+
+  <div id="tags">
+    <h3>Tags</h3>
+
+    <%
+      for (String tag : tags) { %>
+          <span><%=tag%>, </span> <%
+      } %>
+  </div>
+
+  <div id="reviews">
+    <h3>Reviews</h3>
+    <hr>
+    <%
+      for (Review review : reviews) {
+          for (int j = 0; j < review.getStarRating(); j++) { %>
+            <img src="star.png" width="20" height="20"/>
+      <%  } %>
+          <p>"<%=review.getDescription()%>"</p>
+          <hr>
+    <% } %>
+  </div>
+
 </div>
 </body>
 </html>
