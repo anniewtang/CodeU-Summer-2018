@@ -100,12 +100,9 @@ public class ReviewStore {
     public Review getBestReviewForDish(UUID dishID) {
         Set<Review> reviewList = getReviewsForDish(dishID);
         Review bestReview = null;
-        Review currReview = null;
         int currMax = 0;
 
-        for (Iterator<Review> it = reviewList.iterator(); it.hasNext();) {
-          currReview = it.next();
-
+        for (Review currReview : reviewList) {
           if (currReview.getStarRating() > currMax) {
             currMax = currReview.getStarRating();
             bestReview = currReview;
