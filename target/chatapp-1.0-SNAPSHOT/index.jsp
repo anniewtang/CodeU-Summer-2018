@@ -45,7 +45,7 @@
 
       <br>
 
-        <button id="craving">What are you craving</button>
+        <button id="craving">What are you craving?</button>
         <div id="checklist">
           <p>PUT CHECKLIST HERE</p>
         </div>
