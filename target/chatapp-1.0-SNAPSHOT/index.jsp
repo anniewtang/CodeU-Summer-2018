@@ -78,9 +78,11 @@
 
 
         <!-- ADD REVIEW BUTTON -->
-        <form action="/review" method="get">
-            <input id="add-review" type="submit" class="button" value="Add Review">
-        </form>
+        <% if (request.getSession().getAttribute("user") != null) { %>
+          <form action="/review" method="get">
+              <input id="add-review" type="submit" class="button" value="Add Review">
+          </form>
+        <% } %>
 
         <script>
         var craving = document.getElementById("craving");
