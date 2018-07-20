@@ -56,7 +56,11 @@
       Dish currDish = searchResults.getNextResult();
   %>
     <form id="dish-form" action="/dish" method="POST">
-        <h3><%=currDish.getRestaurant()%>'s <a class="links" onclick="document.getElementById('dish-form').submit();"><u><%=currDish.getDishName()%></u></a></h3>
+        <h3><%=currDish.getRestaurant()%>'s
+            <a class="links" onclick="document.getElementById('dish-form').submit();">
+                <u><%=currDish.getDishName()%></u>
+            </a>
+        </h3>
         <input name="dish-id" id="dish-id" type="hidden" value="<%=currDish.getDishID().toString()%>">
     </form>
 
