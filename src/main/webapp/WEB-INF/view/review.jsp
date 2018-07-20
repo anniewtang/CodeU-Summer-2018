@@ -42,15 +42,25 @@
 
   <div id="container" margin-left="30px">
 
-    <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
+    <div class="review-entry" id="dish-entry">
+      <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
+      <div class="list">YOYO</div>
+    </div>
 
-    <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
+    <div class="review-entry">
+      <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
+      <div class="list">YOYO</div>
+    </div>
 
-    <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
+    <div class="review-entry">
+      <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
+      <div class="list">YOYO</div>
+    </div>
 
-    <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
-
-
+    <div class="review-entry">
+      <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
+      <div class="list">YOYO</div>
+    </div>
 
   </div>
 </body>

@@ -134,6 +134,13 @@ nav a {
   margin-bottom: 10px
 }
 
+.review-entry {
+  width: 22%;
+  margin-right: 1%;
+  float: left;
+  height: 200px;
+}
+
 .review-option {
     background-color: #008080;
     color: white;
@@ -143,15 +150,18 @@ nav a {
     text-align: center;
     outline: none;
     font-size: 17px;
-    width: 22%;
-    margin-right: 1%
-}
-.review-option:hover {
-    background-color: #00b3b3;
+    width: 100%;
 }
 
-#dish-review {
+#dish-entry {
     margin-left: 3%;
+}
+
+.list {
+    padding: 0 18px;
+    height: 25%;
+    overflow: auto;
+    background-color: #f1f1f1;
 }
 
 h1 {
