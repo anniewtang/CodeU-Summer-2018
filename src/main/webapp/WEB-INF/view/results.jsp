@@ -39,7 +39,8 @@
 <div id="searchResults">
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
-    userEntry = userEntry.substring(0, userEntry.length() - 2);
+    if (userEntry.length() > 2)
+      userEntry = userEntry.substring(0, userEntry.length() - 2);
 
     Results searchResults = new Results(userEntry);
 
