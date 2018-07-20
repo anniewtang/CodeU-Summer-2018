@@ -19,7 +19,7 @@
 
 <html>
 <head>
-    <title>CodeU Chat App</title>
+    <title>Dishcussion</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
