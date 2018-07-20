@@ -19,7 +19,7 @@
 
 <html>
 <head>
-    <title>CodeU Chat App</title>
+    <title>Dishcussion</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -53,7 +53,7 @@
                 <p align="center"><b>Cuisines</b></p><hr>
             <%
                 for (String cuisine : cuisines) { %>
-                  <input type="checkbox" name="<%=cuisine%>" ><%=cuisine%><br>
+                  <input type="checkbox" name="C:<%=cuisine%>" onchange="saveTag(this)"><%=cuisine%><br>
             <%  } %>
 
               </div>
@@ -62,7 +62,7 @@
                 <p align="center"><b>Dish Types</b></p><hr>
             <%
                 for (String dish : dishes) { %>
-                  <input type="checkbox" name="<%=dish%>" ><%=dish%><br>
+                  <input type="checkbox" name="D:<%=dish%>" onchange="saveTag(this)"><%=dish%><br>
             <%  } %>
               </div>
 
@@ -70,11 +70,11 @@
                 <p align="center"><b>Restrictions</b></p><hr>
             <%
                 for (String restriction : restrictions) { %>
-                  <input type="checkbox" name="<%=restriction%>" ><%=restriction%><br>
+                  <input type="checkbox" name="R:<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
             <%  } %>
               </div>
-
-              <input id="go" type="submit" name="go" class="button" value="Go">
+              <input name="user-entry" id="user-entry" type="hidden" value="">
+              <input id="go" type="submit" class="button" value="Go">
           </form>
         </div>
 
@@ -101,11 +101,14 @@
             }
         });
 
+        function saveTag(element) {
+           if (element.checked) {
+              document.getElementById("user-entry").value = document.getElementById("user-entry").value + element.name + ", ";
+           } else {
+              document.getElementById("user-entry").value = (document.getElementById("user-entry").value).replace(element.name + ", ", "");
+           }
+        }
         </script>
-
-
-      <!-- IF user is signed in... use recommendations based on history & current location -->
-      <!-- IF user is not signed in... use recommendations based on current location -->
 
 </div>
 </body>
