@@ -93,7 +93,9 @@ public class ContentManager {
         Set<Dish> results = new HashSet<>();
         for (int rating : queryRatings) {
             Set<UUID> dishes = DishStore.getInstance().getDishesOfRating(rating);
-            results.addAll(dishes.stream().map(DishStore.getInstance()::getDish).collect(toSet()));
+            if (dishes == null || dishes.isEmpty()) {
+                results.addAll(dishes.stream().map(DishStore.getInstance()::getDish).collect(toSet()));
+            }
         }
         return results;
     }
@@ -155,6 +157,11 @@ public class ContentManager {
      */
     private static Set<Dish> sortDishes(Collection<Dish> dishes, boolean highestToLow) {
         TreeSet<Dish> sorted = new TreeSet<>();
+
+        if (dishes == null || dishes.isEmpty()) {
+            return sorted;
+        }
+
         if (highestToLow) {
             sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
         }
