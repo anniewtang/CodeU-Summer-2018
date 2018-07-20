@@ -49,7 +49,7 @@ public class ReviewServlet extends HttpServlet {
                 UUID dishID = UUID.randomUUID();
                 int numStars = (int) request.getSession().getAttribute("rate");
                 String desc = (String) request.getSession().getAttribute("Description");
-                
+
                 HashMap<String, Set<String>> tags = new HashMap<>();
                 tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN)));
                 tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE, Constants.ASIAN)));

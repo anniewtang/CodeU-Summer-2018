@@ -138,7 +138,7 @@ nav a {
   width: 22%;
   margin-right: 1%;
   float: left;
-  height: 200px;
+  height: 185px;
 }
 
 .review-option {
@@ -159,7 +159,7 @@ nav a {
 
 .list {
     padding: 0 18px;
-    height: 25%;
+    height: 100%;
     overflow: auto;
     background-color: #f1f1f1;
 }
