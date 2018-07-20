@@ -134,6 +134,30 @@ nav a {
   margin-bottom: 10px
 }
 
+#dish-review {
+    background-color: #008080;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 17px;
+    width: 25%
+}
+
+.tag-option {
+    background-color: #008080;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 17px;
+    width: 25%
+}
+
 h1 {
     color: #757575;
 }
