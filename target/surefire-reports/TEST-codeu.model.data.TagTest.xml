@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="codeu.model.data.TagTest" time="0.741" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="codeu.model.data.TagTest" time="1.01" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="10.0.1+10"/>
@@ -65,8 +65,8 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="codeu.model.data.TagTest" name="testSkeletonTag" time="0.724"/>
-  <testcase classname="codeu.model.data.TagTest" name="testFilledTag" time="0.006"/>
-  <testcase classname="codeu.model.data.TagTest" name="testAddDishToTagValue" time="0.006"/>
-  <testcase classname="codeu.model.data.TagTest" name="emptyTest" time="0.005"/>
+  <testcase classname="codeu.model.data.TagTest" name="testSkeletonTag" time="0.997"/>
+  <testcase classname="codeu.model.data.TagTest" name="testFilledTag" time="0.005"/>
+  <testcase classname="codeu.model.data.TagTest" name="testAddDishToTagValue" time="0.004"/>
+  <testcase classname="codeu.model.data.TagTest" name="emptyTest" time="0.004"/>
 </testsuite>
