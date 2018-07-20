@@ -207,7 +207,7 @@ public class ContentManager {
      * Used to display all dishes when user is choosing what Dish they want to review for.
      * @return collection of all dishes in DishStore.
      */
-    public static Collection<Dish> getAlLDishes() {
+    public static Collection<Dish> getAllDishes() {
         return DishStore.getInstance().getAllDishes();
     }
 }
