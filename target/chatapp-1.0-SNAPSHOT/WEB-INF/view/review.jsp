@@ -29,10 +29,12 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
 
     <% if(request.getSession().getAttribute("user") != null){ %>
       <form action ="/review" method="POST">
+        <label for="Desription">Describe A Dish Here </label>
         <textarea 
             name="Desription" rows="10" col="40">
         </textarea>
         <br>
+        <label for="rate">Rate Dish(out of 5) </label>
         <input type="text" name="rate">
         <br/>
         <input type="Submit">
