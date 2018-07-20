@@ -39,15 +39,26 @@
 <div id="searchResults">
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
+    if (userEntry.length() > 2)
+      userEntry = userEntry.substring(0, userEntry.length() - 2);
+
+    Results searchResults = new Results(userEntry);
+
+    userEntry = userEntry.replace("C:", "");
+    userEntry = userEntry.replace("D:", "");
+    userEntry = userEntry.replace("R:", "");
+
   %>
     <h1>Results for: <%=userEntry%></h1>
   <%
-    Results searchResults = new Results(userEntry);
 
     for (int i = 0; i < searchResults.getResultsCount(); i++) {
-      Dish currDish = searchResults.getResult(i);
+      Dish currDish = searchResults.getNextResult();
   %>
-      <h3><%=currDish.getRestaurant()%>'s <%=currDish.getDishName()/*link this to the dish's page*/%></h3>
+    <form id="dish-form" action="/dish" method="POST">
+        <h3><%=currDish.getRestaurant()%>'s <a class="links" onclick="document.getElementById('dish-form').submit();"><u><%=currDish.getDishName()%></u></a></h3>
+        <input name="dish-id" id="dish-id" type="hidden" value="<%=currDish.getDishID().toString()%>">
+    </form>
 
   <%
       ReviewStore reviewStore =  ReviewStore.getInstance();
