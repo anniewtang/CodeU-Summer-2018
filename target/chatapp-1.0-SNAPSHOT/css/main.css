@@ -134,7 +134,7 @@ nav a {
   margin-bottom: 10px
 }
 
-#dish-review {
+.review-option {
     background-color: #008080;
     color: white;
     cursor: pointer;
@@ -143,19 +143,14 @@ nav a {
     text-align: center;
     outline: none;
     font-size: 17px;
-    width: 25%
+    width: 22%;
+}
+.review-option:hover {
+    background-color: #00b3b3;
 }
 
-.tag-option {
-    background-color: #008080;
-    color: white;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 17px;
-    width: 25%
+#dish-review {
+    margin-left: 6%;
 }
 
 h1 {

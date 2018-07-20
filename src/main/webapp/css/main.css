@@ -144,6 +144,14 @@ nav a {
     outline: none;
     font-size: 17px;
     width: 22%;
+    margin-right: 1%
+}
+.review-option:hover {
+    background-color: #00b3b3;
+}
+
+#dish-review {
+    margin-left: 3%;
 }
 
 h1 {

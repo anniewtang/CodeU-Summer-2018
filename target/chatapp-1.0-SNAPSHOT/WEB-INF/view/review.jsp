@@ -42,27 +42,16 @@
 
   <div id="container" margin-left="30px">
 
-    <button id="dish-review">I am reviewing <i class="fa fa-angle-down"></i></button>
+    <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
 
-    <button class="tag-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
+    <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
 
-    <button class="tag-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
+    <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
 
-    <button class="tag-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
+    <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
 
 
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <form action ="/review" method="POST">
-        <textarea
-            name="Desription" rows="10" col="40">
-        </textarea>
-        <br>
-        <input type="text" name="rate">
-        <br/>
-        <input type="Submit">
-       </form>
 
-    <% } %>
   </div>
 </body>
 </html>
