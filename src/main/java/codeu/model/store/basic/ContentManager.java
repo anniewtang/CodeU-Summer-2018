@@ -28,7 +28,7 @@ import static java.util.stream.Collectors.toSet;
  */
 public class ContentManager {
     /* =========================================================
-    Methods for @cohanale to use when users want to Rate Dishes.
+    Methods for @cohanele to use when users want to Rate Dishes.
     ========================================================= */
     /**
      * Used when user adds a NEW Review for a NEW Dish.
