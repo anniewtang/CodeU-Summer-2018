@@ -162,10 +162,9 @@ public class ContentManager {
         return sorted;
     }
 
-    /* ==============================================================
-    Methods for to use when pulling data for the Dish's preview page.
-    =============================================================== */
-
+    /* ================================================
+    Methods for to use when pulling data for webapp UI.
+    ===================================================*/
     /**
      * Can be used to get Dish name from Dish UUID.
      * @param id of the dish
@@ -202,5 +201,13 @@ public class ContentManager {
      */
     public static Set<String> getAllTagsForDish(UUID id) {
         return DishStore.getInstance().getAllTagsForDish(id);
+    }
+
+    /**
+     * Used to display all dishes when user is choosing what Dish they want to review for.
+     * @return collection of all dishes in DishStore.
+     */
+    public static Collection<Dish> getAlLDishes() {
+        return DishStore.getInstance().getAllDishes();
     }
 }
