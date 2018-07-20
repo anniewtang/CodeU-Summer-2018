@@ -157,6 +157,11 @@ public class ContentManager {
      */
     private static Set<Dish> sortDishes(Collection<Dish> dishes, boolean highestToLow) {
         TreeSet<Dish> sorted = new TreeSet<>();
+
+        if (dishes == null || dishes.isEmpty()) {
+            return sorted;
+        }
+
         if (highestToLow) {
             sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
         }
