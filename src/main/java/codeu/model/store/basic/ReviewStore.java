@@ -141,7 +141,7 @@ public class ReviewStore {
      * 2.) Updating the Dish object's tags via DishStore.
      * @param review
      */
-    private void updateTags(Review review) {
+    public void updateTags(Review review) {
         UUID id = review.getDishID();
         Map<String, Set<String>> tags = review.getTags();
 
@@ -152,7 +152,7 @@ public class ReviewStore {
     /**
      * Update the DishStore's avg rating for this dish, given the new review
      */
-    private void updateRating(Review review) {
+    public void updateRating(Review review) {
         DishStore.getInstance().updateRating(review.getDishID(), review.getStarRating());
     }
 
