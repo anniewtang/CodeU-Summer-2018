@@ -21,7 +21,6 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
-    <a href="/about.jsp">About</a>
   </nav>
 
   <div id="container">
@@ -29,7 +28,7 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
 
     <% if(request.getSession().getAttribute("user") != null){ %>
       <form action ="/review" method="POST">
-        <textarea 
+        <textarea
             name="Desription" rows="10" col="40">
         </textarea>
         <br>
@@ -37,7 +36,7 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
         <br/>
         <input type="Submit">
        </form>
-       
+
     <% } %>
   </div>
 </body>
