@@ -38,8 +38,7 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
         <input type="text" name="rate">
         <br/>
         <input type="Submit">
-       </form>
-       
+       </form>   
     <% } %>
   </div>
 </body>
