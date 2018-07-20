@@ -28,6 +28,6 @@ public class ReviewTest extends TestFramework {
         Assert.assertEquals(dishID, review.getDishID());
         Assert.assertEquals(numStars, review.getStarRating());
         Assert.assertEquals(desc, review.getDescription());
-        Assert.assertEquals(tags, review.getTags());
+        Assert.assertEquals(tags, review.getTags()); 
     }
 }

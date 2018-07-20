@@ -13,7 +13,7 @@ import codeu.model.data.User;
 import codeu.model.data.Results;
 import codeu.model.store.basic.UserStore;
 
-public class ResultsServlet extends HttpServlet {
+public class DishServlet extends HttpServlet {
 
     /**
      * Set up state for handling registration-related requests. This method is only called when
@@ -28,14 +28,14 @@ public class ResultsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/view/results.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/dish.jsp").forward(request, response);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        String userEntry = request.getParameter("user-entry");
-        request.getSession().setAttribute("entry", userEntry);
-        response.sendRedirect("/results");
+        String dish = request.getParameter("dish-id");
+        request.getSession().setAttribute("dish-id", dish);
+        response.sendRedirect("/dish");
     }
 }

@@ -38,6 +38,8 @@
     </servlet-mapping>
 
 
+<<<<<<< HEAD
+=======
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>codeu.controller.ProfileServlet</servlet-class>
@@ -60,7 +62,41 @@
     </servlet-mapping>
 
 
+>>>>>>> e9245a7acddaaf4660c89474c3f8d70b42840661
     <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>codeu.controller.ProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+<<<<<<< HEAD
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>codeu.controller.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+=======
+        <servlet-name>ResultsServlet</servlet-name>
+        <servlet-class>codeu.controller.ResultsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ResultsServlet</servlet-name>
+        <url-pattern>/results</url-pattern>
+>>>>>>> e9245a7acddaaf4660c89474c3f8d70b42840661
+    </servlet-mapping>
+
+
+    <servlet>
+<<<<<<< HEAD
         <servlet-name>ReviewServlet</servlet-name>
         <servlet-class>codeu.controller.ReviewServlet</servlet-class>
     </servlet>
@@ -83,4 +119,16 @@
 
 
 
+=======
+        <servlet-name>DishServlet</servlet-name>
+        <servlet-class>codeu.controller.DishServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DishServlet</servlet-name>
+        <url-pattern>/dish</url-pattern>
+    </servlet-mapping>
+
+
+>>>>>>> e9245a7acddaaf4660c89474c3f8d70b42840661
 </web-app>

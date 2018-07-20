@@ -167,6 +167,15 @@ public class ContentManager {
     =============================================================== */
 
     /**
+     * Can be used to get Dish name from Dish UUID.
+     * @param id of the dish
+     * @return Dish name
+     */
+    public static String getDishName(UUID id) {
+        return DishStore.getInstance().getDish(id).getDishName();
+    }
+
+    /**
      * Can be used to display all the reviews associated with a given Dish.
      * @param id of the dish
      * @return set of Review objects for Dish.
