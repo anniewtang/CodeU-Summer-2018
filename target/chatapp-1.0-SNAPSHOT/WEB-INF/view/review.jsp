@@ -21,7 +21,7 @@
 <%@ page import="codeu.model.data.Constants"%>
 <%@ page import="java.util.Set"%>
 <%@ page import="java.util.Collection"%>
-
+<%@ page import="java.util.UUID"%>
 
 <html>
 <head>
@@ -94,6 +94,21 @@
           document.getElementById("user-entry").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
        }
     }
+
+    function pickDish(element) {
+      if (element.id == "0") {
+            document.getElementById("is-new").value = 1;
+            document.getElementById("dish-ID").value = <%=UUID.randomUUID().toString()%>;
+      } else {
+         if (element.checked) {
+            document.getElementById("is-new").value = 0;
+            document.getElementById("dish-ID").value = element.id;
+         } else {
+            document.getElementById("dish-ID").value = "";
+         }
+      }
+
+    }
   </script>
 
 
@@ -113,12 +128,13 @@
 
                     <br>
                     <%
-                      int count = 1;
                       for (Dish dish : dishes) { %>
-                        <input id="<%=count%>" type="radio" name="dishname"><%=dish.getDishName()%></input>
+                        <input id="<%=dish.getDishID().toString()%>" type="radio" name="dishname" onchange="pickDish(this)"><%=dish.getDishName()%></input>
                         <br>
-                    <%  count++;
+                    <%
                       } %>
+                    <input name="dish-ID" id="dish-ID" type="hidden" value="">
+                    <input name="is-new" id="is-new" type="hidden" value="">
                 </div>
           </div>
 

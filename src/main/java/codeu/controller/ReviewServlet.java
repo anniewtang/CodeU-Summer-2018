@@ -95,7 +95,7 @@ public class ReviewServlet extends HttpServlet {
            tags.put(Constants.DISH, Dset);
            tags.put(Constants.RESTRICTION, Rset);
 
-          if (isNewDish) {
+          if (isNewDish == 1) {
               cm.addNewDishAndFirstReview(new Dish(UUID.randomUUID(), dishName, restName, numStars, tags, allTags),
                                           new Review(reviewID, authorID, dishID, numStars, desc, tags));
           } else  {
