@@ -35,7 +35,6 @@
   UserStore userStore = UserStore.getInstance();
   User user = userStore.getUser((String)request.getSession().getAttribute("user"));
   ContentManager cm = new ContentManager();
-
   %>
 
   <nav>
@@ -46,12 +45,16 @@
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
+
+    <% if (request.getSession().getAttribute("user") != null) { %>
+      <a href="/" >Logout</a>
+    <% } %>
   </nav>
 
   <%
     Constants options = new Constants();
     Set<String> cuisines = options.getCuisineConstants();
-    Set<String> disheTypes = options.getDishConstants();
+    Set<String> dishTypes = options.getDishConstants();
     Set<String> restrictions = options.getRestrictionConstants();
     Collection<Dish> dishes = cm.getAllDishes();
   %>
@@ -61,14 +64,13 @@
     <div class="review-entry" id="dish-entry">
       <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
             <div class="list">
-              <%
-                for (Dish dish : dishes) { %>
-                  <li><%=dish.getDishName()%></li>
-                  <br>
-              <%  } %>
+                <%
+                  for (Dish dish : dishes) { %>
+                    <input type="radio" name="dishname"><%=dish.getDishName()%></input>
+                    <br>
+                <%  } %>
             </div>
       </div>
-    </div>
 
     <div class="review-entry">
       <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
@@ -84,7 +86,7 @@
       <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
       <div class="list">
         <%
-          for (String dishType : disheTypes) { %>
+          for (String dishType : dishTypes) { %>
             <input type="checkbox" name="D:<%=dishType%>" onchange="saveTag(this)"><%=dishType%><br>
         <%  } %>
       </div>
@@ -99,7 +101,19 @@
         <%  } %>
       </div>
     </div>
+  </div>
 
+  <div id="desc">
+    <h3>Dishcuss below:</h3>
+    <textarea id="user-desc" rows="10" cols="70"></textarea>
+  </div>
+
+  <div id="rating">
+    <h3>Rating:</h3>
+    <%
+        for (int j = 0; j < 5; j++) { %>
+          <img class="ur-star" src="star.png" width="50" height="50"/>
+    <%  } %>
   </div>
 </body>
 </html>

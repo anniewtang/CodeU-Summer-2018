@@ -154,7 +154,7 @@ nav a {
 }
 
 #dish-entry {
-    margin-left: 3%;
+    margin-left: 50px;
 }
 
 .list {
@@ -162,6 +162,24 @@ nav a {
     height: 100%;
     overflow: auto;
     background-color: #f1f1f1;
+}
+
+#desc {
+    position: absolute;
+    margin-top: 250px;
+    margin-left: 50px;
+}
+
+#user-desc {
+  font-size: 15px;
+  border:solid 2px orange;
+  resize: vertical;
+}
+
+#rating {
+  position: absolute;
+  margin-top: 250px;
+  margin-left: 700px;
 }
 
 h1 {

@@ -21,6 +21,10 @@ User user = userStore.getUser((String)request.getSession().getAttribute("user"))
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
+
+    <% if (request.getSession().getAttribute("user") != null) { %>
+    <a href="/" >Logout</a>
+    <% } %>
   </nav>
 
   <div id="container">
