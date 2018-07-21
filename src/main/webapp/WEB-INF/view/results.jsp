@@ -14,10 +14,11 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
-<%@ page import="codeu.model.data.Results" %>
+<%@ page import="codeu.orm.ResultsORM" %>
 <%@ page import="codeu.model.data.Dish" %>
 <%@ page import="codeu.model.store.basic.ReviewStore" %>
 <%@ page import="codeu.model.data.Review" %>
+<%@ page import="java.util.Set" %>
 
 <html>
 <head>
@@ -33,6 +34,7 @@
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
+    <a href="/about.jsp">About</a>
 </nav>
 
 <div id="searchResults">
@@ -41,7 +43,7 @@
     if (userEntry.length() > 2)
       userEntry = userEntry.substring(0, userEntry.length() - 2);
 
-    Results searchResults = new Results(userEntry);
+    Set<Dish> searchResults = ResultsORM.getResults(userEntry);
 
     userEntry = userEntry.replace("C:", "");
     userEntry = userEntry.replace("D:", "");
@@ -51,8 +53,7 @@
     <h1>Results for: <%=userEntry%></h1>
   <%
 
-    for (int i = 0; i < searchResults.getResultsCount(); i++) {
-      Dish currDish = searchResults.getNextResult();
+    for (Dish currDish : searchResults) {
   %>
     <form id="dish-form" action="/dish" method="POST">
         <h3><%=currDish.getRestaurant()%>'s
@@ -81,9 +82,8 @@
 
   <%
     }
-
-    searchResults.clearResults();
   %>
+    <p>Number of results: <%=searchResults.size()%></p>
 </div>
 
 </body>
