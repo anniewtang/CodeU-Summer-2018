@@ -73,32 +73,32 @@
 
     function saveCTags(element) {
        if (element.checked) {
-          document.getElementById("user-entry").value = document.getElementById("c-tags").value + element.name + ",";
+          document.getElementById("c-tags").value = document.getElementById("c-tags").value + element.name + ",";
        } else {
-          document.getElementById("user-entry").value = (document.getElementById("c-tags").value).replace(element.name + ",", "");
+          document.getElementById("c-tags").value = (document.getElementById("c-tags").value).replace(element.name + ",", "");
        }
     }
 
     function saveDTags(element) {
        if (element.checked) {
-          document.getElementById("user-entry").value = document.getElementById("d-tags").value + element.name + ",";
+          document.getElementById("d-tags").value = document.getElementById("d-tags").value + element.name + ",";
        } else {
-          document.getElementById("user-entry").value = (document.getElementById("d-tags").value).replace(element.name + ",", "");
+          document.getElementById("d-tags").value = (document.getElementById("d-tags").value).replace(element.name + ",", "");
        }
     }
 
     function saveRTags(element) {
        if (element.checked) {
-          document.getElementById("user-entry").value = document.getElementById("r-tags").value + element.name + ",";
+          document.getElementById("r-tags").value = document.getElementById("r-tags").value + element.name + ",";
        } else {
-          document.getElementById("user-entry").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
+          document.getElementById("r-tags").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
        }
     }
 
     function pickDish(element) {
       if (element.id == "0") {
             document.getElementById("is-new").value = 1;
-            document.getElementById("dish-ID").value = <%=UUID.randomUUID().toString()%>;
+            document.getElementById("dish-ID").value = "<%=UUID.randomUUID().toString()%>";
       } else {
          if (element.checked) {
             document.getElementById("is-new").value = 0;
@@ -143,7 +143,7 @@
           <div class="list">
               <%
                 for (String cuisine : cuisines) { %>
-                  <input type="checkbox" name="<%=cuisine%>" onchange="saveCTag(this)"><%=cuisine%><br>
+                  <input type="checkbox" name="<%=cuisine%>" onchange="saveCTags(this)"><%=cuisine%><br>
               <%  } %>
               <input name="c-tags" id="c-tags" type="hidden" value="">
           </div>
@@ -154,7 +154,7 @@
           <div class="list">
             <%
               for (String dishType : dishTypes) { %>
-                <input type="checkbox" name="<%=dishType%>" onchange="saveDTag(this)"><%=dishType%><br>
+                <input type="checkbox" name="<%=dishType%>" onchange="saveDTags(this)"><%=dishType%><br>
             <%  } %>
             <input name="d-tags" id="d-tags" type="hidden" value="">
           </div>
@@ -165,7 +165,7 @@
           <div class="list">
             <%
               for (String restriction : restrictions) { %>
-                <input type="checkbox" name="<%=restriction%>" onchange="saveRTag(this)"><%=restriction%><br>
+                <input type="checkbox" name="<%=restriction%>" onchange="saveRTags(this)"><%=restriction%><br>
             <%  } %>
             <input name="r-tags" id="r-tags" type="hidden" value="">
           </div>
