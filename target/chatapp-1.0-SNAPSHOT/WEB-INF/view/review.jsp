@@ -60,7 +60,6 @@
   %>
 
   <script>
-
     function fillStars(currStar) {
       currStar.src = "star.png";
       for (i = 1; i <= parseInt(currStar.id); i++) {
@@ -69,75 +68,109 @@
       for (i = parseInt(currStar.id) + 1; i <= 5; i++) {
         document.getElementById(i.toString()).src = "uf-star.png";
       }
+      document.getElementById("star-count").value = currStar.id;
+    }
+
+    function saveCTags(element) {
+       if (element.checked) {
+          document.getElementById("user-entry").value = document.getElementById("c-tags").value + element.name + ",";
+       } else {
+          document.getElementById("user-entry").value = (document.getElementById("c-tags").value).replace(element.name + ",", "");
+       }
+    }
+
+    function saveDTags(element) {
+       if (element.checked) {
+          document.getElementById("user-entry").value = document.getElementById("d-tags").value + element.name + ",";
+       } else {
+          document.getElementById("user-entry").value = (document.getElementById("d-tags").value).replace(element.name + ",", "");
+       }
+    }
+
+    function saveRTags(element) {
+       if (element.checked) {
+          document.getElementById("user-entry").value = document.getElementById("r-tags").value + element.name + ",";
+       } else {
+          document.getElementById("user-entry").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
+       }
     }
   </script>
 
-  <div id="container" margin-left="30px">
 
-    <div class="review-entry" id="dish-entry">
-      <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
-            <div class="list">
-                <input type="radio" name="dishname">
-                  <div id="new-info" style="margin-left: 25px;margin-top: -25px;margin-bottom: -25px;">
-                    <input class="new-info" type="text" placeholder="New dish name..">
-                    <input class="new-info" type="text" placeholder="New restaurant name..">
-                  </div>
-                </input>
+<form action="/" method="POST">
 
-                <br>
-                <%
-                  for (Dish dish : dishes) { %>
-                    <input type="radio" name="dishname"><%=dish.getDishName()%></input>
+    <div id="container" margin-left="30px">
+
+        <div class="review-entry" id="dish-entry">
+          <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
+                <div class="list">
+                    <input type="radio" id="0" name="dishname">
+                      <div style="margin-left: 25px;margin-top: -25px;margin-bottom: -25px;">
+                        <input name="new-dish-name"class="new-info" type="text" placeholder="New dish name..">
+                        <input name="new-rest-name" class="new-info" type="text" placeholder="New restaurant name..">
+                      </div>
+                    </input>
+
                     <br>
-                <%  } %>
-            </div>
+                    <%
+                      int count = 1;
+                      for (Dish dish : dishes) { %>
+                        <input id="<%=count%>" type="radio" name="dishname"><%=dish.getDishName()%></input>
+                        <br>
+                    <%  count++;
+                      } %>
+                </div>
+          </div>
+
+        <div class="review-entry">
+          <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+              <%
+                for (String cuisine : cuisines) { %>
+                  <input type="checkbox" name="<%=cuisine%>" onchange="saveCTag(this)"><%=cuisine%><br>
+              <%  } %>
+              <input name="c-tags" id="c-tags" type="hidden" value="">
+          </div>
+        </div>
+
+        <div class="review-entry">
+          <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+            <%
+              for (String dishType : dishTypes) { %>
+                <input type="checkbox" name="<%=dishType%>" onchange="saveDTag(this)"><%=dishType%><br>
+            <%  } %>
+            <input name="d-tags" id="d-tags" type="hidden" value="">
+          </div>
+        </div>
+
+        <div class="review-entry">
+          <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+            <%
+              for (String restriction : restrictions) { %>
+                <input type="checkbox" name="<%=restriction%>" onchange="saveRTag(this)"><%=restriction%><br>
+            <%  } %>
+            <input name="r-tags" id="r-tags" type="hidden" value="">
+          </div>
+        </div>
       </div>
 
-    <div class="review-entry">
-      <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-          <%
-            for (String cuisine : cuisines) { %>
-              <input type="checkbox" name="C:<%=cuisine%>" onchange="saveTag(this)"><%=cuisine%><br>
-          <%  } %>
+      <div id="desc">
+        <h3>Dishcuss below:</h3>
+        <textarea id="user-desc" name="user-desc" rows="10" cols="60"></textarea>
       </div>
-    </div>
 
-    <div class="review-entry">
-      <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-        <%
-          for (String dishType : dishTypes) { %>
-            <input type="checkbox" name="D:<%=dishType%>" onchange="saveTag(this)"><%=dishType%><br>
+      <div id="rating">
+        <h3>Rating:</h3>
+        <%  for (int j = 1; j <= 5; j++) { %>
+              <img class="uf-star" src="uf-star.png" width="50" height="50" id="<%=j%>" onclick="fillStars(this)"/>
         <%  } %>
+        <input name="star-count" id="star-count" type="hidden" value="0">
       </div>
-    </div>
 
-    <div class="review-entry">
-      <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-        <%
-          for (String restriction : restrictions) { %>
-            <input type="checkbox" name="R:<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
-        <%  } %>
-      </div>
-    </div>
-  </div>
-
-  <div id="desc">
-    <h3>Dishcuss below:</h3>
-    <textarea id="user-desc" rows="10" cols="70"></textarea>
-  </div>
-
-  <div id="rating">
-    <h3>Rating:</h3>
-    <%
-        for (int j = 1; j <= 5; j++) { %>
-          <img class="uf-star" src="uf-star.png" width="50" height="50" id="<%=j%>" onclick="fillStars(this)"/>
-    <%  } %>
-  </div>
-
-  <input id="submit" type="submit" value="Submit">
+      <input id="submit" type="submit" value="Submit">
+</form>
 
 </body>
 </html>
