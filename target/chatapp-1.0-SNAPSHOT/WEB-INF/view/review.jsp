@@ -64,6 +64,7 @@
     <div class="review-entry" id="dish-entry">
       <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
             <div class="list">
+                <input type="radio" name="dishname"><input type="text" placeholder="New dish name.."</input><br>
                 <%
                   for (Dish dish : dishes) { %>
                     <input type="radio" name="dishname"><%=dish.getDishName()%></input>
@@ -112,8 +113,11 @@
     <h3>Rating:</h3>
     <%
         for (int j = 0; j < 5; j++) { %>
-          <img src="star.png" width="50" height="50"/>
+          <img class="uf-star" src="uf-star.png" width="50" height="50"/>
     <%  } %>
   </div>
+
+  <input id="submit" type="submit" value="Submit">
+
 </body>
 </html>
