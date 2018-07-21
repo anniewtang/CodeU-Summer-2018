@@ -59,6 +59,19 @@
     Collection<Dish> dishes = cm.getAllDishes();
   %>
 
+  <script>
+
+    function fillStars(currStar) {
+      currStar.src = "star.png";
+      for (i = 1; i <= parseInt(currStar.id); i++) {
+        document.getElementById(i.toString()).src = "star.png";
+      }
+      for (i = parseInt(currStar.id) + 1; i <= 5; i++) {
+        document.getElementById(i.toString()).src = "uf-star.png";
+      }
+    }
+  </script>
+
   <div id="container" margin-left="30px">
 
     <div class="review-entry" id="dish-entry">
@@ -112,7 +125,7 @@
   <div id="rating">
     <h3>Rating:</h3>
     <%
-        for (int j = 0; j < 5; j++) { %>
+        for (int j = 1; j <= 5; j++) { %>
           <img class="uf-star" src="uf-star.png" width="50" height="50" id="<%=j%>" onclick="fillStars(this)"/>
     <%  } %>
   </div>
