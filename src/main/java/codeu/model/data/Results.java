@@ -76,7 +76,7 @@ public class Results {
       ratings.add(3);
       ratings.add(4);
       ratings.add(5);
-      myResults = cm.queryByTagsAndRatings(queryTags, ratings);
+      myResults = cm.queryByTags(queryTags);
       itr = myResults.iterator();
   }
 

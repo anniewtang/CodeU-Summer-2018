@@ -126,7 +126,7 @@
                     <br>
                     <%
                       for (Dish dish : dishes) { %>
-                        <input id="<%=dish.getDishID().toString()%>" type="radio" name="dishname" onchange="pickDish(this)"><%=dish.getDishName()%></input>
+                        <input id="<%=dish.getDishID().toString()%>" type="radio" name="dishname" onchange="pickDish(this)"><%=dish.getRestaurant()%>'s <%=dish.getDishName()%></input>
                         <br>
                     <%
                       } %>
