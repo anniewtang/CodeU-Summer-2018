@@ -1,15 +1,11 @@
 package codeu.controller;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.mindrot.jbcrypt.BCrypt;
 
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
@@ -31,7 +27,8 @@ public class ProfileServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
      // Checks to see if the user is logged into his or her page
-     if (request.getSession().getAttribute("user") != null) {
+     String username = request.getParameter("username");
+     if (username != null) {
       request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
       return;
     }

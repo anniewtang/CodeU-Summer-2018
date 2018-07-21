@@ -28,7 +28,7 @@ import static java.util.stream.Collectors.toSet;
  */
 public class ContentManager {
     /* =========================================================
-    Methods for @cohanale to use when users want to Rate Dishes.
+    Methods for @cohanele to use when users want to Rate Dishes.
     ========================================================= */
     /**
      * Used when user adds a NEW Review for a NEW Dish.
@@ -48,13 +48,6 @@ public class ContentManager {
      */
     public static void addReviewForExistingDish(Review review) {
         ReviewStore.getInstance().addReview(review);
-    }
-
-    /**
-     * Returns set of all dishes.
-     */
-    public static Collection<Dish> getAllDishes() {
-        return DishStore.getInstance().getAllDishes();
     }
 
     /* =============================================================
@@ -100,7 +93,9 @@ public class ContentManager {
         Set<Dish> results = new HashSet<>();
         for (int rating : queryRatings) {
             Set<UUID> dishes = DishStore.getInstance().getDishesOfRating(rating);
-            results.addAll(dishes.stream().map(DishStore.getInstance()::getDish).collect(toSet()));
+            if (dishes != null && !dishes.isEmpty()) {
+                results.addAll(dishes.stream().map(DishStore.getInstance()::getDish).collect(toSet()));
+            }
         }
         return results;
     }
@@ -162,6 +157,11 @@ public class ContentManager {
      */
     private static Set<Dish> sortDishes(Collection<Dish> dishes, boolean highestToLow) {
         TreeSet<Dish> sorted = new TreeSet<>();
+
+        if (dishes == null || dishes.isEmpty()) {
+            return sorted;
+        }
+
         if (highestToLow) {
             sorted = new TreeSet<>((Dish d1, Dish d2) -> -1 * Integer.compare(d1.getRating(), d2.getRating()));
         }
@@ -169,10 +169,9 @@ public class ContentManager {
         return sorted;
     }
 
-    /* ==============================================================
-    Methods for to use when pulling data for the Dish's preview page.
-    =============================================================== */
-
+    /* ================================================
+    Methods for to use when pulling data for webapp UI.
+    ===================================================*/
     /**
      * Can be used to get Dish name from Dish UUID.
      * @param id of the dish
@@ -209,5 +208,13 @@ public class ContentManager {
      */
     public static Set<String> getAllTagsForDish(UUID id) {
         return DishStore.getInstance().getAllTagsForDish(id);
+    }
+
+    /**
+     * Used to display all dishes when user is choosing what Dish they want to review for.
+     * @return collection of all dishes in DishStore.
+     */
+    public static Collection<Dish> getAllDishes() {
+        return DishStore.getInstance().getAllDishes();
     }
 }
