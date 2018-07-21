@@ -103,23 +103,20 @@
          if (element.checked) {
             document.getElementById("is-new").value = 0;
             document.getElementById("dish-ID").value = element.id;
-         } else {
-            document.getElementById("dish-ID").value = "";
          }
       }
-
     }
   </script>
 
 
-<form action="/" method="POST">
+<form action="/review" method="POST">
 
     <div id="container" margin-left="30px">
 
         <div class="review-entry" id="dish-entry">
           <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
                 <div class="list">
-                    <input type="radio" id="0" name="dishname">
+                    <input id="0" type="radio" name="dishname" onchange="pickDish(this)">
                       <div style="margin-left: 25px;margin-top: -25px;margin-bottom: -25px;">
                         <input name="new-dish-name"class="new-info" type="text" placeholder="New dish name..">
                         <input name="new-rest-name" class="new-info" type="text" placeholder="New restaurant name..">

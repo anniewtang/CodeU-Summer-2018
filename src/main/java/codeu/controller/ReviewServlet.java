@@ -38,62 +38,62 @@ public class ReviewServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+         String username = (String) request.getSession().getAttribute("user");
+         User user = UserStore.getInstance().getUser(username);
+         UUID reviewID = UUID.randomUUID();
+         UUID authorID = user.getId();
+         UUID dishID = UUID.fromString(request.getParameter("dish-ID"));
+         int numStars = Integer.parseInt(request.getParameter("star-count"));
+         String desc = request.getParameter("user-desc");
+         Integer isNewDish = Integer.parseInt(request.getParameter("is-new"));
+         String dishName = request.getParameter("new-dish-name");
+         String restName = request.getParameter("new-rest-name");
 
-           String username = (String) request.getSession().getAttribute("user");
-           user = UserStore.getInstance().getUser(username);
+         String Ctags = request.getParameter("c-tags");
+         String Dtags = request.getParameter("d-tags");
+         String Rtags = request.getParameter("r-tags");
 
-           UUID reviewID = UUID.randomUUID();
-           UUID authorID = user.getId();
-           UUID dishID = UUID.fromString(request.getParameter("dish-ID"));
-           int numStars = Integer.parseInt(request.getParameter("star-count"));
-           String desc = request.getParameter("user-desc");
-           Integer isNewDish = Integer.parseInt(request.getParameter("is-new"));
-           String dishName = request.getParameter("new-dish-name");
-           String restName = request.getParameter("new-rest-name");
+         StringTokenizer stC = new StringTokenizer(Ctags, ",");
+         StringTokenizer stD = new StringTokenizer(Dtags, ",");
+         StringTokenizer stR = new StringTokenizer(Rtags, ",");
 
-           String Ctags = request.getParameter("c-tags");
-           String Dtags = request.getParameter("d-tags");
-           String Rtags = request.getParameter("r-tags");
+         Set<String> Cset = new HashSet<String>();
+         Set<String> Dset = new HashSet<String>();
+         Set<String> Rset = new HashSet<String>();
 
-           StringTokenizer stC = new StringTokenizer(Ctags, ",");
-           StringTokenizer stD = new StringTokenizer(Dtags, ",");
-           StringTokenizer stR = new StringTokenizer(Rtags, ",");
+         Set<String> allTags = new HashSet<String>();
 
-           Set<String> Cset = new HashSet<String>();
-           Set<String> Dset = new HashSet<String>();
-           Set<String> Rset = new HashSet<String>();
+         while (stC.hasMoreTokens()) {
+           String temp = stC.nextToken();
+           Cset.add(temp);
+           allTags.add(temp);
+         }
 
-           Set<String> allTags = new HashSet<String>();
+         while (stD.hasMoreTokens()) {
+           String temp = stD.nextToken();
+           Dset.add(temp);
+           allTags.add(temp);
+         }
 
-           while (stC.hasMoreTokens()) {
-             String temp = stC.nextToken();
-             Cset.add(temp);
-             allTags.add(temp);
-           }
+         while (stR.hasMoreTokens()) {
+           String temp = stR.nextToken();
+           Rset.add(temp);
+           allTags.add(temp);
+         }
 
-           while (stD.hasMoreTokens()) {
-             String temp = stD.nextToken();
-             Dset.add(temp);
-             allTags.add(temp);
-           }
+         HashMap<String, Set<String>> tags = new HashMap<>();
 
-           while (stR.hasMoreTokens()) {
-             String temp = stR.nextToken();
-             Rset.add(temp);
-             allTags.add(temp);
-           }
+         tags.put(Constants.CUISINE, Cset);
+         tags.put(Constants.DISH, Dset);
+         tags.put(Constants.RESTRICTION, Rset);
 
-           HashMap<String, Set<String>> tags = new HashMap<>();
+        if (isNewDish == 1) {
+            cm.addNewDishAndFirstReview(new Dish(dishID, dishName, restName, numStars, tags, allTags),
+                                         new Review(reviewID, authorID, dishID, numStars, desc, tags));
+        } else  {
+            cm.addReviewForExistingDish(new Review(reviewID, authorID, dishID, numStars, desc, tags));
+        }
 
-           tags.put(Constants.CUISINE, Cset);
-           tags.put(Constants.DISH, Dset);
-           tags.put(Constants.RESTRICTION, Rset);
-
-          if (isNewDish == 1) {
-              cm.addNewDishAndFirstReview(new Dish(UUID.randomUUID(), dishName, restName, numStars, tags, allTags),
-                                          new Review(reviewID, authorID, dishID, numStars, desc, tags));
-          } else  {
-              cm.addReviewForExistingDish(new Review(reviewID, authorID, dishID, numStars, desc, tags));
-          }
+        response.sendRedirect("/");
     }
 }
