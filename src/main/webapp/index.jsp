@@ -28,11 +28,13 @@
     <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
     <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a href="/review">Review</a>
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
-    <!--a href="/conversations">Conversations</a-->
-    <a href="/about.jsp">About</a>
+    <% if (request.getSession().getAttribute("user") != null) { %>
+    <a href="/" >Logout</a>
+    <% } %>
 </nav>
 
 <div id="container">
@@ -80,9 +82,11 @@
 
 
         <!-- ADD REVIEW BUTTON -->
-        <form action="/review" method="get">
-            <input id="add-review" type="submit" class="button" value="Add Review">
-        </form>
+        <% if (request.getSession().getAttribute("user") != null) { %>
+          <form action="/review" method="get">
+              <input id="add-review" type="submit" class="button" value="Add Review">
+          </form>
+        <% } %>
 
         <script>
         var craving = document.getElementById("craving");

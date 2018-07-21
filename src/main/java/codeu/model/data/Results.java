@@ -111,4 +111,9 @@ public class Results {
   public int getResultsCount() {
     return myResults.size();
   }
+
+  /** Clear results. */
+  public void clearResults() {
+    myResults.clear();
+  }
 }
