@@ -50,13 +50,6 @@ public class ContentManager {
         ReviewStore.getInstance().addReview(review);
     }
 
-    /**
-     * Returns set of all dishes.
-     */
-    public static Collection<Dish> getAllDishes() {
-        return DishStore.getInstance().getAllDishes();
-    }
-
     /* =============================================================
     Methods for @helarabawy to use when querying for search results.
     ============================================================== */
