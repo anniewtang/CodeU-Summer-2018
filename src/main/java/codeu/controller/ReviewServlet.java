@@ -57,5 +57,7 @@ public class ReviewServlet extends HttpServlet {
 
                 Review review = new Review(newID, authorID, dishID, numStars, desc, tags);
                 store.addReview(review);
+
+                response.sendRedirect("/results");
     }
 }

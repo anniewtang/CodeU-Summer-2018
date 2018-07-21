@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "chatapp",
+                "projectName": "chatapp",
+                "workingDirectory": "/Users/chibuikemohanele/Documents/codeU/CodeU-Summer-2018",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "chatapp",
+                "projectName": "chatapp",
+                "workingDirectory": "/Users/chibuikemohanele/Documents/codeU/CodeU-Summer-2018",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

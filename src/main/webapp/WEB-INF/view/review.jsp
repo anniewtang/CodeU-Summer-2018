@@ -77,7 +77,8 @@
     <div class="review-entry" id="dish-entry">
       <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
             <div class="list">
-                <input type="radio" name="dishname"><input type="text" placeholder="New dish name.."</input><br>
+                <input type="radio" name="dishname"><div id="new-info"><input class="new-info" type="text" placeholder="New dish name.."><input class="new-info" type="text" placeholder="New restaurant name.."></input></div>
+                <br>
                 <%
                   for (Dish dish : dishes) { %>
                     <input type="radio" name="dishname"><%=dish.getDishName()%></input>
