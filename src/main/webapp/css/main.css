@@ -196,6 +196,16 @@ button {
   margin-top: 30px;
 }
 
+.new-info{
+  font-size: 15px;
+}
+
+#new-info {
+  margin-left: 25px;
+  margin-top: -25px;
+  margin-bottom: -25px;
+}
+
 h1 {
     color: #757575;
 }
