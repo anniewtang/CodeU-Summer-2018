@@ -101,7 +101,7 @@ button {
     background-color: #00b3b3;
 }
 
-.add-review {
+.add-review{
   background-color: #E4F1F2;
   padding: 0 18px;
   width: 15%;
@@ -117,7 +117,7 @@ button {
 }
 
 #add-review2 {
-
+    margin-left: 42%;
 }
 
 #checklist {

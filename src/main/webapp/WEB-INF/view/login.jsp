@@ -22,11 +22,12 @@
 <body>
 
 <nav>
-    <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
+    <a style="font-weight: bold;">Hello <%= request.getSession().getAttribute("user") %>!</a>
+    <% } %>
+    <a href="/">Homepage</a>
     <a href="/review">Review</a>
-    <% } else { %>
+    <% if (request.getSession().getAttribute("user") == null) { %>
     <a href="/login">Login</a>
     <% } %>
 </nav>

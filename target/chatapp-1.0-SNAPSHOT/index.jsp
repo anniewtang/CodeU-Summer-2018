@@ -24,18 +24,20 @@
 </head>
 <body>
 
-<nav>
-    <a href="/">Homepage</a>
+  <nav>
+      <% if (request.getSession().getAttribute("user") != null) { %>
+      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <% } %>
+      <a href="/">Homepage</a>
+      <a href="/review">Review</a>
+      <% if (request.getSession().getAttribute("user") == null) { %>
+      <a href="/login">Login</a>
+      <% } %>
+
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
-    <a href="/review">Review</a>
-    <% } else { %>
-    <a href="/login">Login</a>
+      <a href="/" >Logout</a>
     <% } %>
-    <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/" >Logout</a>
-    <% } %>
-</nav>
+  </nav>
 
 <div id="container">
 
@@ -45,10 +47,9 @@
         <div id="checklist">
           <form action="/results" method="POST">
             <%
-              Constants options = new Constants();
-              Set<String> cuisines = options.getCuisineConstants();
-              Set<String> dishes = options.getDishConstants();
-              Set<String> restrictions = options.getRestrictionConstants();
+              Set<String> cuisines = Constants.getCuisineConstants();
+              Set<String> dishes = Constants.getDishConstants();
+              Set<String> restrictions = Constants.getRestrictionConstants();
             %>
 
               <div id="cuisines" class="column">

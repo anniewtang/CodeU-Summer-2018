@@ -27,16 +27,20 @@
 </head>
 <body>
 
-<nav>
-    <a href="/">Homepage</a>
+  <nav>
+      <% if (request.getSession().getAttribute("user") != null) { %>
+      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+      <% } %>
+      <a href="/">Homepage</a>
+      <a href="/review">Review</a>
+      <% if (request.getSession().getAttribute("user") == null) { %>
+      <a href="/login">Login</a>
+      <% } %>
+
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
-    <a href="/review">Review</a>
-    <% } else { %>
-    <a href="/login">Login</a>
+      <a href="/" >Logout</a>
     <% } %>
-    <a href="/about.jsp">About</a>
-</nav>
+  </nav>
 
 <div id="searchResults">
   <%
