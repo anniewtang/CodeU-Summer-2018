@@ -97,11 +97,15 @@
             if (content.style.display === "block") {
                 content.style.display = "none";
                 go.style.display = "none";
-                review.style.top = "350px";
+                  <% if (request.getSession().getAttribute("user") != null) { %>
+                    review.style.top = "350px";
+                  <% } %>
             } else {
                 content.style.display = "block";
                 go.style.display = "block";
-                review.style.top = "550px";
+                <% if (request.getSession().getAttribute("user") != null) { %>
+                  review.style.top = "550px";
+                <% } %>
             }
         });
 

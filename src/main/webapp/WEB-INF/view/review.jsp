@@ -21,7 +21,7 @@
 <%@ page import="codeu.model.data.Constants"%>
 <%@ page import="java.util.Set"%>
 <%@ page import="java.util.Collection"%>
-
+<%@ page import="java.util.UUID"%>
 
 <html>
 <head>
@@ -60,7 +60,6 @@
   %>
 
   <script>
-
     function fillStars(currStar) {
       currStar.src = "star.png";
       for (i = 1; i <= parseInt(currStar.id); i++) {
@@ -69,69 +68,122 @@
       for (i = parseInt(currStar.id) + 1; i <= 5; i++) {
         document.getElementById(i.toString()).src = "uf-star.png";
       }
+      document.getElementById("star-count").value = currStar.id;
+    }
+
+    function saveCTags(element) {
+       if (element.checked) {
+          document.getElementById("c-tags").value = document.getElementById("c-tags").value + element.name + ",";
+       } else {
+          document.getElementById("c-tags").value = (document.getElementById("c-tags").value).replace(element.name + ",", "");
+       }
+    }
+
+    function saveDTags(element) {
+       if (element.checked) {
+          document.getElementById("d-tags").value = document.getElementById("d-tags").value + element.name + ",";
+       } else {
+          document.getElementById("d-tags").value = (document.getElementById("d-tags").value).replace(element.name + ",", "");
+       }
+    }
+
+    function saveRTags(element) {
+       if (element.checked) {
+          document.getElementById("r-tags").value = document.getElementById("r-tags").value + element.name + ",";
+       } else {
+          document.getElementById("r-tags").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
+       }
+    }
+
+    function pickDish(element) {
+      if (element.id == "0") {
+            document.getElementById("is-new").value = 1;
+            document.getElementById("dish-ID").value = "<%=UUID.randomUUID().toString()%>";
+      } else {
+         if (element.checked) {
+            document.getElementById("is-new").value = 0;
+            document.getElementById("dish-ID").value = element.id;
+         }
+      }
     }
   </script>
 
-  <div id="container" margin-left="30px">
 
-    <div class="review-entry" id="dish-entry">
-      <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
-            <div class="list">
-                <input type="radio" name="dishname"><div id="new-info"><input class="new-info" type="text" placeholder="New dish name.."><input class="new-info" type="text" placeholder="New restaurant name.."></input></div>
-                <br>
-                <%
-                  for (Dish dish : dishes) { %>
-                    <input type="radio" name="dishname"><%=dish.getDishName()%></input>
+<form action="/review" method="POST">
+
+    <div id="container" margin-left="30px">
+
+        <div class="review-entry" id="dish-entry">
+          <button id="dish-review" class="review-option">I am reviewing <i class="fa fa-angle-down"></i></button>
+                <div class="list">
+                    <input id="0" type="radio" name="dishname" onchange="pickDish(this)">
+                      <div style="margin-left: 25px;margin-top: -25px;margin-bottom: -25px;">
+                        <input name="new-dish-name"class="new-info" type="text" placeholder="New dish name..">
+                        <input name="new-rest-name" class="new-info" type="text" placeholder="New restaurant name..">
+                      </div>
+                    </input>
+
                     <br>
-                <%  } %>
-            </div>
+                    <%
+                      for (Dish dish : dishes) { %>
+                        <input id="<%=dish.getDishID().toString()%>" type="radio" name="dishname" onchange="pickDish(this)"><%=dish.getRestaurant()%>'s <%=dish.getDishName()%></input>
+                        <br>
+                    <%
+                      } %>
+                    <input name="dish-ID" id="dish-ID" type="hidden" value="">
+                    <input name="is-new" id="is-new" type="hidden" value="">
+                </div>
+          </div>
+
+        <div class="review-entry">
+          <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+              <%
+                for (String cuisine : cuisines) { %>
+                  <input type="checkbox" name="<%=cuisine%>" onchange="saveCTags(this)"><%=cuisine%><br>
+              <%  } %>
+              <input name="c-tags" id="c-tags" type="hidden" value="">
+          </div>
+        </div>
+
+        <div class="review-entry">
+          <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+            <%
+              for (String dishType : dishTypes) { %>
+                <input type="checkbox" name="<%=dishType%>" onchange="saveDTags(this)"><%=dishType%><br>
+            <%  } %>
+            <input name="d-tags" id="d-tags" type="hidden" value="">
+          </div>
+        </div>
+
+        <div class="review-entry">
+          <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
+          <div class="list">
+            <%
+              for (String restriction : restrictions) { %>
+                <input type="checkbox" name="<%=restriction%>" onchange="saveRTags(this)"><%=restriction%><br>
+            <%  } %>
+            <input name="r-tags" id="r-tags" type="hidden" value="">
+          </div>
+        </div>
       </div>
 
-    <div class="review-entry">
-      <button class="review-option">Cuisine(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-          <%
-            for (String cuisine : cuisines) { %>
-              <input type="checkbox" name="C:<%=cuisine%>" onchange="saveTag(this)"><%=cuisine%><br>
-          <%  } %>
+      <div id="desc">
+        <h3>Dishcuss below:</h3>
+        <textarea id="user-desc" name="user-desc" rows="10" cols="60"></textarea>
       </div>
-    </div>
 
-    <div class="review-entry">
-      <button class="review-option">Dish Type(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-        <%
-          for (String dishType : dishTypes) { %>
-            <input type="checkbox" name="D:<%=dishType%>" onchange="saveTag(this)"><%=dishType%><br>
+      <div id="rating">
+        <h3>Rating:</h3>
+        <%  for (int j = 1; j <= 5; j++) { %>
+              <img class="uf-star" src="uf-star.png" width="50" height="50" id="<%=j%>" onclick="fillStars(this)"/>
         <%  } %>
+        <input name="star-count" id="star-count" type="hidden" value="0">
       </div>
-    </div>
 
-    <div class="review-entry">
-      <button class="review-option">Dietary Restriction(s) <i class="fa fa-angle-down"></i></button>
-      <div class="list">
-        <%
-          for (String restriction : restrictions) { %>
-            <input type="checkbox" name="R:<%=restriction%>" onchange="saveTag(this)"><%=restriction%><br>
-        <%  } %>
-      </div>
-    </div>
-  </div>
-
-  <div id="desc">
-    <h3>Dishcuss below:</h3>
-    <textarea id="user-desc" rows="10" cols="70"></textarea>
-  </div>
-
-  <div id="rating">
-    <h3>Rating:</h3>
-    <%
-        for (int j = 1; j <= 5; j++) { %>
-          <img class="uf-star" src="uf-star.png" width="50" height="50" id="<%=j%>" onclick="fillStars(this)"/>
-    <%  } %>
-  </div>
-
-  <input id="submit" type="submit" value="Submit">
+      <input id="submit" type="submit" value="Submit">
+</form>
 
 </body>
 </html>
