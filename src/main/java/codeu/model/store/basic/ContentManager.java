@@ -71,9 +71,14 @@ public class ContentManager {
             String tagType = pair.getKey();
             Tag tag = TagStore.getInstance().getTagForType(tagType);
             for (String tagValue : pair.getValue()) {
-                queriedDishes.addAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
+                if (queriedDishes.isEmpty()) {
+                    queriedDishes = new HashSet<>(TagStore.getInstance().getDishesByValue(tag, tagValue));
+                } else {
+                    queriedDishes.retainAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
+                }
             }
         }
+
         return queriedDishes.stream().map(DishStore.getInstance()::getDish).collect(toSet());
     }
 
