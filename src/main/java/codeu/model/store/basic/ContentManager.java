@@ -94,6 +94,10 @@ public class ContentManager {
      * @return Set of Dishes that satisfy the rating requirements.
      */
     public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
+        if (queryRatings.isEmpty()) {
+            return (Set<Dish>) ContentManager.getAllDishes();
+        }
+
         Set<Dish> results = new HashSet<>();
         for (int rating : queryRatings) {
             Set<UUID> dishes = DishStore.getInstance().getDishesOfRating(rating);
