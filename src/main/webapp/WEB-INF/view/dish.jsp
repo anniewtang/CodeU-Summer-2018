@@ -103,7 +103,7 @@
           <img src="uf-star.png" width="20" height="20"/>
       <%  }
 
-          if (review == null) { %>
+          if (review == null || review.getDescription() == "") { %>
             <p>No written descriptions.</p>
       <%  } else { %>
             <p><%=ContentManager.getUsername(review.getAuthor())%> says: "<%=review.getDescription()%>"</p>

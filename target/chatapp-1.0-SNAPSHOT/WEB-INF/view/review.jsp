@@ -203,7 +203,23 @@
         <input name="star-count" id="star-count" type="hidden" value="0">
       </div>
 
-      <input id="submit" type="submit" value="Submit" disabled>
+      <script>
+
+        function showDisabledReason() {
+            if (document.getElementById("submit").disabled == true) {
+                document.getElementById("submit").value = "Incomplete";
+            }
+        }
+
+        function hideDisabledReason() {
+            if (document.getElementById("submit").disabled == true) {
+              document.getElementById("submit").value = "Submit";
+            }
+        }
+
+      </script>
+
+      <input id="submit" type="submit" value="Submit" onmouseover="showDisabledReason()" onmouseout="hideDisabledReason()" disabled>
 </form>
 
 </body>

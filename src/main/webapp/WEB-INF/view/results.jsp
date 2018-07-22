@@ -54,20 +54,24 @@
     userEntry = userEntry.replace("R:", "");
 
   %>
-    <h1>Results for: <%=userEntry%></h1>
-  <%
+    <script>
+      function linkToDish(element) {
+        document.getElementById("dish-id").value = element.name;
+        document.getElementById('dish-form').submit();
+      }
+      </script>
 
+    <h1>Results for: <%=userEntry%></h1>
+
+<form id="dish-form" action="/dish" method="POST">
+  <%
     for (Dish currDish : searchResults) {
   %>
-    <form id="dish-form" action="/dish" method="POST">
         <h3><%=currDish.getRestaurant()%>'s
-            <a class="links" onclick="document.getElementById('dish-form').submit();">
+            <a class="links" onclick="linkToDish(this)" name="<%=currDish.getDishID().toString()%>">
                 <u><%=currDish.getDishName()%></u>
             </a>
         </h3>
-        <input name="dish-id" id="dish-id" type="hidden" value="<%=currDish.getDishID().toString()%>">
-    </form>
-
   <%
       ReviewStore reviewStore =  ReviewStore.getInstance();
 
@@ -91,6 +95,9 @@
   <%
     }
   %>
+  <input name="dish-id" id="dish-id" type="hidden" value="">
+</form>
+
     <p>Number of results: <%=searchResults.size()%></p>
 </div>
 
