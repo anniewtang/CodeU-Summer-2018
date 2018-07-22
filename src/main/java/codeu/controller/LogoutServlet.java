@@ -29,8 +29,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.setAttribute("user", null);
-//        response.sendRedirect("/");
-        request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+        request.getSession().setAttribute("user", null);
+        response.sendRedirect("/");
     }
 }
