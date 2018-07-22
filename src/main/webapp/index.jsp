@@ -33,7 +33,7 @@
     <a href="/login">Login</a>
     <% } %>
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/" >Logout</a>
+    <a href="/logout" >Logout</a>
     <% } %>
 </nav>
 
