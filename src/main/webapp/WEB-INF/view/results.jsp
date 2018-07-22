@@ -17,6 +17,7 @@
 <%@ page import="codeu.orm.ResultsORM" %>
 <%@ page import="codeu.model.data.Dish" %>
 <%@ page import="codeu.model.store.basic.ReviewStore" %>
+<%@ page import="codeu.model.store.basic.ContentManager" %>
 <%@ page import="codeu.model.data.Review" %>
 <%@ page import="java.util.Set" %>
 
@@ -67,8 +68,12 @@
   <%
       ReviewStore reviewStore =  ReviewStore.getInstance();
 
-      for (int j = 0; j < currDish.getRating(); j++) { %>
+      for (int j = 1; j <= currDish.getRating(); j++) { %>
         <img src="star.png" width="20" height="20"/>
+  <%  }
+
+      for (int j = currDish.getRating() + 1; j <= 5; j++) { %>
+      <img src="uf-star.png" width="20" height="20"/>
   <%  }
 
       Review bestReview = reviewStore.getBestReviewForDish(currDish.getDishID());
@@ -76,7 +81,7 @@
       if (bestReview == null) { %>
         <p>No written descriptions.</p>
   <%  } else { %>
-        <p>"<%=bestReview.getDescription()%>"</p>
+        <p><%=ContentManager.getUsername(bestReview.getAuthor())%> says: "<%=bestReview.getDescription()%>"</p>
   <%  } %>
       <hr>
 

@@ -76,7 +76,7 @@
             <%  } %>
               </div>
               <input name="user-entry" id="user-entry" type="hidden" value="">
-              <input id="go" type="submit" class="button" value="Go">
+              <input id="go" type="submit" value="Go">
           </form>
         </div>
 
@@ -84,7 +84,7 @@
         <!-- ADD REVIEW BUTTON -->
         <% if (request.getSession().getAttribute("user") != null) { %>
           <form action="/review" method="get">
-              <input id="add-review" type="submit" class="button" value="Add Review">
+              <input id="add-review1" type="submit" class="add-review" value="Add Review">
           </form>
         <% } %>
 
@@ -93,18 +93,18 @@
         craving.addEventListener("click", function() {
             var content = document.getElementById("checklist");
             var go = document.getElementById("go");
-            var review = document.getElementById("add-review")
+            var review = document.getElementById("add-review1")
             if (content.style.display === "block") {
                 content.style.display = "none";
                 go.style.display = "none";
-                  <% if (request.getSession().getAttribute("user") != null) { %>
-                    review.style.top = "350px";
-                  <% } %>
+                <% if (request.getSession().getAttribute("user") != null) { %>
+                  review.style.display = "block";
+                <% } %>
             } else {
                 content.style.display = "block";
                 go.style.display = "block";
                 <% if (request.getSession().getAttribute("user") != null) { %>
-                  review.style.top = "550px";
+                  review.style.display = "none";
                 <% } %>
             }
         });

@@ -177,6 +177,32 @@ public class ContentManager {
     }
 
     /**
+     * Can be used to get restaurant name from Dish UUID.
+     * @param id of the dish
+     * @return Dish name
+     */
+    public static String getRestaurant(UUID id) {
+        return DishStore.getInstance().getDish(id).getRestaurant();
+    }
+
+    /**
+     * Can be used to get rating from Dish UUID.
+     * @param id of the dish
+     * @return Dish rating
+     */
+    public static Integer getRating(UUID id) {
+        return DishStore.getInstance().getDish(id).getRating();
+    }
+
+    /**
+     * Can be used to get username from user UUID.
+     * @param id of the user
+     * @return username
+     */
+    public static String getUsername(UUID id) {
+        return UserStore.getInstance().getUser(id).getName();
+    }
+    /**
      * Can be used to display all the reviews associated with a given Dish.
      * @param id of the dish
      * @return set of Review objects for Dish.
