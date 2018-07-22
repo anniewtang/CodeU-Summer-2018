@@ -42,7 +42,7 @@ nav a {
 #container {
     margin-left: 0;
     margin-right: 0;
-    margin-top: 50px;
+    margin-top: 100px;
     width: 1000;
 }
 
@@ -81,11 +81,16 @@ button {
 }
 
 #go {
+    background-color: #008080;
+    font-size: 18px;
+    color: white;
+    padding: 5px 18px;
+    width: 10%;
     display: none;
     margin-right: 25%;
     position: absolute;
-    top: 550px;
-    right: 0;
+    margin-top: 250px;
+    right: 0px;
 }
 
 #craving:hover {
@@ -96,21 +101,29 @@ button {
     background-color: #00b3b3;
 }
 
-#add-review {
-    padding: 0 18px;
-    background-color: #E4F1F2;
-    width: 15%;
+.add-review {
+  background-color: #E4F1F2;
+  padding: 0 18px;
+  width: 15%;
+  height: 35px;
+  color: black;
+}
+
+#add-review1 {
     margin-left: 42.5%;
-    margin-top: 5px;
+    margin-top: 0px;
     position: absolute;
-    height: 35px;
-    color: black;
+    top: 400px;
+}
+
+#add-review2 {
+
 }
 
 #checklist {
     padding: 0 18px;
     display: none;
-    height: 10%;
+    height: 250px;
     overflow: auto;
     background-color: #f1f1f1;
     margin-left: 25%;
@@ -190,6 +203,25 @@ button {
   position: absolute;
   margin-top: 250px;
   margin-left: 700px;
+}
+
+#dish-page-rest {
+  font-style: oblique;
+  width: 100%;
+  text-align: center;
+  margin-top: -50px;
+}
+
+#dish-page-title {
+  color: #757575;
+  width: 100%;
+  text-align: center;
+  margin-top: -20px;
+}
+
+#stars {
+  width: 100%;
+  margin-left: 39%;
 }
 
 .uf-star{

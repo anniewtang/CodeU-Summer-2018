@@ -14,10 +14,12 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
-<%@ page import="codeu.model.data.Results" %>
+<%@ page import="codeu.orm.ResultsORM" %>
 <%@ page import="codeu.model.data.Dish" %>
 <%@ page import="codeu.model.store.basic.ReviewStore" %>
+<%@ page import="codeu.model.store.basic.ContentManager" %>
 <%@ page import="codeu.model.data.Review" %>
+<%@ page import="java.util.Set" %>
 
 <html>
 <head>
@@ -33,15 +35,18 @@
     <% } else { %>
     <a href="/login">Login</a>
     <% } %>
+    <a href="/about.jsp">About</a>
 </nav>
 
 <div id="searchResults">
   <%
+    ContentManager cm = new ContentManager();
+
     String userEntry = (String) request.getSession().getAttribute("entry");
     if (userEntry.length() > 2)
       userEntry = userEntry.substring(0, userEntry.length() - 2);
 
-    Results searchResults = new Results(userEntry);
+    Set<Dish> searchResults = ResultsORM.getResults(userEntry);
 
     userEntry = userEntry.replace("C:", "");
     userEntry = userEntry.replace("D:", "");
@@ -51,19 +56,26 @@
     <h1>Results for: <%=userEntry%></h1>
   <%
 
-    for (int i = 0; i < searchResults.getResultsCount(); i++) {
-      Dish currDish = searchResults.getNextResult();
+    for (Dish currDish : searchResults) {
   %>
     <form id="dish-form" action="/dish" method="POST">
-        <h3><%=currDish.getRestaurant()%>'s <a class="links" onclick="document.getElementById('dish-form').submit();"><u><%=currDish.getDishName()%></u></a></h3>
+        <h3><%=currDish.getRestaurant()%>'s
+            <a class="links" onclick="document.getElementById('dish-form').submit();">
+                <u><%=currDish.getDishName()%></u>
+            </a>
+        </h3>
         <input name="dish-id" id="dish-id" type="hidden" value="<%=currDish.getDishID().toString()%>">
     </form>
 
   <%
       ReviewStore reviewStore =  ReviewStore.getInstance();
 
-      for (int j = 0; j < currDish.getRating(); j++) { %>
+      for (int j = 1; j <= currDish.getRating(); j++) { %>
         <img src="star.png" width="20" height="20"/>
+  <%  }
+
+      for (int j = currDish.getRating() + 1; j <= 5; j++) { %>
+      <img src="uf-star.png" width="20" height="20"/>
   <%  }
 
       Review bestReview = reviewStore.getBestReviewForDish(currDish.getDishID());
@@ -71,15 +83,14 @@
       if (bestReview == null) { %>
         <p>No written descriptions.</p>
   <%  } else { %>
-        <p>"<%=bestReview.getDescription()%>"</p>
+        <p><%=cm.getUsername(bestReview.getAuthor())%> says: "<%=bestReview.getDescription()%>"</p>
   <%  } %>
       <hr>
 
   <%
     }
-
-    searchResults.clearResults();
   %>
+    <p>Number of results: <%=searchResults.size()%></p>
 </div>
 
 </body>
