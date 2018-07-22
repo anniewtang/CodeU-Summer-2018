@@ -74,7 +74,7 @@ public class ContentManagerTest extends TestFramework {
 
         // verify
         Assert.assertEquals(new HashSet<>(Arrays.asList(dish, dishTwo)), results);
-        Assert.assertEquals(new HashSet<>(Collections.singletonList(dish)), resultsTwo);
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dish, dishTwo)), resultsTwo);
     }
 
     @Test

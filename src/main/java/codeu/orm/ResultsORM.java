@@ -28,16 +28,14 @@ public class ResultsORM {
     /* TODO: REMOVE STATIC INITIALIZER. used for UI testing right now only. */
     static {
         Map<String, Set<String>> tags = new HashMap<>();
-        tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE)));
+        tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE, Constants.GLUTENFREE)));
         tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
 
-        Set<String> allTags = new HashSet<>(Arrays.asList(Constants.VEGETARIAN, Constants.VEGAN, Constants.GLUTENFREE, Constants.CHINESE, Constants.JAPANESE, Constants.ASIAN, Constants.DAIRYFREE));
-
-        Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi", 4, tags, allTags);
-        Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill", 3, tags, allTags);
+        Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi");
+        Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill");
 
         Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
-        Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 4, "Juciest meat ever! Get as medium rare!", tags);
+        Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 3, "Juciest meat ever! Get as medium rare!", tags);
 
         ContentManager.addNewDishAndFirstReview(dish1, review1);
         ContentManager.addNewDishAndFirstReview(dish2, review2);
@@ -50,7 +48,10 @@ public class ResultsORM {
      */
     public static Set<Dish> getResults(String entries) {
         Map<String, Set<String>> queryTags = extractQueryTags(entries);
-        return ContentManager.queryByTags(queryTags);
+
+        // TODO: replace new HashSet<>() with extractRatings(entries) when there's time
+        Set<Integer> ratings = new HashSet<>();
+        return ContentManager.queryAndSort(queryTags, ratings, false);
     }
 
     /**

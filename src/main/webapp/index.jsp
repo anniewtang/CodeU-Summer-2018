@@ -45,10 +45,9 @@
         <div id="checklist">
           <form action="/results" method="POST">
             <%
-              Constants options = new Constants();
-              Set<String> cuisines = options.getCuisineConstants();
-              Set<String> dishes = options.getDishConstants();
-              Set<String> restrictions = options.getRestrictionConstants();
+              Set<String> cuisines = Constants.getCuisineConstants();
+              Set<String> dishes = Constants.getDishConstants();
+              Set<String> restrictions = Constants.getRestrictionConstants();
             %>
 
               <div id="cuisines" class="column">

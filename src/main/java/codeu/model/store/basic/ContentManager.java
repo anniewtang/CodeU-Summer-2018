@@ -71,14 +71,9 @@ public class ContentManager {
             String tagType = pair.getKey();
             Tag tag = TagStore.getInstance().getTagForType(tagType);
             for (String tagValue : pair.getValue()) {
-                if (queriedDishes.size() == 0) {
-                    queriedDishes = new HashSet<>(TagStore.getInstance().getDishesByValue(tag, tagValue));
-                } else {
-                    queriedDishes.retainAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
-                }
+                queriedDishes.addAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
             }
         }
-
         return queriedDishes.stream().map(DishStore.getInstance()::getDish).collect(toSet());
     }
 
@@ -215,6 +210,6 @@ public class ContentManager {
      * @return collection of all dishes in DishStore.
      */
     public static Collection<Dish> getAllDishes() {
-        return DishStore.getInstance().getAllDishes();
+        return new TreeSet<>(DishStore.getInstance().getAllDishes());
     }
 }
