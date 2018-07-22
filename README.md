@@ -5,7 +5,6 @@ They can search for dishes based on the following preferences:
 * cuisine type
 * dish type (i.e. entree, breakfast, etc.)
 * dietary restrictions.
-<br>
 
 To provide an analogy, this is our take on a highly customized Yelp experience — but for individual dishes, and not restaurants.
 <br>
