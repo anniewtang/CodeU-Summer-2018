@@ -54,6 +54,21 @@ public class ContentManager {
     Methods for @helarabawy to use when querying for search results.
     ============================================================== */
     /**
+     * QUERY BY BOTH TAGS AND RATINGS && SORT RESULTS AS WELL.
+     * =======================================================
+     * Allows user to query based on preferences (tags + rating values)
+     * AND have everything be returned in sorted order
+     * @param queryTags (same as above)
+     * @param ratings (same as above)
+     * @param highestToLow boolean to indicate users' preference for high to low rating
+     * @return sorted set of Dish objects that match all the requirements
+     */
+    public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
+        Collection<Dish> results = queryByTagsAndRatings(queryTags, ratings);
+        return sortDishes(results, highestToLow);
+    }
+
+    /**
      * QUERY BASED ON TAGS ONLY.
      * ========================
      * Allows users to search for a set of Dishes that satisfy their requirements.
@@ -64,9 +79,9 @@ public class ContentManager {
      * @param queryTags map of user requirements for Dish tags {tagType : {tagValues}}
      * @return Set of Dishes that satisfy requirements
      */
-    public static Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
+    private static Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
         if (queryTags.isEmpty()) {
-            return (Set<Dish>) ContentManager.getAllDishes();
+            return sortAllDishes();
         }
 
         Set<UUID> queriedDishes = new HashSet<>();
@@ -76,7 +91,7 @@ public class ContentManager {
             Tag tag = TagStore.getInstance().getTagForType(tagType);
             for (String tagValue : pair.getValue()) {
                 if (queriedDishes.isEmpty()) {
-                    queriedDishes = new HashSet<>(TagStore.getInstance().getDishesByValue(tag, tagValue));
+                    queriedDishes.addAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
                 } else {
                     queriedDishes.retainAll(TagStore.getInstance().getDishesByValue(tag, tagValue));
                 }
@@ -93,9 +108,9 @@ public class ContentManager {
      * @param queryRatings set of dish rating values user wants for Dish results.
      * @return Set of Dishes that satisfy the rating requirements.
      */
-    public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
+    private static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
         if (queryRatings.isEmpty()) {
-            return (Set<Dish>) ContentManager.getAllDishes();
+            return sortAllDishes();
         }
 
         Set<Dish> results = new HashSet<>();
@@ -109,15 +124,15 @@ public class ContentManager {
     }
 
     /**
-     * SORT ALL DISHES BY RATING ONLY.
-     * ==============================
-     * Provides ALL the dishes in the Dish Store sorted by rating, based on user's preference.
-     * @param highestToLow boolean value telling us which way users want the sort
-     * @return sorted set of ALL Dishes for the user
+     * SORT ALL DISHES BY NAME ON DEFAULT.
+     * ===================================
+     * Provides ALL the dishes in the Dish Store sorted by dish name.
+     * @return ordered set of ALL Dishes for the user
      */
-    public static Set<Dish> sortAllByRating(boolean highestToLow) {
-        Collection<Dish> allDishes = DishStore.getInstance().getAllDishes();
-        return sortDishes(allDishes, highestToLow);
+    private static Set<Dish> sortAllDishes() {
+        Set<Dish> result = new TreeSet<>(Comparator.comparing(Dish::getDishName));
+        result.addAll(ContentManager.getAllDishes());
+        return result;
     }
 
     /**
@@ -128,30 +143,10 @@ public class ContentManager {
      * @param ratings set of ratings user wants to see Dishes for
      * @return set of Dish objects that match all these requirements
      */
-    public static Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
-        // select dishes from Tag restrictions first; somehow get overlapping sets
-        // filter based on the rating of the dish?
-        // return a TreeSet so queryAndSort can use it lel
+    private static Set<Dish> queryByTagsAndRatings(Map<String, Set<String>> queryTags, Set<Integer> ratings) {
         Set<Dish> results = queryByTags(queryTags);
         results.retainAll(queryByRatings(ratings));
         return results;
-    }
-
-    /**
-     * QUERY BY BOTH TAGS AND RATINGS && SORT RESULTS AS WELL.
-     * =======================================================
-     * Allows user to query based on preferences (tags + rating values)
-     * AND have everything be returned in sorted order
-     * @param queryTags (same as above)
-     * @param ratings (same as above)
-     * @param highestToLow boolean to indicate users' preference for high to low rating
-     * @return sorted set of Dish objects that match all the requirements
-     */
-    public static Set<Dish> queryAndSort(Map<String, Set<String>> queryTags, Set<Integer> ratings, boolean highestToLow) {
-        // call the previous method
-        // take the returned dish set as a TreeSet with custom comparator
-        Collection<Dish> results = queryByTagsAndRatings(queryTags, ratings);
-        return sortDishes(results, highestToLow);
     }
 
     /**

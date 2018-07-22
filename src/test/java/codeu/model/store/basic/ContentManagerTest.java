@@ -67,42 +67,15 @@ public class ContentManagerTest extends TestFramework {
     }
 
     @Test
-    public void testQueryByTags() {
+    public void testQueryAndSort() {
         // run
-        Set<Dish> results = ContentManager.queryByTags(queryTags);
-        Set<Dish> resultsTwo = ContentManager.queryByTags(queryTagsTwo);
-
-        // verify
-        Assert.assertEquals(new HashSet<>(Arrays.asList(dish, dishTwo)), results);
-        Assert.assertEquals(new HashSet<>(Arrays.asList(dish)), resultsTwo);
-    }
-
-    @Test
-    public void testQueryByRating() {
-        // run
-        Set<Dish> results = ContentManager.queryByRatings(queryRatings);
-
-        // verify
-        Assert.assertEquals(new HashSet<>(Arrays.asList(d3, d2, dish)), results);
-    }
-
-    @Test
-    public void testSortAllByRating() {
-        // run
-        Set<Dish> highToLow = ContentManager.sortAllByRating(true);
-        Set<Dish> lowToHigh = ContentManager.sortAllByRating(false);
-
-        // verify
-        Assert.assertEquals(new HashSet<>(Arrays.asList(d1, d2, dishTwo, dish, d3)), highToLow);
-        Assert.assertEquals(new HashSet<>(Arrays.asList(d3, dish, dishTwo, d2, d1)), lowToHigh);
-    }
-
-    @Test
-    public void testQueryByTagsAndRatings() {
-        // run
-        Set<Dish> results = ContentManager.queryByTagsAndRatings(queryTags, queryRatings);
+        Set<Dish> results = ContentManager.queryAndSort(queryTags, queryRatings, true);
+        Set<Dish> resultsTwo = ContentManager.queryAndSort(queryTagsTwo, new HashSet<>(), true);
+        Set<Dish> resultsThree = ContentManager.queryAndSort(new HashMap<>(), new HashSet<>(), true);
 
         // verify
         Assert.assertEquals(new HashSet<>(Arrays.asList(dish)), results);
+        Assert.assertEquals(new HashSet<>(Arrays.asList(dish)), resultsTwo);
+        Assert.assertEquals(new HashSet<>(Arrays.asList(d1, d2, d3, dish, dishTwo)), resultsThree);
     }
 }
