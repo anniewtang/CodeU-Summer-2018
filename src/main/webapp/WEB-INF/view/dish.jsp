@@ -14,6 +14,8 @@
   limitations under the License.
 --%>
 <!DOCTYPE html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <%@ page import="java.util.UUID" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="codeu.model.store.basic.ContentManager" %>
@@ -41,6 +43,7 @@
 </nav>
 
 <div id="container">
+    <a href="/results" class="fa fa-angle-left" style="font-size:48px;margin-left:3%;text-decoration:none;color:grey;"></a>
 
   <%
     UUID dish_id = UUID.fromString((String) request.getSession().getAttribute("dish-id"));
@@ -77,6 +80,12 @@
       }
 
       allTags = allTags.substring(0, allTags.length() - 2) + ".";
+
+      if (allTags.length() >= 3) {
+        if (!Character.isLetter(allTags.charAt(0)) && !Character.isLetter(allTags.charAt(1))) {
+          allTags = allTags.substring(2);
+        }
+      }
       %>
       <span><%=allTags%></span>
   </div>

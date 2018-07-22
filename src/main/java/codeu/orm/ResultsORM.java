@@ -25,22 +25,6 @@ import codeu.model.data.Dish;
  * Class representing search results.
  */
 public class ResultsORM {
-    /* TODO: REMOVE STATIC INITIALIZER. used for UI testing right now only. */
-    static {
-        Map<String, Set<String>> tags = new HashMap<>();
-        tags.put(Constants.RESTRICTION, new HashSet<>(Arrays.asList(Constants.DAIRYFREE, Constants.GLUTENFREE)));
-        tags.put(Constants.CUISINE, new HashSet<>(Arrays.asList(Constants.JAPANESE)));
-
-        Dish dish1 = new Dish(UUID.randomUUID(), "California Roll", "Katana Sushi");
-        Dish dish2 = new Dish(UUID.randomUUID(), "Beef Barg", "Shamshiri Grill");
-
-        Review review1 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish1.getDishID(), 4, "OMG the cilantro roll is AMAZING!!", tags);
-        Review review2 = new Review(UUID.randomUUID(), UUID.randomUUID(), dish2.getDishID(), 3, "Juciest meat ever! Get as medium rare!", tags);
-
-        ContentManager.addNewDishAndFirstReview(dish1, review1);
-        ContentManager.addNewDishAndFirstReview(dish2, review2);
-    }
-
     /**
      * Used for results.jsp to query search results based on user preferences.
      * @param entries string containing user's requirements
@@ -51,7 +35,7 @@ public class ResultsORM {
 
         // TODO: replace new HashSet<>() with extractRatings(entries) when there's time
         Set<Integer> ratings = new HashSet<>();
-        return ContentManager.queryAndSort(queryTags, ratings, false);
+        return ContentManager.queryAndSort(queryTags, ratings, true);
     }
 
     /**
@@ -61,6 +45,10 @@ public class ResultsORM {
      */
     private static Map<String, Set<String>> extractQueryTags(String entries) {
         Map<String, Set<String>> results = new HashMap<>();
+        if (entries.length() < 3) {
+            return results;
+        }
+
         String[] partitionedEntries = entries.split(", ");
         for (String entry : partitionedEntries) {
             switch (entry.charAt(0)) {

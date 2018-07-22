@@ -213,7 +213,11 @@ public class ContentManager {
      * @return username
      */
     public static String getUsername(UUID id) {
-        return UserStore.getInstance().getUser(id).getName();
+        if (UserStore.getInstance().getUser(id) == null) {
+          return "Anonymous";
+        } else {
+          return UserStore.getInstance().getUser(id).getName();
+        }
     }
     /**
      * Can be used to display all the reviews associated with a given Dish.

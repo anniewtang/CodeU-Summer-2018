@@ -43,8 +43,9 @@
 <div id="searchResults">
   <%
     String userEntry = (String) request.getSession().getAttribute("entry");
-    if (userEntry.length() > 2)
+    if (userEntry.length() > 2) {
       userEntry = userEntry.substring(0, userEntry.length() - 2);
+    }
 
     Set<Dish> searchResults = ResultsORM.getResults(userEntry);
 
