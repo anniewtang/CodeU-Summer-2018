@@ -59,6 +59,18 @@
   %>
 
   <script>
+    var tagsChecked = 0;
+
+    function canSubmit() {
+      if ((document.getElementById("dish-ID").value != "") && (tagsChecked > 0)) {
+            document.getElementById("submit").disabled = false;
+            document.getElementById("submit").style.backgroundColor ="#008080";
+      } else {
+            document.getElementById("submit").disabled = true;
+            document.getElementById("submit").style.backgroundColor = "#c7d2e2";
+      }
+    }
+
     function fillStars(currStar) {
       currStar.src = "star.png";
       for (i = 1; i <= parseInt(currStar.id); i++) {
@@ -72,26 +84,35 @@
 
     function saveCTags(element) {
        if (element.checked) {
+          tagsChecked = tagsChecked + 1;
           document.getElementById("c-tags").value = document.getElementById("c-tags").value + element.name + ",";
        } else {
+          tagsChecked = tagsChecked - 1;
           document.getElementById("c-tags").value = (document.getElementById("c-tags").value).replace(element.name + ",", "");
        }
+       canSubmit();
     }
 
     function saveDTags(element) {
        if (element.checked) {
+          tagsChecked = tagsChecked + 1;
           document.getElementById("d-tags").value = document.getElementById("d-tags").value + element.name + ",";
        } else {
+          tagsChecked = tagsChecked - 1;
           document.getElementById("d-tags").value = (document.getElementById("d-tags").value).replace(element.name + ",", "");
        }
+       canSubmit();
     }
 
     function saveRTags(element) {
        if (element.checked) {
+          tagsChecked = tagsChecked + 1;
           document.getElementById("r-tags").value = document.getElementById("r-tags").value + element.name + ",";
        } else {
+          tagsChecked = tagsChecked - 1;
           document.getElementById("r-tags").value = (document.getElementById("r-tags").value).replace(element.name + ",", "");
        }
+       canSubmit();
     }
 
     function pickDish(element) {
@@ -104,6 +125,7 @@
             document.getElementById("dish-ID").value = element.id;
          }
       }
+      canSubmit();
     }
   </script>
 
@@ -181,7 +203,7 @@
         <input name="star-count" id="star-count" type="hidden" value="0">
       </div>
 
-      <input id="submit" type="submit" value="Submit">
+      <input id="submit" type="submit" value="Submit" disabled>
 </form>
 
 </body>

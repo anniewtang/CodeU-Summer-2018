@@ -44,7 +44,7 @@
         <button type="submit" style="width: 100%;text-align:  center;">Login</button>
     </form>
 
-    <p style="position:absolute;text-align: center;width:100%;margin-top: 20%;">New user? <a href="/register">Register here</a>.</p>
+    <p style="position:absolute;text-align:center;width:100%;margin-top:20%;">New user? <a href="/register">Register here</a>.</p>
 </div>
 </body>
 </html>
