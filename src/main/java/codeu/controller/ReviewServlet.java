@@ -13,7 +13,6 @@ import codeu.model.store.basic.UserStore;
 import codeu.model.store.basic.ContentManager;
 import codeu.model.data.Constants;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ReviewServlet extends HttpServlet {
     @Override
