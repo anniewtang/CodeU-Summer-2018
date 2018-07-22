@@ -65,6 +65,10 @@ public class ContentManager {
      * @return Set of Dishes that satisfy requirements
      */
     public static Set<Dish> queryByTags(Map<String, Set<String>> queryTags) {
+        if (queryTags.isEmpty()) {
+            return (Set<Dish>) ContentManager.getAllDishes();
+        }
+
         Set<UUID> queriedDishes = new HashSet<>();
 
         for (Map.Entry<String, Set<String>> pair : queryTags.entrySet()) {
@@ -90,6 +94,10 @@ public class ContentManager {
      * @return Set of Dishes that satisfy the rating requirements.
      */
     public static Set<Dish> queryByRatings(Set<Integer> queryRatings) {
+        if (queryRatings.isEmpty()) {
+            return (Set<Dish>) ContentManager.getAllDishes();
+        }
+
         Set<Dish> results = new HashSet<>();
         for (int rating : queryRatings) {
             Set<UUID> dishes = DishStore.getInstance().getDishesOfRating(rating);
