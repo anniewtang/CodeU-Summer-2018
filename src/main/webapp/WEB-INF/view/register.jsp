@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -27,24 +27,23 @@
   </nav>
 
 <div id="container">
-    <h1>Register</h1>
-
     <% if (request.getAttribute("error") != null) { %>
     <h2 style="color:red"><%= request.getAttribute("error") %>
     </h2>
     <% } %>
 
-    <form action="/register" method="POST">
+    <form action="/register" method="POST" style="text-align: center;position:absolute;margin-left:43%;margin-right: 40%;">
         <label for="username">Username: </label>
         <br/>
         <input type="text" name="username" id="username">
-        <br/>
+        <br/><br/>
         <label for="password">Password: </label>
         <br/>
         <input type="password" name="password" id="password">
         <br/><br/>
-        <button type="submit">Submit</button>
+        <button type="submit" style="width: 100%;text-align:  center;">Register</button>
     </form>
+
 </div>
 </body>
 </html>

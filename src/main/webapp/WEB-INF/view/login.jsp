@@ -27,26 +27,24 @@
   </nav>
 
 <div id="container">
-    <h1>Login</h1>
-
     <% if (request.getAttribute("error") != null) { %>
     <h2 style="color:red"><%= request.getAttribute("error") %>
     </h2>
     <% } %>
 
-    <form action="/login" method="POST">
+    <form action="/login" method="POST" style="text-align: center;position:  absolute;margin-left: 43%;margin-right: 40%;">
         <label for="username">Username: </label>
         <br/>
         <input type="text" name="username" id="username">
-        <br/>
+        <br/><br/>
         <label for="password">Password: </label>
         <br/>
         <input type="password" name="password" id="password">
         <br/><br/>
-        <button type="submit">Login</button>
+        <button type="submit" style="width: 100%;text-align:  center;">Login</button>
     </form>
 
-    <p>New users can register <a href="/register">here</a>.</p>
+    <p style="position:absolute;text-align:center;width:100%;margin-top:20%;">New user? <a href="/register">Register here</a>.</p>
 </div>
 </body>
 </html>
