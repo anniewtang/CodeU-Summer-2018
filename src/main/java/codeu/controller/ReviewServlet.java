@@ -13,22 +13,9 @@ import codeu.model.store.basic.UserStore;
 import codeu.model.store.basic.ContentManager;
 import codeu.model.data.Constants;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReviewServlet extends HttpServlet {
-    private User user;
-    private ContentManager cm;
-
-    /**
-     * Set up state for handling registration-related requests. This method is only called when
-     * running in a server, not when running in a test.
-     */
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        cm = new ContentManager();
-    }
-
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -49,49 +36,25 @@ public class ReviewServlet extends HttpServlet {
          String dishName = request.getParameter("new-dish-name");
          String restName = request.getParameter("new-rest-name");
 
-         String Ctags = request.getParameter("c-tags");
-         String Dtags = request.getParameter("d-tags");
-         String Rtags = request.getParameter("r-tags");
+         Set<String> Cset = new HashSet<>(Arrays.asList(request.getParameter("c-tags").split(",")));
+         Set<String> Dset = new HashSet<>(Arrays.asList(request.getParameter("d-tags").split(",")));
+         Set<String> Rset = new HashSet<>(Arrays.asList(request.getParameter("r-tags").split(",")));
 
-         StringTokenizer stC = new StringTokenizer(Ctags, ",");
-         StringTokenizer stD = new StringTokenizer(Dtags, ",");
-         StringTokenizer stR = new StringTokenizer(Rtags, ",");
-
-         Set<String> Cset = new HashSet<String>();
-         Set<String> Dset = new HashSet<String>();
-         Set<String> Rset = new HashSet<String>();
-
-         Set<String> allTags = new HashSet<String>();
-
-         while (stC.hasMoreTokens()) {
-           String temp = stC.nextToken();
-           Cset.add(temp);
-           allTags.add(temp);
-         }
-
-         while (stD.hasMoreTokens()) {
-           String temp = stD.nextToken();
-           Dset.add(temp);
-           allTags.add(temp);
-         }
-
-         while (stR.hasMoreTokens()) {
-           String temp = stR.nextToken();
-           Rset.add(temp);
-           allTags.add(temp);
-         }
+         Set<String> allTags = new HashSet<>();
+         allTags.addAll(Cset);
+         allTags.addAll(Dset);
+         allTags.addAll(Rset);
 
          HashMap<String, Set<String>> tags = new HashMap<>();
-
          tags.put(Constants.CUISINE, Cset);
          tags.put(Constants.DISH, Dset);
          tags.put(Constants.RESTRICTION, Rset);
 
         if (isNewDish == 1) {
-            cm.addNewDishAndFirstReview(new Dish(dishID, dishName, restName, numStars, tags, allTags),
+            ContentManager.addNewDishAndFirstReview(new Dish(dishID, dishName, restName, numStars, tags, allTags),
                                          new Review(reviewID, authorID, dishID, numStars, desc, tags));
         } else  {
-            cm.addReviewForExistingDish(new Review(reviewID, authorID, dishID, numStars, desc, tags));
+            ContentManager.addReviewForExistingDish(new Review(reviewID, authorID, dishID, numStars, desc, tags));
         }
 
         response.sendRedirect("/");
