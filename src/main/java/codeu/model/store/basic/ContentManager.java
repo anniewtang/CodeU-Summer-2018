@@ -215,6 +215,6 @@ public class ContentManager {
      * @return collection of all dishes in DishStore.
      */
     public static Collection<Dish> getAllDishes() {
-        return DishStore.getInstance().getAllDishes();
+        return new TreeSet<>(DishStore.getInstance().getAllDishes());
     }
 }
