@@ -232,6 +232,11 @@ button {
   font-size: 15px;
 }
 
+.log-in-out{
+  position: absolute;
+  right: 0px;
+}
+
 h1 {
     color: #757575;
 }

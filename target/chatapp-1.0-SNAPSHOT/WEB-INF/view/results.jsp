@@ -29,16 +29,14 @@
 
   <nav>
       <% if (request.getSession().getAttribute("user") != null) { %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
+        <a style="font-weight:bold;">Hello <%= request.getSession().getAttribute("user") %>!</a>
       <% } %>
-      <a href="/">Homepage</a>
-      <a href="/review">Review</a>
+        <a href="/">Homepage</a>
       <% if (request.getSession().getAttribute("user") == null) { %>
-      <a href="/login">Login</a>
-      <% } %>
-
-    <% if (request.getSession().getAttribute("user") != null) { %>
-      <a href="/" >Logout</a>
+          <a class="log-in-out" href="/login">Login</a>
+      <% } else { %>
+          <a href="/review">Review</a>
+          <a class="log-in-out" href="/logout" >Logout</a>
     <% } %>
   </nav>
 

@@ -22,14 +22,8 @@
 <body>
 
   <nav>
-      <% if (request.getSession().getAttribute("user") != null) { %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-      <% } %>
       <a href="/">Homepage</a>
-      <a href="/review">Review</a>
-      <% if (request.getSession().getAttribute("user") == null) { %>
-      <a href="/login">Login</a>
-      <% } %>
+      <a class="log-in-out" href="/login">Login</a>
   </nav>
 
 <div id="container">

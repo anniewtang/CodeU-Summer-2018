@@ -28,13 +28,16 @@
 <body>
 
 <nav>
-    <a href="/">Homepage</a>
     <% if (request.getSession().getAttribute("user") != null) { %>
-    <a href="/profile"><%= request.getSession().getAttribute("user") %>'s Profile</a>
-    <a href="/review">Review</a>
-    <% } else { %>
-    <a href="/login">Login</a>
+      <a style="font-weight:bold;">Hello <%= request.getSession().getAttribute("user") %>!</a>
     <% } %>
+      <a href="/">Homepage</a>
+    <% if (request.getSession().getAttribute("user") == null) { %>
+        <a class="log-in-out" href="/login">Login</a>
+    <% } else { %>
+        <a href="/review">Review</a>
+        <a class="log-in-out" href="/logout" >Logout</a>
+  <% } %>
 </nav>
 
 <div id="container">
@@ -57,9 +60,11 @@
   <% } %>
   </div>
 
-  <form action="/review" method="get">
-      <input id="add-review2" type="submit" class="add-review" value="Add Review">
-  </form>
+  <% if (request.getSession().getAttribute("user") != null) { %>
+    <form action="/review" method="get">
+        <input id="add-review2" type="submit" class="add-review" value="Add Review">
+    </form>
+  <% } %>
 
   </div>
 
