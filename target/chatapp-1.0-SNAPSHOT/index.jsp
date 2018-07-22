@@ -93,7 +93,7 @@
         craving.addEventListener("click", function() {
             var content = document.getElementById("checklist");
             var go = document.getElementById("go");
-            var review = document.getElementById("add-review")
+            var review = document.getElementById("add-review1")
             if (content.style.display === "block") {
                 content.style.display = "none";
                 go.style.display = "none";

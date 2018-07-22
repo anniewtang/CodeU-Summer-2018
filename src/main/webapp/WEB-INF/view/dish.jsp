@@ -41,19 +41,18 @@
 
   <%
     UUID dish_id = UUID.fromString((String) request.getSession().getAttribute("dish-id"));
-    ContentManager cm = new ContentManager();
-    Set<Review> reviews = cm.getReviewsForDish(dish_id);
-    Set<String> tags = cm.getAllTagsForDish(dish_id);
+    Set<Review> reviews = ContentManager.getReviewsForDish(dish_id);
+    Set<String> tags = ContentManager.getAllTagsForDish(dish_id);
   %>
 
-  <h3 id="dish-page-rest"><%=cm.getRestaurant(dish_id)%>'s</h3>
-  <h1 id="dish-page-title"><%=cm.getDishName(dish_id)%></h1>
+  <h3 id="dish-page-rest"><%=ContentManager.getRestaurant(dish_id)%>'s</h3>
+  <h1 id="dish-page-title"><%=ContentManager.getDishName(dish_id)%></h1>
 
   <div id="stars">
-    <% for (int j = 0; j < cm.getRating(dish_id); j++) { %>
+    <% for (int j = 0; j < ContentManager.getRating(dish_id); j++) { %>
         <img src="star.png" width="4%" height="4%"/>
     <% }
-    for (int j = cm.getRating(dish_id) + 1; j <= 5; j++) { %>
+    for (int j = ContentManager.getRating(dish_id) + 1; j <= 5; j++) { %>
       <img src="uf-star.png" width="4%" height="4%"/>
   <% } %>
   </div>
@@ -61,7 +60,7 @@
   <form action="/review" method="get">
       <input id="add-review2" type="submit" class="add-review" value="Add Review">
   </form>
-  
+
   </div>
 
   <div id="tags">
@@ -93,7 +92,7 @@
           if (review == null) { %>
             <p>No written descriptions.</p>
       <%  } else { %>
-            <p><%=cm.getUsername(review.getAuthor())%> says: "<%=review.getDescription()%>"</p>
+            <p><%=ContentManager.getUsername(review.getAuthor())%> says: "<%=review.getDescription()%>"</p>
       <%  } %>
 
           <hr>

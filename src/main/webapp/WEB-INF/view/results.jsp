@@ -40,8 +40,6 @@
 
 <div id="searchResults">
   <%
-    ContentManager cm = new ContentManager();
-
     String userEntry = (String) request.getSession().getAttribute("entry");
     if (userEntry.length() > 2)
       userEntry = userEntry.substring(0, userEntry.length() - 2);
@@ -83,7 +81,7 @@
       if (bestReview == null) { %>
         <p>No written descriptions.</p>
   <%  } else { %>
-        <p><%=cm.getUsername(bestReview.getAuthor())%> says: "<%=bestReview.getDescription()%>"</p>
+        <p><%=ContentManager.getUsername(bestReview.getAuthor())%> says: "<%=bestReview.getDescription()%>"</p>
   <%  } %>
       <hr>
 
