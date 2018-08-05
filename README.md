@@ -14,7 +14,9 @@ Our final product is hosted with Google App Engine at the following link: [team1
 Our team design doc can be viewed [here](https://docs.google.com/document/d/12A13MtuR3KmAVc6ELorekBRwj-6_b21VnjEBKi_8QZc/edit?usp=sharing).
 
 # Technical Details
-Languages used in this project include Java, HTML, and CSS. We integrated our app with Google Cloud and App Engine APIs.
+Languages used in this project include Java, HTML, and CSS.
+<br>
+We integrated our app with Google Cloud and App Engine APIs.
 
 # About: Team 15
 **Annie Tang**:        UC Berkeley (2016 – 2020)    | [Github](https://github.com/anniewtang) <br>
